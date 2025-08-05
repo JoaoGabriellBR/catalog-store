@@ -7,7 +7,14 @@ import Dropdown from "./Dropdown";
 import { useAppSelector } from "@/redux/store";
 import { useCartModalContext } from "@/app/context/CartSidebarModalContext";
 import Image from "next/image";
-import { Search, User, ShoppingCart, Clock, Heart } from "lucide-react";
+import {
+  Search,
+  User,
+  ShoppingCart,
+  Clock,
+  Heart,
+  ShoppingBag,
+} from "lucide-react";
 
 const Header: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -52,14 +59,10 @@ const Header: React.FC = () => {
         >
           {/* Logo + Busca */}
           <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-5 sm:gap-10 w-full">
-            <Link href="/" className="flex-shrink-0">
-              <Image
-                src="/images/logo/logo.svg"
-                alt="Logo"
-                width={219}
-                height={36}
-              />
-            </Link>
+            <div className="flex items-center gap-2 w-full sm:w-auto bg-red-500">
+              <ShoppingBag size={25} className="stroke-current text-blue" />
+              <h1 className="text-3xl font-bold text-dark">Stg Catalog</h1>
+            </div>
             <div className="max-w-[475px] w-full">
               <form>
                 <div className="flex items-center">

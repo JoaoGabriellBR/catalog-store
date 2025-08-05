@@ -30,15 +30,15 @@ const Cart = () => {
                   {/* <!-- table header --> */}
                   <div className="flex items-center py-5.5 px-7.5">
                     <div className="min-w-[400px]">
-                      <p className="text-dark">Product</p>
+                      <p className="text-dark">Produto</p>
                     </div>
 
                     <div className="min-w-[180px]">
-                      <p className="text-dark">Price</p>
+                      <p className="text-dark">Preço</p>
                     </div>
 
                     <div className="min-w-[275px]">
-                      <p className="text-dark">Quantityyyyyyy</p>
+                      <p className="text-dark">Quantidade</p>
                     </div>
 
                     <div className="min-w-[200px]">
@@ -46,7 +46,7 @@ const Cart = () => {
                     </div>
 
                     <div className="min-w-[50px]">
-                      <p className="text-dark text-right">Action</p>
+                      <p className="text-dark text-right">Ações</p>
                     </div>
                   </div>
 

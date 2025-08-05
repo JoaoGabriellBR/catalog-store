@@ -38,12 +38,6 @@ export const menuData: Menu[] = [
         path: "/shop-without-sidebar",
       },
       {
-        id: 64,
-        title: "Checkout",
-        newTab: false,
-        path: "/checkout",
-      },
-      {
         id: 65,
         title: "Carrinho",
         newTab: false,

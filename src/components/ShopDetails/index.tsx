@@ -6,6 +6,10 @@ import Newsletter from "../Common/Newsletter";
 import RecentlyViewdItems from "./RecentlyViewd";
 import { usePreviewSlider } from "@/app/context/PreviewSliderContext";
 import { useAppSelector } from "@/redux/store";
+import { useDispatch } from "react-redux";
+
+import { addItemToCart } from "@/redux/features/cart-slice";
+import { AppDispatch } from "@/redux/store";
 
 const ShopDetails = () => {
   const [activeColor, setActiveColor] = useState("blue");
@@ -80,7 +84,12 @@ const ShopDetails = () => {
     (state) => state.productDetailsReducer.value
   );
 
+  const dispatch = useDispatch<AppDispatch>();
   const product = alreadyExist ? JSON.parse(alreadyExist) : productFromStorage;
+
+  const handleAddToCart = () => {
+    dispatch(addItemToCart({ ...product, quantity: 1 }));
+  };
 
   useEffect(() => {
     localStorage.setItem("productDetails", JSON.stringify(product));
@@ -672,8 +681,9 @@ const ShopDetails = () => {
                       <a
                         href="#"
                         className="inline-flex font-medium text-white bg-blue py-3 px-7 rounded-md ease-out duration-200 hover:bg-blue-dark"
+                        onClick={handleAddToCart}
                       >
-                        Purchase Now
+                        Comprar agora
                       </a>
 
                       <a
