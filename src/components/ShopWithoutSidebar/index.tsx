@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import Breadcrumb from "../Common/Breadcrumb";
-import SingleGridItem from "../Shop/SingleGridItem";
 import SingleListItem from "../Shop/SingleListItem";
 import CustomSelect from "../ShopWithSidebar/CustomSelect";
 import shopData from "../Shop/shopData";
 import { Grid, List, ChevronLeft, ChevronRight } from "lucide-react";
+import ProductItem from "../Common/ProductItem";
 
 const ShopWithoutSidebar: React.FC = () => {
   const [productStyle, setProductStyle] = useState<"grid" | "list">("grid");
@@ -81,7 +81,7 @@ const ShopWithoutSidebar: React.FC = () => {
               >
                 {shopData.map((item, idx) =>
                   productStyle === "grid" ? (
-                    <SingleGridItem item={item} key={idx} />
+                    <ProductItem item={item} key={idx} />
                   ) : (
                     <SingleListItem item={item} key={idx} />
                   )

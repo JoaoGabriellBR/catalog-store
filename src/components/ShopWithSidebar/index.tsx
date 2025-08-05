@@ -8,8 +8,8 @@ import SizeDropdown from "./SizeDropdown";
 import ColorsDropdwon from "./ColorsDropdwon";
 import PriceDropdown from "./PriceDropdown";
 import shopData from "../Shop/shopData";
-import SingleGridItem from "../Shop/SingleGridItem";
 import SingleListItem from "../Shop/SingleListItem";
+import ProductItem from "../Common/ProductItem";
 
 const ShopWithSidebar = () => {
   const [productStyle, setProductStyle] = useState("grid");
@@ -280,7 +280,7 @@ const ShopWithSidebar = () => {
               >
                 {shopData.map((item, key) =>
                   productStyle === "grid" ? (
-                    <SingleGridItem item={item} key={key} />
+                    <ProductItem item={item} key={key} />
                   ) : (
                     <SingleListItem item={item} key={key} />
                   )

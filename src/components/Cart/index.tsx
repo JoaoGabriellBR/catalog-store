@@ -38,7 +38,7 @@ const Cart = () => {
                     </div>
 
                     <div className="min-w-[275px]">
-                      <p className="text-dark">Quantity</p>
+                      <p className="text-dark">Quantityyyyyyy</p>
                     </div>
 
                     <div className="min-w-[200px]">
@@ -98,7 +98,7 @@ const Cart = () => {
               </svg>
             </div>
 
-            <p className="pb-6">Your cart is empty!</p>
+            <p className="pb-6">Seu carrinho está vazio!</p>
 
             <Link
               href="/shop-with-sidebar"
