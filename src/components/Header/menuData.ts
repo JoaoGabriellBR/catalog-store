@@ -9,19 +9,19 @@ export const menuData: Menu[] = [
   },
   {
     id: 2,
-    title: "Shop",
+    title: "Produtos",
     newTab: false,
-    path: "/shop-with-sidebar",
+    path: "/shop-without-sidebar",
   },
   {
     id: 3,
-    title: "Contact",
+    title: "Contato",
     newTab: false,
     path: "/contact",
   },
   {
     id: 6,
-    title: "pages",
+    title: "Páginas",
     newTab: false,
     path: "/",
     submenu: [
