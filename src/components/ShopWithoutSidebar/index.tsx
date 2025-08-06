@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Breadcrumb from "../Common/Breadcrumb";
 import SingleListItem from "../Shop/SingleListItem";
-import CustomSelect from "../ShopWithSidebar/CustomSelect";
+import CustomSelect from "./CustomSelect";
 import shopData from "../Shop/shopData";
 import { Grid, List, ChevronLeft, ChevronRight } from "lucide-react";
 import ProductItem from "../Common/ProductItem";

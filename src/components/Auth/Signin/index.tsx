@@ -66,34 +66,6 @@ const Signin = () => {
                   <span className="inline-block px-3 bg-white">Ou</span>
                 </span>
 
-                <div className="flex flex-col gap-4.5 mt-4.5">
-                  <button className="flex justify-center items-center gap-3.5 rounded-lg border border-gray-3 bg-gray-1 p-3 ease-out duration-200 hover:bg-gray-2">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      {/* ...SVG code... */}
-                    </svg>
-                    Entrar com Google
-                  </button>
-
-                  <button className="flex justify-center items-center gap-3.5 rounded-lg border border-gray-3 bg-gray-1 p-3 ease-out duration-200 hover:bg-gray-2">
-                    <svg
-                      width="22"
-                      height="22"
-                      viewBox="0 0 22 22"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      {/* ...SVG code... */}
-                    </svg>
-                    Entrar com Github
-                  </button>
-                </div>
-
                 <p className="text-center mt-6">
                   Não tem uma conta?
                   <Link

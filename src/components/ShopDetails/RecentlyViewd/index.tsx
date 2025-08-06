@@ -37,10 +37,10 @@ const RecentlyViewdItems = () => {
                   height={17}
                   alt="icon"
                 />
-                Categories
+                Categorias
               </span>
               <h2 className="font-semibold text-xl xl:text-heading-5 text-dark">
-                Browse by Category
+                Navegar por Categoria
               </h2>
             </div>
 

@@ -26,12 +26,6 @@ export const menuData: Menu[] = [
     path: "/",
     submenu: [
       {
-        id: 61,
-        title: "Shop With Sidebar",
-        newTab: false,
-        path: "/shop-with-sidebar",
-      },
-      {
         id: 62,
         title: "Shop Without Sidebar",
         newTab: false,
