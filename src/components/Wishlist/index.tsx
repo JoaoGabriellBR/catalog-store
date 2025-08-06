@@ -6,11 +6,7 @@ import SingleItem from "./SingleItem";
 import { removeAllItemsFromWishlist } from "@/redux/features/wishlist-slice";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
-
-type TableHeader = {
-  minWidth: string;
-  title: string;
-};
+import { TableHeader } from "@/types/table-header";
 
 export const Wishlist = () => {
   const wishlistItems = useAppSelector((state) => state.wishlistReducer.items);

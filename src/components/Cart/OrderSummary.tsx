@@ -1,5 +1,6 @@
 import { selectTotalPrice } from "@/redux/features/cart-slice";
 import { useAppSelector } from "@/redux/store";
+import { MessageCircle } from "lucide-react";
 import React from "react";
 import { useSelector } from "react-redux";
 
@@ -12,14 +13,14 @@ const OrderSummary = () => {
       {/* <!-- order list box --> */}
       <div className="bg-white shadow-1 rounded-[10px]">
         <div className="border-b border-gray-3 py-5 px-4 sm:px-8.5">
-          <h3 className="font-medium text-xl text-dark">Order Summary</h3>
+          <h3 className="font-medium text-xl text-dark">Resumo do pedido</h3>
         </div>
 
         <div className="pt-2.5 pb-8.5 px-4 sm:px-8.5">
           {/* <!-- title --> */}
           <div className="flex items-center justify-between py-5 border-b border-gray-3">
             <div>
-              <h4 className="font-medium text-dark">Product</h4>
+              <h4 className="font-medium text-dark">Produto</h4>
             </div>
             <div>
               <h4 className="font-medium text-dark text-right">Subtotal</h4>
@@ -55,9 +56,10 @@ const OrderSummary = () => {
           {/* <!-- checkout button --> */}
           <button
             type="submit"
-            className="w-full flex justify-center font-medium text-white bg-blue py-3 px-6 rounded-md ease-out duration-200 hover:bg-blue-dark mt-7.5"
+             className="w-full flex justify-center font-medium text-white bg-green-light py-3 px-6 mt-7 rounded-md ease-out duration-200 hover:bg-opacity-95"
           >
-            Process to Checkout
+            <MessageCircle className="mr-2" />
+            Finalizar compra
           </button>
         </div>
       </div>

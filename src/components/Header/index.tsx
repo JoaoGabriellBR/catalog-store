@@ -59,10 +59,10 @@ const Header: React.FC = () => {
         >
           {/* Logo + Busca */}
           <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-5 sm:gap-10 w-full">
-            <div className="flex items-center gap-2 w-full sm:w-auto bg-red-500">
+            <Link href="/" className="flex items-center gap-2 w-full sm:w-auto">
               <ShoppingBag size={25} className="stroke-current text-blue" />
               <h1 className="text-3xl font-bold text-dark">Stg Catalog</h1>
-            </div>
+            </Link>
             <div className="max-w-[475px] w-full">
               <form>
                 <div className="flex items-center">
