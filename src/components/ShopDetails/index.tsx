@@ -15,6 +15,7 @@ import {
   Link,
   Minus,
   Plus,
+  ShoppingBag,
   ShoppingCart,
   Truck,
 } from "lucide-react";
@@ -60,7 +61,7 @@ const ProductDetails = ({ product }: ProductProps) => {
 
   return (
     <>
-      <Breadcrumb title={"Detalhes do Produto"} pages={["shop details"]} />
+      <Breadcrumb title={"Detalhes do Produto"} pages={["detalhes do produto"]} />
 
       <section className="overflow-hidden relative pb-20 pt-5 lg:pt-20 xl:pt-28">
         <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
@@ -91,6 +92,11 @@ const ProductDetails = ({ product }: ProductProps) => {
 
             {/* <!-- product content --> */}
             <div className="max-w-[539px] w-full flex flex-col gap-6">
+
+              <span className="flex flex-row items-center gap-2 text-sm text-gray-500 bg-gray-100 rounded">
+                <ShoppingBag className="w-4 h-4 inline-block" />
+                {product?.category}
+              </span>
               <h2 className="font-semibold text-xl sm:text-2xl xl:text-custom-3 text-dark">
                 {product?.name}
               </h2>
@@ -103,9 +109,6 @@ const ProductDetails = ({ product }: ProductProps) => {
                 <div className="flex items-end gap-3">
                   <span className="text-3xl font-extrabold text-blue">
                     R$ {product?.price.toFixed(2)}
-                  </span>
-                  <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                    {product?.category}
                   </span>
                 </div>
               </div>

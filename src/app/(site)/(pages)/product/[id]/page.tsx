@@ -3,6 +3,12 @@ import React, { useEffect, useState } from "react";
 import ProductDetails from "@/components/ShopDetails";
 import { useParams } from "next/navigation";
 import { products } from "../../../../../../lib/productsData";
+import { Metadata } from "next";
+
+// export const metadata: Metadata = {
+//   title: "Detalhes do Produto | Loja STG Catalog",
+//   description: "Tela de detalhes do produto",
+// };
 
 const ProductsPage = () => {
   const { id } = useParams(); // nome do param

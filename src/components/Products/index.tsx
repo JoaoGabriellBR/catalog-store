@@ -7,7 +7,7 @@ import shopData from "../Shop/shopData";
 import { Grid, List, ChevronLeft, ChevronRight } from "lucide-react";
 import ProductItem from "../Common/ProductItem";
 
-const ShopWithoutSidebar: React.FC = () => {
+const AllProducts: React.FC = () => {
   const [productStyle, setProductStyle] = useState<"grid" | "list">("grid");
 
   const sortOptions = [
@@ -144,4 +144,4 @@ const ShopWithoutSidebar: React.FC = () => {
   );
 };
 
-export default ShopWithoutSidebar;
+export default AllProducts;
