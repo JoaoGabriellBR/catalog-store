@@ -6,7 +6,7 @@ import { menuData } from "./menuData";
 import Dropdown from "./Dropdown";
 import { useAppSelector } from "@/redux/store";
 import { useCartModalContext } from "@/app/context/CartSidebarModalContext";
-import { products } from "../../../lib/productsData";
+import { products, categories } from "../../../lib/productsData";
 import type { Product } from "@/types/product";
 import SearchResults from "./SearchResults";
 import useDebounce from "@/hooks/useDebounce";
@@ -23,13 +23,22 @@ const Header: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [navigationOpen, setNavigationOpen] = useState(false);
   const [stickyMenu, setStickyMenu] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string>("Todos");
   const debouncedQuery = useDebounce(searchQuery, 300);
 
   const filteredProducts: Product[] = useMemo(() => {
     if (!debouncedQuery) return [];
     const query = debouncedQuery.toLowerCase();
-    return products.filter((item) => item.name.toLowerCase().includes(query));
-  }, [debouncedQuery]);
+    const isValidCategory = categories.includes(selectedCategory);
+    return products.filter((item) => {
+      const matchesQuery = item.name.toLowerCase().includes(query);
+      const matchesCategory =
+        !isValidCategory || selectedCategory === "Todos"
+          ? true
+          : item.category === selectedCategory;
+      return matchesQuery && matchesCategory;
+    });
+  }, [debouncedQuery, selectedCategory]);
   const { openCartModal } = useCartModalContext();
 
   const product = useAppSelector((state) => state.cartReducer.items);
@@ -48,16 +57,7 @@ const Header: React.FC = () => {
     return () => window.removeEventListener("scroll", handleStickyMenu);
   }, []);
 
-  const options = [
-    { label: "Categorias", value: "0" },
-    { label: "Desktop", value: "1" },
-    { label: "Laptop", value: "2" },
-    { label: "Monitor", value: "3" },
-    { label: "Phone", value: "4" },
-    { label: "Watch", value: "5" },
-    { label: "Mouse", value: "6" },
-    { label: "Tablet", value: "7" },
-  ];
+  const options = categories.map((cat) => ({ label: cat, value: cat }));
 
   return (
     <header
@@ -81,7 +81,10 @@ const Header: React.FC = () => {
             <div className="max-w-[475px] w-full">
               <form onSubmit={(e) => e.preventDefault()}>
                 <div className="flex items-center">
-                  <CustomSelect options={options} />
+                    <CustomSelect
+                      options={options}
+                      onSelect={setSelectedCategory}
+                    />
                   <div className="relative w-full max-w-[333px] sm:min-w-[333px]">
                     <span className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-5.5 bg-gray-4" />
                     <input
