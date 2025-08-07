@@ -67,7 +67,7 @@ const SingleListItem: React.FC<SingleListItemProps> = ({ item }) => {
       <div className="flex flex-col flex-grow p-4 justify-between">
         <div>
           <h3 className="text-base font-medium text-gray-800 hover:text-blue transition-colors mb-2">
-            <Link href="/shop-details" className="block">
+            <Link href={`/product/${item.id}`} className="block">
               {item.name}
             </Link>
           </h3>

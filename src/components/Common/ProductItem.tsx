@@ -78,7 +78,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
         {/* Title */}
         <h3 className="text-base font-medium text-gray-800 hover:text-blue transition-colors mb-2">
           <Link
-            href="/shop-details"
+            href={`/product/${item.id}`}
             onClick={handleShowDetails}
             className="block"
           >
