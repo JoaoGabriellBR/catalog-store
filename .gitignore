@@ -24,6 +24,8 @@
 .DS_Store
 *.pem
 
+/codex.patch
+
 # debug
 npm-debug.log*
 yarn-debug.log*

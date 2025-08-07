@@ -1,12 +1,15 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import CustomSelect from "./CustomSelect";
 import { menuData } from "./menuData";
 import Dropdown from "./Dropdown";
 import { useAppSelector } from "@/redux/store";
 import { useCartModalContext } from "@/app/context/CartSidebarModalContext";
-import Image from "next/image";
+import { products } from "../../../lib/productsData";
+import type { Product } from "@/types/product";
+import SearchResults from "./SearchResults";
+import useDebounce from "@/hooks/useDebounce";
 import {
   Search,
   User,
@@ -20,6 +23,15 @@ const Header: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [navigationOpen, setNavigationOpen] = useState(false);
   const [stickyMenu, setStickyMenu] = useState(false);
+  const debouncedQuery = useDebounce(searchQuery, 300);
+
+  const filteredProducts: Product[] = useMemo(() => {
+    if (!debouncedQuery) return [];
+    const query = debouncedQuery.toLowerCase();
+    return products.filter((item) =>
+      item.name.toLowerCase().includes(query)
+    );
+  }, [debouncedQuery]);
   const { openCartModal } = useCartModalContext();
 
   const product = useAppSelector((state) => state.cartReducer.items);
@@ -64,7 +76,7 @@ const Header: React.FC = () => {
               <h1 className="text-3xl font-bold text-dark">Stg Catalog</h1>
             </Link>
             <div className="max-w-[475px] w-full">
-              <form>
+              <form onSubmit={(e) => e.preventDefault()}>
                 <div className="flex items-center">
                   <CustomSelect options={options} />
                   <div className="relative w-full max-w-[333px] sm:min-w-[333px]">
@@ -87,6 +99,7 @@ const Header: React.FC = () => {
                     >
                       <Search size={18} className="stroke-current" />
                     </button>
+                    <SearchResults results={filteredProducts} />
                   </div>
                 </div>
               </form>
