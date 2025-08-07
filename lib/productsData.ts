@@ -128,6 +128,86 @@ export const products: Product[] = [
       "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=400&h=400&fit=crop",
     category: "Games",
   },
+  {
+    id: "13",
+    name: "Controle Sem Fio DualSense PS5",
+    description:
+      "Controle com resposta tátil e gatilhos adaptáveis para imersão em jogos de nova geração.",
+    price: 479.9,
+    image:
+      "https://images.unsplash.com/photo-1605835963874-a7c87f56259e?q=80&w=1470&auto=format&fit=crop",
+    category: "Games",
+  },
+  {
+    id: "14",
+    name: "Headset Gamer Surround 7.1",
+    description:
+      "Headset com som imersivo e microfone removível, ideal para sessões intensas de jogos.",
+    price: 329.0,
+    image:
+      "https://images.unsplash.com/photo-1600186279172-fdbaefd74383?q=80&w=1470&auto=format&fit=crop",
+    category: "Games",
+  },
+  {
+    id: "15",
+    name: "Smartphone Galaxy S22 128GB",
+    description:
+      "Smartphone com tela AMOLED de 6.1 polegadas, câmera tripla e desempenho de ponta.",
+    price: 3899.99,
+    image:
+      "https://images.unsplash.com/photo-1707438095956-25a7a502df16?q=80&w=2062&auto=format&fit=crop",
+    category: "Smartphones",
+  },
+  {
+    id: "16",
+    name: "iPhone 14 Pro 256GB",
+    description:
+      "iPhone com câmera Pro de 48MP, Dynamic Island e chip A16 Bionic ultrarrápido.",
+    price: 8299.0,
+    image:
+      "https://images.unsplash.com/photo-1677144677444-9ab5de19143f?q=80&w=1469&auto=format&fit=crop",
+    category: "Smartphones",
+  },
+  {
+    id: "17",
+    name: "Notebook Dell Inspiron 15",
+    description:
+      "Notebook com processador Intel i7, SSD de 512GB e tela Full HD antirreflexo.",
+    price: 4599.9,
+    image:
+      "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?q=80&w=1470&auto=format&fit=crop",
+    category: "Notebooks",
+  },
+  {
+    id: "18",
+    name: "MacBook Air M2 13'' 256GB",
+    description:
+      "Notebook ultrafino com chip Apple M2, bateria de longa duração e tela Liquid Retina.",
+    price: 8999.0,
+    image:
+      "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?q=80&w=1470&auto=format&fit=crop",
+    category: "Notebooks",
+  },
+  {
+    id: "19",
+    name: "Carregador Rápido USB-C 20W",
+    description:
+      "Carregador compacto com tecnologia de carregamento rápido compatível com iPhone e Android.",
+    price: 119.9,
+    image:
+      "https://images.unsplash.com/photo-1555449368-099e5eb46842?q=80&w=764&auto=format&fit=crop",
+    category: "Acessórios",
+  },
+  {
+    id: "20",
+    name: "Suporte Articulado para Notebook",
+    description:
+      "Suporte ergonômico com altura ajustável, ideal para melhorar a postura durante o uso.",
+    price: 89.9,
+    image:
+      "https://images.unsplash.com/photo-1623251606108-512c7c4a3507?q=80&w=1374&auto=format&fit=crop",
+    category: "Acessórios",
+  },
 ];
 
 export const categories = [
