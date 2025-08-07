@@ -41,7 +41,7 @@ const SingleItem = ({ item }) => {
           <div className="w-full flex items-center gap-5.5">
             <div className="flex items-center justify-center rounded-[5px] bg-gray-2 max-w-[80px] w-full h-17.5">
               <Image
-                src={item.imgs?.thumbnails[0]}
+                src={item.image}
                 alt="produto"
                 width={200}
                 height={200}
@@ -50,7 +50,7 @@ const SingleItem = ({ item }) => {
 
             <div>
               <h3 className="text-dark ease-out duration-200 hover:text-blue">
-                <a href="#"> {item.title} </a>
+                <a href="#"> {item.name} </a>
               </h3>
             </div>
           </div>
@@ -58,7 +58,7 @@ const SingleItem = ({ item }) => {
       </div>
 
       <div className="min-w-[415px]">
-        <p className="text-dark">${item.discountedPrice}</p>
+        <p className="text-dark">R$ {item.price.toFixed(2)}</p>
       </div>
 
       <div className="min-w-[150px] flex justify-end">

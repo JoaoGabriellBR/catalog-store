@@ -112,16 +112,10 @@ const ShopDetails = () => {
                   <div className="">
                     <div className="flex items-end gap-3">
                       <span className="text-3xl font-extrabold text-blue">
-                        R$ {product.discountedPrice.toFixed(2)}
-                      </span>
-                      <span className="text-base text-gray-400 line-through">
                         R$ {product.price.toFixed(2)}
                       </span>
-                      <span className="ml-auto bg-red-100 text-red-600 text-xs font-semibold uppercase px-2 py-0.5 rounded">
-                        {Math.round(
-                          (1 - product.discountedPrice / product.price) * 100
-                        )}
-                        % OFF
+                      <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                        {product.category}
                       </span>
                     </div>
                   </div>

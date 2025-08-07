@@ -3,7 +3,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
-import { Eye, Heart, ShoppingCart, Star } from "lucide-react";
+import { Eye, Heart, ShoppingBag, ShoppingCart, Star } from "lucide-react";
 import { useModalContext } from "@/app/context/QuickViewModalContext";
 import { updateQuickView } from "@/redux/features/quickView-slice";
 import { addItemToCart } from "@/redux/features/cart-slice";
@@ -55,8 +55,8 @@ const SingleListItem: React.FC<SingleListItemProps> = ({ item }) => {
       {/* Imagem */}
       <div className="flex-shrink-0 w-full sm:w-[270px] p-4 bg-gray-100 flex items-center justify-center">
         <Image
-          src={item.imgs?.previews[0] ?? ""}
-          alt={item.title}
+          src={item.image}
+          alt={item.name}
           width={250}
           height={250}
           className="object-contain transition-transform duration-200 group-hover:scale-110"
@@ -68,30 +68,22 @@ const SingleListItem: React.FC<SingleListItemProps> = ({ item }) => {
         <div>
           <h3 className="text-base font-medium text-gray-800 hover:text-blue transition-colors mb-2">
             <Link href="/shop-details" className="block">
-              {item.title}
+              {item.name}
             </Link>
           </h3>
 
           <div className="flex items-baseline space-x-3 mb-3">
             <span className="text-lg font-semibold text-gray-900">
-              ${item.discountedPrice}
+              R$ {item.price.toFixed(2)}
             </span>
-            <span className="text-sm line-through text-gray-400">
-              ${item.price}
+            <span className="flex flex-row items-center gap-2 text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">
+              <ShoppingBag size={16} className="text-gray-500" />
+              {item.category}
             </span>
           </div>
 
           <div className="flex items-center space-x-2">
-            <div className="flex space-x-1">
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  size={14}
-                  className="stroke-current text-yellow-400"
-                />
-              ))}
-            </div>
-            <span className="text-sm text-gray-500">({item.reviews})</span>
+            <p className="text-sm text-gray-600">{item.description}</p>
           </div>
         </div>
 

@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import Image from "next/image";
 import { usePreviewSlider } from "@/app/context/PreviewSliderContext";
 import { updateproductDetails } from "@/redux/features/product-details";
-import { X, Minus, Plus, Heart, ShoppingCart } from "lucide-react";
+import { X, Minus, Plus, Heart, ShoppingCart, ShoppingBag } from "lucide-react";
 
 const QuickViewModal = () => {
   const { isModalOpen, closeModal } = useModalContext();
@@ -71,28 +71,21 @@ const QuickViewModal = () => {
             <div className="max-w-[526px] w-full">
               <div className="flex gap-5">
                 <div className="flex flex-col gap-5">
-                  {product.imgs.thumbnails?.map((img, key) => (
-                    <button
-                      onClick={() => setActivePreview(key)}
-                      key={key}
-                      className={`flex items-center justify-center w-20 h-20 overflow-hidden rounded-lg bg-gray-1 ease-out duration-200 hover:border-2 hover:border-blue ${
-                        activePreview === key && "border-2 border-blue"
-                      }`}
-                    >
-                      <Image
-                        src={img || ""}
-                        alt="thumbnail"
-                        width={61}
-                        height={61}
-                        className="aspect-square"
-                      />
-                    </button>
-                  ))}
+                  {/* Simplified image display since we only have one image */}
+                  <div className="flex items-center justify-center w-20 h-20 overflow-hidden rounded-lg bg-gray-1 border-2 border-blue">
+                    <Image
+                      src={product.image}
+                      alt="thumbnail"
+                      width={61}
+                      height={61}
+                      className="aspect-square"
+                    />
+                  </div>
                 </div>
 
                 <div className="relative z-1 overflow-hidden flex items-center justify-center w-full sm:min-h-[508px] bg-gray-1 rounded-lg border border-gray-3">
                   <Image
-                    src={product?.imgs?.previews?.[activePreview]}
+                    src={product.image}
                     alt="products-details"
                     width={400}
                     height={400}
@@ -102,8 +95,14 @@ const QuickViewModal = () => {
             </div>
 
             <div className="max-w-[445px] w-full flex flex-col gap-4">
+              
+              <span className="flex flex-row items-center gap-2 text-sm text-gray-500 bg-gray-100 rounded">
+                <ShoppingBag size={16} className="text-gray-500" />
+                {product.category}
+              </span>
+
               <h3 className="font-semibold text-xl xl:text-heading-5 text-dark">
-                {product.title}
+                {product.name}
               </h3>
 
               <p>
@@ -114,13 +113,8 @@ const QuickViewModal = () => {
               <div>
                 <h4 className="font-semibold text-lg text-dark">Preço</h4>
 
-                <span className="flex items-center gap-2">
-                  <span className="font-semibold text-dark text-xl xl:text-heading-4">
-                    ${product.discountedPrice}
-                  </span>
-                  <span className="font-medium text-dark-4 text-lg xl:text-2xl line-through">
-                    ${product.price}
-                  </span>
+                <span className="font-semibold text-dark text-xl xl:text-heading-4">
+                  R$ {product.price.toFixed(2)}
                 </span>
               </div>
 

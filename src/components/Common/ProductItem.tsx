@@ -3,7 +3,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
-import { Eye, Heart, ShoppingCart, Star } from "lucide-react";
+import { Eye, Heart, ShoppingBag, ShoppingCart, Star } from "lucide-react";
 import { useModalContext } from "@/app/context/QuickViewModalContext";
 import { updateQuickView } from "@/redux/features/quickView-slice";
 import { addItemToCart } from "@/redux/features/cart-slice";
@@ -60,8 +60,8 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
       {/* Image */}
       <div className="relative w-full aspect-square overflow-hidden bg-gray-100">
         <Image
-          src={item.imgs?.previews[0] ?? ""}
-          alt={item.title}
+          src={item.image}
+          alt={item.name}
           fill
           className="object-contain transition-transform duration-200 group-hover:scale-110"
         />
@@ -69,18 +69,10 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
 
       {/* Info */}
       <div className="p-4 flex flex-col flex-grow">
-        {/* Reviews */}
+        {/* Category */}
         <div className="flex items-center mb-2">
-          <div className="flex space-x-1">
-            {[...Array(5)].map((_, i) => (
-              <Star
-                key={i}
-                size={14}
-                className="stroke-current text-yellow-400"
-              />
-            ))}
-          </div>
-          <span className="text-sm text-gray-500 ml-2">({item.reviews})</span>
+          <ShoppingBag size={16} className="text-gray-500" />
+          <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">{item.category}</span>
         </div>
 
         {/* Title */}
@@ -90,17 +82,14 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
             onClick={handleShowDetails}
             className="block"
           >
-            {item.title}
+            {item.name}
           </Link>
         </h3>
 
         {/* Price */}
         <div className="flex items-baseline space-x-2 mb-4">
           <span className="text-lg font-semibold text-gray-900">
-            ${item.discountedPrice}
-          </span>
-          <span className="text-sm line-through text-gray-400">
-            ${item.price}
+            R$ {item.price.toFixed(2)}
           </span>
         </div>
 
