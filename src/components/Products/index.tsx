@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Breadcrumb from "../Common/Breadcrumb";
 import SingleListItem from "../Shop/SingleListItem";
 import CustomSelect from "./CustomSelect";
@@ -16,8 +16,20 @@ const AllProducts: React.FC = () => {
     { label: "Produtos antigos", value: "2" },
   ];
 
+  const itemsPerPage = 12;
   const totalItems = shopData.length;
-  const visibleCount = 9; // ajustar conforme necessidade
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentItems = shopData.slice(startIndex, endIndex);
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages || 1);
+    }
+  }, [currentPage, totalPages]);
 
   return (
     <>
@@ -36,9 +48,9 @@ const AllProducts: React.FC = () => {
                 <div className="flex flex-wrap items-center gap-4">
                   <CustomSelect options={sortOptions} />
                   <p>
-                    Exibindo{" "}
+                    Exibindo {" "}
                     <span className="font-medium text-dark">
-                      {visibleCount} de {totalItems}
+                      {startIndex + 1}-{Math.min(endIndex, totalItems)}
                     </span>{" "}
                     produtos
                   </p>
@@ -79,11 +91,11 @@ const AllProducts: React.FC = () => {
                     : "flex flex-col gap-7.5"
                 }
               >
-                {shopData.map((item, idx) =>
+                {currentItems.map((item) =>
                   productStyle === "grid" ? (
-                    <ProductItem item={item} key={idx} />
+                    <ProductItem item={item} key={item.id} />
                   ) : (
-                    <SingleListItem item={item} key={idx} />
+                    <SingleListItem item={item} key={item.id} />
                   )
                 )}
               </div>
@@ -95,40 +107,38 @@ const AllProducts: React.FC = () => {
                     <li>
                       <button
                         type="button"
-                        disabled
                         aria-label="Página anterior"
+                        onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                        disabled={currentPage === 1}
                         className="flex h-9 w-8 items-center justify-center rounded-[3px] disabled:text-gray-4 transition-colors duration-200 hover:bg-blue hover:text-white"
                       >
                         <ChevronLeft size={18} className="stroke-current" />
                       </button>
                     </li>
-                    {[
-                      1,
-                      2,
-                      3,
-                      4,
-                      5,
-                      "...",
-                      Math.ceil(totalItems / visibleCount),
-                    ].map((page, i) => (
-                      <li key={i}>
-                        <a
-                          href="#"
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                      <li key={page}>
+                        <button
+                          type="button"
+                          onClick={() => setCurrentPage(page)}
                           className={`flex items-center justify-center rounded-[3px] px-3.5 py-1.5 text-custom-sm transition-colors duration-200 ${
-                            page === 1
+                            page === currentPage
                               ? "bg-blue text-white"
                               : "hover:bg-blue hover:text-white"
                           }`}
                         >
                           {page}
-                        </a>
+                        </button>
                       </li>
                     ))}
                     <li>
                       <button
                         type="button"
                         aria-label="Próxima página"
-                        className="flex h-9 w-8 items-center justify-center rounded-[3px] transition-colors duration-200 hover:bg-blue hover:text-white"
+                        onClick={() =>
+                          setCurrentPage((p) => Math.min(totalPages, p + 1))
+                        }
+                        disabled={currentPage === totalPages || totalPages === 0}
+                        className="flex h-9 w-8 items-center justify-center rounded-[3px] disabled:text-gray-4 transition-colors duration-200 hover:bg-blue hover:text-white"
                       >
                         <ChevronRight size={18} className="stroke-current" />
                       </button>
