@@ -28,13 +28,16 @@ const Header: React.FC = () => {
   const filteredProducts: Product[] = useMemo(() => {
     if (!debouncedQuery) return [];
     const query = debouncedQuery.toLowerCase();
-    return products.filter((item) =>
-      item.name.toLowerCase().includes(query)
-    );
+    return products.filter((item) => item.name.toLowerCase().includes(query));
   }, [debouncedQuery]);
   const { openCartModal } = useCartModalContext();
 
   const product = useAppSelector((state) => state.cartReducer.items);
+
+  const handleClearSearch = () => {
+    setSearchQuery("");
+    filteredProducts.length = 0;
+  };
 
   // Sticky menu
   useEffect(() => {
@@ -99,7 +102,10 @@ const Header: React.FC = () => {
                     >
                       <Search size={18} className="stroke-current" />
                     </button>
-                    <SearchResults results={filteredProducts} />
+                    <SearchResults
+                      results={filteredProducts}
+                      handleClearSearch={handleClearSearch}
+                    />
                   </div>
                 </div>
               </form>

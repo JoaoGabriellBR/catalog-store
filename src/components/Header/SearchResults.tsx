@@ -7,16 +7,27 @@ import React from "react";
 
 interface SearchResultsProps {
   results: Product[];
+  handleClearSearch: () => void;
 }
 
-const SearchResults: React.FC<SearchResultsProps> = ({ results }) => {
+const SearchResults: React.FC<SearchResultsProps> = ({
+  results,
+  handleClearSearch,
+}) => {
   if (results.length === 0) return null;
 
   return (
     <ul className="absolute left-0 right-0 top-full mt-1 max-h-80 overflow-y-auto rounded-md border border-gray-3 bg-white shadow">
       {results.map((item) => (
-        <li key={item.id} className="p-2 hover:bg-gray-1">
-          <Link href={`/product/${item.id}`} className="flex items-center gap-3">
+        <li
+          key={item.id}
+          className="p-2 hover:bg-gray-1"
+          onClick={handleClearSearch}
+        >
+          <Link
+            href={`/product/${item.id}`}
+            className="flex items-center gap-3"
+          >
             <Image
               src={item.image}
               alt={item.name}
