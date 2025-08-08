@@ -3,12 +3,13 @@ import Breadcrumb from "@/components/Common/Breadcrumb";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useForm, FieldErrors, Resolver } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { supabase } from "../../../../lib/supabaseClient";
 import InputField from "../InputField";
 import Loader from "@/components/Common/Loader";
 import { useAuth } from "@/app/context/AuthContext";
+import { zodResolver } from "@/lib/zodResolver";
 
 const loginSchema = z.object({
   email: z.string().email("Email inválido"),
@@ -16,24 +17,6 @@ const loginSchema = z.object({
 });
 
 export type LoginFormData = z.infer<typeof loginSchema>;
-
-const zodResolver =
-  (schema: z.ZodSchema): Resolver<LoginFormData> =>
-  async (values) => {
-    const result = schema.safeParse(values);
-    if (result.success) {
-      return { values: result.data, errors: {} };
-    }
-    const formErrors: FieldErrors<LoginFormData> = {};
-    result.error.errors.forEach((err) => {
-      const path = err.path[0] as keyof LoginFormData;
-      formErrors[path] = {
-        type: err.code,
-        message: err.message,
-      };
-    });
-    return { values: {}, errors: formErrors };
-  };
 
 const Signin = () => {
   const router = useRouter();

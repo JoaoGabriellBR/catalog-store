@@ -1,10 +1,30 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import type { Menu } from "@/types/Menu";
+import type { User } from "@supabase/supabase-js";
 
-const Dropdown = ({ menuItem, stickyMenu }) => {
+interface DropdownProps {
+  menuItem: Menu;
+  stickyMenu: boolean;
+  user: User | null;
+}
+
+const Dropdown = ({ menuItem, stickyMenu, user }: DropdownProps) => {
   const [dropdownToggler, setDropdownToggler] = useState(false);
   const pathUrl = usePathname();
+
+  const items = useMemo(
+    () =>
+      menuItem.submenu?.filter(
+        (item) =>
+          !(
+            user &&
+            (item.path === "/signin" || item.path === "/signup")
+          )
+      ) || [],
+    [menuItem.submenu, user]
+  );
 
   return (
     <li
@@ -45,7 +65,7 @@ const Dropdown = ({ menuItem, stickyMenu }) => {
             : "xl:group-hover:translate-y-0"
         }`}
       >
-        {menuItem.submenu.map((item, i) => (
+        {items.map((item, i) => (
           <li key={i}>
             <Link
               href={item.path}

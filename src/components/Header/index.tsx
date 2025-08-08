@@ -219,6 +219,7 @@ const Header: React.FC = () => {
                         key={i}
                         menuItem={menuItem}
                         stickyMenu={stickyMenu}
+                        user={user}
                       />
                     ) : (
                       <li

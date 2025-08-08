@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useForm, FieldErrors, Resolver } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { supabase } from "../../../lib/supabaseClient";
@@ -9,6 +9,7 @@ import Loader from "@/components/Common/Loader";
 import { PasswordStrengthIndicator } from "./PasswordStrengthIndicator";
 import { Circle } from "lucide-react";
 import Breadcrumb from "@/components/Common/Breadcrumb";
+import { zodResolver } from "@/lib/zodResolver";
 
 const registerSchema = z
   .object({
@@ -29,24 +30,6 @@ const registerSchema = z
   });
 
 export type RegisterFormData = z.infer<typeof registerSchema>;
-
-const zodResolver =
-  (schema: z.ZodSchema): Resolver<RegisterFormData> =>
-  async (values) => {
-    const result = schema.safeParse(values);
-    if (result.success) {
-      return { values: result.data, errors: {} };
-    }
-    const formErrors: FieldErrors<RegisterFormData> = {};
-    result.error.errors.forEach((err) => {
-      const path = err.path[0] as keyof RegisterFormData;
-      formErrors[path] = {
-        type: err.code,
-        message: err.message,
-      };
-    });
-    return { values: {}, errors: formErrors };
-  };
 
 const RegisterForm: React.FC = () => {
   const router = useRouter();

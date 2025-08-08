@@ -9,12 +9,46 @@ import { supabase } from "../../../lib/supabaseClient";
 import { useAuth } from "@/app/context/AuthContext";
 import Loader from "@/components/Common/Loader";
 import { LogOut, ShoppingBasket, User } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@/lib/zodResolver";
+
+const passwordSchema = z
+  .object({
+    currentPassword: z.string().min(1, "Senha atual é obrigatória"),
+    newPassword: z
+      .string()
+      .min(8, "A senha deve ter no mínimo 8 caracteres")
+      .regex(/[A-Z]/, "A senha deve conter letra maiúscula")
+      .regex(/[a-z]/, "A senha deve conter letra minúscula")
+      .regex(/[0-9]/, "A senha deve conter números")
+      .regex(/[^A-Za-z0-9]/, "A senha deve conter símbolos"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "As senhas devem ser iguais",
+  });
+
+type PasswordFormData = z.infer<typeof passwordSchema>;
 
 const MyAccount = () => {
   const router = useRouter();
   const { user, loading } = useAuth();
   const [activeTab, setActiveTab] = useState("dashboard");
   const [addressModal, setAddressModal] = useState(false);
+  const [profile, setProfile] = useState({ fullName: "", email: "" });
+  const [passwordMessage, setPasswordMessage] = useState<{
+    type: "error" | "success";
+    text: string;
+  } | null>(null);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<PasswordFormData>({ resolver: zodResolver(passwordSchema) });
 
   useEffect(() => {
     if (!loading && !user) {
@@ -22,17 +56,52 @@ const MyAccount = () => {
     }
   }, [user, loading, router]);
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (user) {
+        setProfile({
+          fullName: user.user_metadata?.full_name || "",
+          email: user.email || "",
+        });
+      }
+    };
+    fetchUser();
+  }, []);
+
   const handleLogout = async () => {
     await supabase.auth.signOut();
     router.push("/");
   };
 
-  const openAddressModal = () => {
-    setAddressModal(true);
-  };
+  const openAddressModal = () => setAddressModal(true);
+  const closeAddressModal = () => setAddressModal(false);
 
-  const closeAddressModal = () => {
-    setAddressModal(false);
+  const onPasswordSubmit = async (data: PasswordFormData) => {
+    setPasswordMessage(null);
+    if (!user) return;
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email: user.email || "",
+      password: data.currentPassword,
+    });
+    if (signInError) {
+      setPasswordMessage({ type: "error", text: "Senha atual incorreta" });
+      return;
+    }
+    const { error } = await supabase.auth.updateUser({
+      password: data.newPassword,
+    });
+    if (error) {
+      setPasswordMessage({ type: "error", text: error.message });
+    } else {
+      setPasswordMessage({
+        type: "success",
+        text: "Senha alterada com sucesso",
+      });
+      reset();
+    }
   };
 
   if (loading || !user) {
@@ -50,7 +119,6 @@ const MyAccount = () => {
       <section className="overflow-hidden py-20 bg-gray-2">
         <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
           <div className="flex flex-col xl:flex-row gap-7.5">
-            {/* <!--== user dashboard menu start ==--> */}
             <div className="xl:max-w-[370px] w-full bg-white rounded-xl shadow-1">
               <div className="flex xl:flex-col">
                 <div className="hidden lg:flex flex-wrap items-center gap-5 py-6 px-4 sm:px-7.5 xl:px-9 border-r xl:border-r-0 xl:border-b border-gray-3">
@@ -65,9 +133,9 @@ const MyAccount = () => {
 
                   <div>
                     <p className="font-medium text-dark mb-0.5">
-                      James Septimus
+                      {profile.fullName || user.email}
                     </p>
-                    <p className="text-custom-xs">Member Since Sep 2020</p>
+                    <p className="text-custom-xs">{profile.email}</p>
                   </div>
                 </div>
 
@@ -87,7 +155,7 @@ const MyAccount = () => {
 
                     <button
                       onClick={() => setActiveTab("orders")}
-                      className={`flex items-center rounded-md gap-2.5 py-3 px-4.5 ease-out duration-200 hover:bg-blue hover:text-white ${
+                      className={`flex items-center rounded-md gap-2.5 py-3 px-4.5 ease-out duração-200 hover:bg-blue hover:text-white ${
                         activeTab === "orders"
                           ? "text-white bg-blue"
                           : "text-dark-2 bg-gray-1"
@@ -99,7 +167,7 @@ const MyAccount = () => {
 
                     <button
                       onClick={handleLogout}
-                      className="flex items-center rounded-md gap-2.5 py-3 px-4.5 ease-out duration-200 hover:bg-blue hover:text-white text-dark-2 bg-gray-1"
+                      className="flex items-center rounded-md gap-2.5 py-3 px-4.5 ease-out duração-200 hover:bg-blue hover:text-white text-dark-2 bg-gray-1"
                     >
                       <LogOut />
                       Sair
@@ -109,9 +177,6 @@ const MyAccount = () => {
               </div>
             </div>
 
-            {/* <!-- dashboard tab content end -->
-
-          <!-- orders tab content start --> */}
             <div
               className={`xl:max-w-[770px] w-full bg-white rounded-xl shadow-1 ${
                 activeTab === "orders" ? "block" : "hidden"
@@ -119,82 +184,89 @@ const MyAccount = () => {
             >
               <Orders />
             </div>
-            {/* <!-- orders tab content end -->
 
-
-
-          <!-- details tab content start --> */}
             <div
               className={`xl:max-w-[770px] w-full ${
                 activeTab === "account-details" ? "block" : "hidden"
               }`}
             >
-              <form>
-                <div className="bg-white shadow-1 rounded-xl p-4 sm:p-8.5">
-                  <div className="flex flex-col lg:flex-row gap-5 sm:gap-8 mb-5">
-                    <div className="w-full">
-                      <label htmlFor="firstName" className="block mb-2.5">
-                        Nome <span className="text-red">*</span>
-                      </label>
+              <div className="bg-white shadow-1 rounded-xl p-4 sm:p-8.5">
+                <div className="flex flex-col lg:flex-row gap-5 sm:gap-8 mb-5">
+                  <div className="w-full">
+                    <label htmlFor="firstName" className="block mb-2.5">
+                      Nome <span className="text-red">*</span>
+                    </label>
 
-                      <input
-                        type="text"
-                        name="firstName"
-                        id="firstName"
-                        placeholder="Jhon"
-                        value="Jhon"
-                        className="rounded-md border border-gray-3 bg-gray-1 placeholder:text-dark-5 w-full py-2.5 px-5 outline-none duration-200 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20"
-                      />
-                    </div>
+                    <input
+                      type="text"
+                      id="firstName"
+                      value={profile.fullName}
+                      onChange={(e) =>
+                        setProfile({ ...profile, fullName: e.target.value })
+                      }
+                      className="rounded-md border border-gray-3 bg-gray-1 placeholder:text-dark-5 w-full py-2.5 px-5 outline-none duração-200 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20"
+                    />
                   </div>
-
-                  <div className="mb-5">
-                    <div className="w-full">
-                      <label htmlFor="email" className="block mb-2.5">
-                        Email <span className="text-red">*</span>
-                      </label>
-
-                      <input
-                        type="text"
-                        name="email"
-                        id="email"
-                        placeholder="Jhon"
-                        value="myemail@gmail.com"
-                        className="rounded-md border border-gray-3 bg-gray-1 placeholder:text-dark-5 w-full py-2.5 px-5 outline-none duration-200 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20"
-                      />
-                    </div>
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="inline-flex font-medium text-white bg-blue py-3 px-7 rounded-md ease-out duration-200 hover:bg-blue-dark"
-                  >
-                    Salvar Alterações
-                  </button>
                 </div>
 
-                <p className="text-custom-sm mt-5 mb-9">
-                  É assim que seu nome será exibido na seção de conta e nas
-                  avaliações
-                </p>
+                <div className="mb-5">
+                  <div className="w-full">
+                    <label htmlFor="email" className="block mb-2.5">
+                      Email <span className="text-red">*</span>
+                    </label>
 
-                <p className="font-medium text-xl sm:text-2xl text-dark mb-7">
-                  Mudar Senha
-                </p>
+                    <input
+                      type="email"
+                      id="email"
+                      value={profile.email}
+                      onChange={(e) =>
+                        setProfile({ ...profile, email: e.target.value })
+                      }
+                      className="rounded-md border border-gray-3 bg-gray-1 placeholder:text-dark-5 w-full py-2.5 px-5 outline-none duração-200 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20"
+                    />
+                  </div>
+                </div>
 
+                <button
+                  type="button"
+                  className="inline-flex font-medium text-white bg-blue py-3 px-7 rounded-md ease-out duração-200 hover:bg-blue-dark"
+                >
+                  Salvar Alterações
+                </button>
+              </div>
+
+              <p className="text-custom-sm mt-5 mb-9">
+                É assim que seu nome será exibido na seção de conta e nas
+                avaliações
+              </p>
+
+              <p className="font-medium text-xl sm:text-2xl text-dark mb-7">
+                Mudar Senha
+              </p>
+
+              <form onSubmit={handleSubmit(onPasswordSubmit)} noValidate>
                 <div className="bg-white shadow-1 rounded-xl p-4 sm:p-8.5">
                   <div className="mb-5">
-                    <label htmlFor="oldPassword" className="block mb-2.5">
+                    <label htmlFor="currentPassword" className="block mb-2.5">
                       Senha Antiga
                     </label>
 
                     <input
                       type="password"
-                      name="oldPassword"
-                      id="oldPassword"
+                      id="currentPassword"
                       autoComplete="on"
-                      className="rounded-md border border-gray-3 bg-gray-1 placeholder:text-dark-5 w-full py-2.5 px-5 outline-none duration-200 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20"
+                      {...register("currentPassword")}
+                      className={`rounded-md border bg-gray-1 w-full py-2.5 px-5 outline-none duração-200 focus:border-transparent focus:shadow-input focus:ring-2 ${
+                        errors.currentPassword
+                          ? "border-red focus:ring-red/20"
+                          : "border-gray-3 focus:ring-blue/20"
+                      }`}
                     />
+                    {errors.currentPassword && (
+                      <p className="mt-1 text-sm text-red">
+                        {errors.currentPassword.message}
+                      </p>
+                    )}
                   </div>
 
                   <div className="mb-5">
@@ -204,41 +276,66 @@ const MyAccount = () => {
 
                     <input
                       type="password"
-                      name="newPassword"
                       id="newPassword"
                       autoComplete="on"
-                      className="rounded-md border border-gray-3 bg-gray-1 placeholder:text-dark-5 w-full py-2.5 px-5 outline-none duration-200 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20"
+                      {...register("newPassword")}
+                      className={`rounded-md border bg-gray-1 w-full py-2.5 px-5 outline-none duração-200 focus:border-transparent focus:shadow-input focus:ring-2 ${
+                        errors.newPassword
+                          ? "border-red focus:ring-red/20"
+                          : "border-gray-3 focus:ring-blue/20"
+                      }`}
                     />
+                    {errors.newPassword && (
+                      <p className="mt-1 text-sm text-red">
+                        {errors.newPassword.message}
+                      </p>
+                    )}
                   </div>
 
                   <div className="mb-5">
-                    <label
-                      htmlFor="confirmNewPassword"
-                      className="block mb-2.5"
-                    >
+                    <label htmlFor="confirmPassword" className="block mb-2.5">
                       Confirmar Nova Senha
                     </label>
 
                     <input
                       type="password"
-                      name="confirmNewPassword"
-                      id="confirmNewPassword"
+                      id="confirmPassword"
                       autoComplete="on"
-                      className="rounded-md border border-gray-3 bg-gray-1 placeholder:text-dark-5 w-full py-2.5 px-5 outline-none duration-200 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20"
+                      {...register("confirmPassword")}
+                      className={`rounded-md border bg-gray-1 w-full py-2.5 px-5 outline-none duração-200 focus:border-transparent focus:shadow-input focus:ring-2 ${
+                        errors.confirmPassword
+                          ? "border-red focus:ring-red/20"
+                          : "border-gray-3 focus:ring-blue/20"
+                      }`}
                     />
+                    {errors.confirmPassword && (
+                      <p className="mt-1 text-sm text-red">
+                        {errors.confirmPassword.message}
+                      </p>
+                    )}
                   </div>
 
                   <button
                     type="submit"
-                    className="inline-flex font-medium text-white bg-blue py-3 px-7 rounded-md ease-out duration-200 hover:bg-blue-dark"
+                    disabled={isSubmitting}
+                    className="inline-flex font-medium text-white bg-blue py-3 px-7 rounded-md ease-out duração-200 hover:bg-blue-dark disabled:opacity-50"
                   >
-                    Mudar Senha
+                    {isSubmitting ? "Salvando..." : "Mudar Senha"}
                   </button>
+                  {passwordMessage && (
+                    <p
+                      className={`mt-4 text-sm ${
+                        passwordMessage.type === "success"
+                          ? "text-green-600"
+                          : "text-red"
+                      }`}
+                    >
+                      {passwordMessage.text}
+                    </p>
+                  )}
                 </div>
               </form>
             </div>
-            {/* <!-- details tab content end -->
-          <!--== user dashboard content end ==--> */}
           </div>
         </div>
       </section>
