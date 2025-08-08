@@ -10,7 +10,7 @@ import { products, categories } from "../../../lib/productsData";
 import type { Product } from "@/types/product";
 import SearchResults from "./SearchResults";
 import useDebounce from "@/hooks/useDebounce";
-import { supabase } from "../../../lib/supabaseClient";
+import { useAuth } from "@/app/context/AuthContext";
 import {
   Search,
   User,
@@ -26,7 +26,7 @@ const Header: React.FC = () => {
   const [stickyMenu, setStickyMenu] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("Todos");
   const debouncedQuery = useDebounce(searchQuery, 300);
-  const [user, setUser] = useState<any>(null);
+  const { user } = useAuth();
 
   const filteredProducts: Product[] = useMemo(() => {
     if (!debouncedQuery) return [];
@@ -59,19 +59,7 @@ const Header: React.FC = () => {
     return () => window.removeEventListener("scroll", handleStickyMenu);
   }, []);
 
-  useEffect(() => {
-    const getUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      setUser(user);
-    };
-    getUser();
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-    return () => listener.subscription.unsubscribe();
-  }, []);
+  // user state is managed by AuthProvider
 
   const options = categories.map((cat) => ({ label: cat, value: cat }));
 

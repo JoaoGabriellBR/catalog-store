@@ -8,6 +8,7 @@ import { z } from "zod";
 import { supabase } from "../../../../lib/supabaseClient";
 import InputField from "../InputField";
 import Loader from "@/components/Common/Loader";
+import { useAuth } from "@/app/context/AuthContext";
 
 const loginSchema = z.object({
   email: z.string().email("Email inválido"),
@@ -37,6 +38,7 @@ const zodResolver =
 const Signin = () => {
   const router = useRouter();
   const [message, setMessage] = useState<string | null>(null);
+  const { user, loading } = useAuth();
 
   const {
     register,
@@ -45,14 +47,10 @@ const Signin = () => {
   } = useForm<LoginFormData>({ resolver: zodResolver(loginSchema) });
 
   useEffect(() => {
-    const checkUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (user) router.replace("/my-account");
-    };
-    checkUser();
-  }, [router]);
+    if (!loading && user) {
+      router.replace("/my-account");
+    }
+  }, [user, loading, router]);
 
   const onSubmit = async (data: LoginFormData) => {
     setMessage(null);

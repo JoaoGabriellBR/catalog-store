@@ -6,21 +6,20 @@ import AddressModal from "./AddressModal";
 import Orders from "../Orders";
 import { useRouter } from "next/navigation";
 import { supabase } from "../../../lib/supabaseClient";
+import { useAuth } from "@/app/context/AuthContext";
+import Loader from "@/components/Common/Loader";
 
 const MyAccount = () => {
   const router = useRouter();
+  const { user, loading } = useAuth();
   const [activeTab, setActiveTab] = useState("dashboard");
   const [addressModal, setAddressModal] = useState(false);
 
   useEffect(() => {
-    const checkUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) router.replace("/signin");
-    };
-    checkUser();
-  }, [router]);
+    if (!loading && !user) {
+      router.replace("/signin");
+    }
+  }, [user, loading, router]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -34,6 +33,14 @@ const MyAccount = () => {
   const closeAddressModal = () => {
     setAddressModal(false);
   };
+
+  if (loading || !user) {
+    return (
+      <section className="py-20 flex justify-center items-center">
+        <Loader className="h-10 w-10 text-blue" />
+      </section>
+    );
+  }
 
   return (
     <>
