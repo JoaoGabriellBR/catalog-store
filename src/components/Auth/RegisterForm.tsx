@@ -8,6 +8,7 @@ import InputField from "./InputField";
 import Loader from "@/components/Common/Loader";
 import { PasswordStrengthIndicator } from "./PasswordStrengthIndicator";
 import { Circle } from "lucide-react";
+import Breadcrumb from "@/components/Common/Breadcrumb";
 
 const registerSchema = z
   .object({
@@ -94,124 +95,130 @@ const RegisterForm: React.FC = () => {
 
   if (accountCreated) {
     return (
-      <section className="overflow-hidden py-20 bg-gray-2">
-        <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
-          <div className="max-w-[570px] w-full mx-auto rounded-xl bg-white shadow-1 p-4 sm:p-7.5 xl:p-11 text-center">
-            <Circle className="mx-auto mb-4 h-16 w-16 text-green-light" />
-            <h2 className="font-semibold text-2xl text-dark mb-4">
-              Conta criada com sucesso!
-            </h2>
-            <p className="mb-6">
-              Enviamos um link de confirmação para o seu{" "}
-              <span className="font-bold">e-mail</span>. Verifique sua caixa de
-              entrada para ativar a conta.
-            </p>
+      <>
+        <Breadcrumb title={"Criar conta"} pages={["Criar conta"]} />
+        <section className="overflow-hidden py-20 bg-gray-2">
+          <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
+            <div className="max-w-[570px] w-full mx-auto rounded-xl bg-white shadow-1 p-4 sm:p-7.5 xl:p-11 text-center">
+              <Circle className="mx-auto mb-4 h-16 w-16 text-green-light" />
+              <h2 className="font-semibold text-2xl text-dark mb-4">
+                Conta criada com sucesso!
+              </h2>
+              <p className="mb-6">
+                Enviamos um link de confirmação para o seu{" "}
+                <span className="font-bold">e-mail</span>. Verifique sua caixa
+                de entrada para ativar a conta.
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </>
     );
   }
 
   return (
-    <section className="overflow-hidden py-20 bg-gray-2">
-      <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
-        <div className="max-w-[570px] w-full mx-auto rounded-xl bg-white shadow-1 p-4 sm:p-7.5 xl:p-11">
-          <div className="text-center mb-11">
-            <h2 className="font-semibold text-xl sm:text-2xl md:text-3xl text-dark mb-1.5">
-              Criar uma conta
-            </h2>
-            <p>Digite seus dados abaixo</p>
-          </div>
+    <>
+      <Breadcrumb title={"Criar conta"} pages={["Criar conta"]} />
+      <section className="overflow-hidden py-20 bg-gray-2">
+        <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
+          <div className="max-w-[570px] w-full mx-auto rounded-xl bg-white shadow-1 p-4 sm:p-7.5 xl:p-11">
+            <div className="text-center mb-11">
+              <h2 className="font-semibold text-xl sm:text-2xl md:text-3xl text-dark mb-1.5">
+                Criar uma conta
+              </h2>
+              <p>Digite seus dados abaixo</p>
+            </div>
 
-          <form onSubmit={handleSubmit(onSubmit)} noValidate>
-            <InputField
-              label="Nome Completo"
-              id="name"
-              type="text"
-              placeholder="Digite seu nome completo"
-              registration={register("name")}
-              error={errors.name}
-            />
-            <InputField
-              label="Endereço de Email"
-              id="email"
-              type="email"
-              placeholder="Digite seu endereço de email"
-              registration={register("email")}
-              error={errors.email}
-            />
-            <div className="mb-5">
-              <label htmlFor="password" className="block mb-2.5">
-                Senha <span>*</span>
-              </label>
-              <input
+            <form onSubmit={handleSubmit(onSubmit)} noValidate>
+              <InputField
+                label="Nome Completo"
+                id="name"
+                type="text"
+                placeholder="Digite seu nome completo"
+                registration={register("name")}
+                error={errors.name}
+              />
+              <InputField
+                label="Endereço de Email"
+                id="email"
+                type="email"
+                placeholder="Digite seu endereço de email"
+                registration={register("email")}
+                error={errors.email}
+              />
+              <div className="mb-5">
+                <label htmlFor="password" className="block mb-2.5">
+                  Senha <span>*</span>
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  placeholder="Digite sua senha"
+                  autoComplete="on"
+                  {...register("password")}
+                  className={`rounded-lg w-full py-3 px-5 outline-none duration-200 bg-gray-1 placeholder:text-dark-5 border ${
+                    errors.password
+                      ? "border-red focus:border-red focus:ring-2 focus:ring-red/20"
+                      : "border-gray-3 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20"
+                  }`}
+                />
+                <PasswordStrengthIndicator
+                  password={passwordValue}
+                  hasError={!!errors.password}
+                />
+                {errors.password && (
+                  <p className="mt-1 text-sm text-red">
+                    {errors.password.message}
+                  </p>
+                )}
+              </div>
+              <InputField
+                label="Repita a Senha"
+                id="confirmPassword"
                 type="password"
-                id="password"
-                placeholder="Digite sua senha"
-                autoComplete="on"
-                {...register("password")}
-                className={`rounded-lg w-full py-3 px-5 outline-none duration-200 bg-gray-1 placeholder:text-dark-5 border ${
-                  errors.password
-                    ? "border-red focus:border-red focus:ring-2 focus:ring-red/20"
-                    : "border-gray-3 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20"
-                }`}
+                placeholder="Repita sua senha"
+                registration={register("confirmPassword")}
+                error={errors.confirmPassword}
               />
-              <PasswordStrengthIndicator
-                password={passwordValue}
-                hasError={!!errors.password}
-              />
-              {errors.password && (
-                <p className="mt-1 text-sm text-red">
-                  {errors.password.message}
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full flex justify-center font-medium text-white bg-dark py-3 px-6 rounded-lg ease-out duration-200 hover:bg-blue mt-7.5 disabled:opacity-50"
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader className="mr-2 h-4 w-4" /> Cadastrando...
+                  </>
+                ) : (
+                  "Criar Conta"
+                )}
+              </button>
+
+              {message && (
+                <p
+                  className={`text-center mt-4 ${
+                    message.type === "error" ? "text-red-600" : "text-green-600"
+                  }`}
+                >
+                  {message.text}
                 </p>
               )}
-            </div>
-            <InputField
-              label="Repita a Senha"
-              id="confirmPassword"
-              type="password"
-              placeholder="Repita sua senha"
-              registration={register("confirmPassword")}
-              error={errors.confirmPassword}
-            />
 
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full flex justify-center font-medium text-white bg-dark py-3 px-6 rounded-lg ease-out duration-200 hover:bg-blue mt-7.5 disabled:opacity-50"
-            >
-              {isSubmitting ? (
-                <>
-                  <Loader className="mr-2 h-4 w-4" /> Cadastrando...
-                </>
-              ) : (
-                "Criar Conta"
-              )}
-            </button>
-
-            {message && (
-              <p
-                className={`text-center mt-4 ${
-                  message.type === "error" ? "text-red-600" : "text-green-600"
-                }`}
-              >
-                {message.text}
+              <p className="text-center mt-6">
+                Já possui uma conta
+                <a
+                  href="/signin"
+                  className="text-dark ease-out duration-200 hover:text-blue pl-2"
+                >
+                  Entrar Agora
+                </a>
               </p>
-            )}
-
-            <p className="text-center mt-6">
-              Já possui uma conta
-              <a
-                href="/signin"
-                className="text-dark ease-out duration-200 hover:text-blue pl-2"
-              >
-                Entrar Agora
-              </a>
-            </p>
-          </form>
+            </form>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 
