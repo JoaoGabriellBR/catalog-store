@@ -31,6 +31,10 @@ const AllProducts: React.FC = () => {
     }
   }, [currentPage, totalPages]);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentPage]);
+
   return (
     <>
       <Breadcrumb
