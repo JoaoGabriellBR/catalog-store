@@ -1,4 +1,4 @@
-import Signup from "@/components/Auth/Signup";
+import RegisterForm from "@/components/Auth/RegisterForm";
 import React from "react";
 
 import { Metadata } from "next";
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const SignupPage = () => {
   return (
     <main>
-      <Signup />
+      <RegisterForm />
     </main>
   );
 };

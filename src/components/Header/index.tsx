@@ -10,6 +10,7 @@ import { products, categories } from "../../../lib/productsData";
 import type { Product } from "@/types/product";
 import SearchResults from "./SearchResults";
 import useDebounce from "@/hooks/useDebounce";
+import { supabase } from "../../../lib/supabaseClient";
 import {
   Search,
   User,
@@ -25,6 +26,7 @@ const Header: React.FC = () => {
   const [stickyMenu, setStickyMenu] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("Todos");
   const debouncedQuery = useDebounce(searchQuery, 300);
+  const [user, setUser] = useState<any>(null);
 
   const filteredProducts: Product[] = useMemo(() => {
     if (!debouncedQuery) return [];
@@ -55,6 +57,20 @@ const Header: React.FC = () => {
     };
     window.addEventListener("scroll", handleStickyMenu);
     return () => window.removeEventListener("scroll", handleStickyMenu);
+  }, []);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    getUser();
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => listener.subscription.unsubscribe();
   }, []);
 
   const options = categories.map((cat) => ({ label: cat, value: cat }));
@@ -120,13 +136,25 @@ const Header: React.FC = () => {
             <span className="hidden xl:block w-px h-7.5 bg-gray-4" />
             <div className="flex items-center gap-5 w-full lg:w-auto justify-between">
               <div className="flex items-center gap-5">
-                <Link
-                  href="/signin"
-                  className="flex items-center gap-2.5 hover:text-blue transition-colors"
-                >
-                  <User size={24} className="stroke-current text-blue" />
-                  <p className="font-medium text-custom-sm text-dark">Entrar</p>
-                </Link>
+                {user ? (
+                  <Link
+                    href="/my-account"
+                    className="flex items-center gap-2.5 hover:text-blue transition-colors"
+                  >
+                    <User size={24} className="stroke-current text-blue" />
+                    <p className="font-medium text-custom-sm text-dark">
+                      {user.user_metadata?.full_name || user.email}
+                    </p>
+                  </Link>
+                ) : (
+                  <Link
+                    href="/signin"
+                    className="flex items-center gap-2.5 hover:text-blue transition-colors"
+                  >
+                    <User size={24} className="stroke-current text-blue" />
+                    <p className="font-medium text-custom-sm text-dark">Entrar</p>
+                  </Link>
+                )}
                 <button
                   onClick={openCartModal}
                   className="flex items-center gap-2.5"
