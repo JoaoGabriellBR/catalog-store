@@ -49,7 +49,10 @@ const zodResolver =
 
 const RegisterForm: React.FC = () => {
   const router = useRouter();
-  const [message, setMessage] = useState<{ type: "error" | "success"; text: string } | null>(null);
+  const [message, setMessage] = useState<{
+    type: "error" | "success";
+    text: string;
+  } | null>(null);
   const [accountCreated, setAccountCreated] = useState(false);
 
   const {
@@ -95,8 +98,14 @@ const RegisterForm: React.FC = () => {
         <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
           <div className="max-w-[570px] w-full mx-auto rounded-xl bg-white shadow-1 p-4 sm:p-7.5 xl:p-11 text-center">
             <Circle className="mx-auto mb-4 h-16 w-16 text-green-light" />
-            <h2 className="font-semibold text-2xl text-dark mb-4">Conta criada com sucesso!</h2>
-            <p className="mb-6">Enviamos um link de confirmação para o seu <span className="font-bold">e-mail</span>. Verifique sua caixa de entrada para ativar a conta.</p>
+            <h2 className="font-semibold text-2xl text-dark mb-4">
+              Conta criada com sucesso!
+            </h2>
+            <p className="mb-6">
+              Enviamos um link de confirmação para o seu{" "}
+              <span className="font-bold">e-mail</span>. Verifique sua caixa de
+              entrada para ativar a conta.
+            </p>
           </div>
         </div>
       </section>
@@ -152,7 +161,9 @@ const RegisterForm: React.FC = () => {
                 hasError={!!errors.password}
               />
               {errors.password && (
-                <p className="mt-1 text-sm text-red">{errors.password.message}</p>
+                <p className="mt-1 text-sm text-red">
+                  {errors.password.message}
+                </p>
               )}
             </div>
             <InputField
@@ -190,7 +201,10 @@ const RegisterForm: React.FC = () => {
 
             <p className="text-center mt-6">
               Já possui uma conta
-              <a href="/signin" className="text-dark ease-out duration-200 hover:text-blue pl-2">
+              <a
+                href="/signin"
+                className="text-dark ease-out duration-200 hover:text-blue pl-2"
+              >
                 Entrar Agora
               </a>
             </p>

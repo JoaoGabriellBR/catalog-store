@@ -7,9 +7,13 @@ interface PasswordStrengthIndicatorProps {
   hasError?: boolean;
 }
 
-export function PasswordStrengthIndicator({ password, hasError = false }: PasswordStrengthIndicatorProps) {
+export function PasswordStrengthIndicator({
+  password,
+  hasError = false,
+}: PasswordStrengthIndicatorProps) {
   const strength = useMemo(() => {
-    if (!password) return { score: 0, label: "", color: "", bgColor: "", progress: 0 };
+    if (!password)
+      return { score: 0, label: "", color: "", bgColor: "", progress: 0 };
 
     let score = 0;
     const checks = {
@@ -24,11 +28,36 @@ export function PasswordStrengthIndicator({ password, hasError = false }: Passwo
 
     const strengthLevels = {
       0: { label: "", color: "", bgColor: "", progress: 0 },
-      1: { label: "Muito fraca", color: "text-red", bgColor: "bg-red", progress: 20 },
-      2: { label: "Fraca", color: "text-orange", bgColor: "bg-orange", progress: 40 },
-      3: { label: "Regular", color: "text-yellow", bgColor: "bg-yellow", progress: 60 },
-      4: { label: "Forte", color: "text-blue", bgColor: "bg-blue", progress: 80 },
-      5: { label: "Muito forte", color: "text-green", bgColor: "bg-green", progress: 100 },
+      1: {
+        label: "Muito fraca",
+        color: "text-red",
+        bgColor: "bg-red",
+        progress: 20,
+      },
+      2: {
+        label: "Fraca",
+        color: "text-orange",
+        bgColor: "bg-orange",
+        progress: 40,
+      },
+      3: {
+        label: "Regular",
+        color: "text-yellow",
+        bgColor: "bg-yellow",
+        progress: 60,
+      },
+      4: {
+        label: "Forte",
+        color: "text-blue",
+        bgColor: "bg-blue",
+        progress: 80,
+      },
+      5: {
+        label: "Muito forte",
+        color: "text-green",
+        bgColor: "bg-green",
+        progress: 100,
+      },
     } as const;
 
     return strengthLevels[score as keyof typeof strengthLevels];
