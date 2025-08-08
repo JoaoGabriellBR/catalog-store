@@ -1,102 +1,130 @@
+"use client";
+
 import React from "react";
+import Image from "next/image";
+import Link from "next/link";
 import HeroCarousel from "./HeroCarousel";
 import HeroFeature from "./HeroFeature";
-import Image from "next/image";
 
-const Hero = () => {
+type PromoItem = {
+  id: string | number;
+  title: string;
+  subtitle?: string;
+  price: string;
+  oldPrice?: string;
+  imageSrc: string;
+  imageAlt: string;
+  href?: string;
+};
+
+const PROMOS: PromoItem[] = [
+  {
+    id: 1,
+    title: "Apple Watch Series 9",
+    subtitle: "limited time offer",
+    price: "R$ 3999.99",
+    oldPrice: "R$ 4399.99",
+    imageSrc: "/images/hero/apple-watch-series-9.png",
+    imageAlt: "Apple Watch Series 9",
+    href: "/images/hero/apple-watch-series-9.png",
+  },
+  {
+    id: 2,
+    title: "iPad Pro 12.9",
+    subtitle: "limited time offer",
+    price: "R$ 8999.99",
+    oldPrice: "R$ 9599.99",
+    imageSrc: "/images/hero/ipad-pro-12.png",
+    imageAlt: "iPad Pro 12.9",
+    href: "/images/hero/ipad-pro-12.png",
+  },
+];
+
+const PromoCard = React.memo(function PromoCard({ item }: { item: PromoItem }) {
+  const Wrapper = item.href ? Link : "div";
+  const wrapperProps = item.href ? { href: item.href } : {};
+
   return (
-    <section className="overflow-hidden pb-10 lg:pb-12.5 xl:pb-15 pt-57.5 sm:pt-45 lg:pt-30 xl:pt-51.5 bg-[#E5EAF4]">
+    <Wrapper
+      {...(wrapperProps as any)}
+      className="w-full h-full min-h-0 relative rounded-[10px] bg-white p-4 sm:p-6 transition-shadow hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 flex"
+    >
+      <div className="flex items-start justify-between gap-6 w-full">
+        <div className="min-w-0 h-full flex flex-col justify-between gap-2">
+          <div className="flex flex-col items-start">
+            <h2 className="font-semibold text-dark text-lg sm:text-xl mb-3 line-clamp-2">
+              {item.title}
+            </h2>
+            {item.subtitle && (
+              <p className="font-medium text-dark-4 text-custom-sm mb-2">
+                Oferta por tempo limitado
+              </p>
+            )}
+          </div>
+
+          <span className="w-full flex flex-col items-start font-semibold text-2xl text-blue">
+            <span className="text-sm text-red-light line-through">
+              {item.oldPrice}
+            </span>
+            <span>{item.price}</span>
+          </span>
+        </div>
+
+        <div className="relative w-[96px] h-[96px] sm:w-[120px] sm:h-[120px] shrink-0 self-end">
+          <Image
+            src={item.imageSrc}
+            alt={item.imageAlt}
+            fill
+            sizes="(max-width: 640px) 96px, 120px"
+            className="object-contain"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </Wrapper>
+  );
+});
+
+const Hero: React.FC = () => {
+  return (
+    <section
+      className="overflow-hidden pb-10 lg:pb-12.5 xl:pb-15 pt-57.5 sm:pt-45 lg:pt-30 xl:pt-51.5 bg-[#E5EAF4]"
+      aria-label="Destaques e promoções"
+    >
       <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
-        <div className="flex flex-wrap gap-5">
+        <div className="flex flex-wrap gap-5 items-stretch">
+          {/* Carrossel */}
           <div className="xl:max-w-[757px] w-full">
-            <div className="relative z-1 rounded-[10px] bg-white overflow-hidden">
-              {/* <!-- bg shapes --> */}
+            <div className="relative rounded-[10px] bg-white overflow-hidden h-[380px] md:h-[440px] xl:h-[520px]">
+              {/* BG decorativo */}
               <Image
                 src="/images/hero/hero-bg.png"
-                alt="hero bg shapes"
-                className="absolute right-0 bottom-0 -z-1"
+                alt=""
+                aria-hidden="true"
+                className="absolute right-0 bottom-0"
                 width={534}
                 height={520}
+                priority={false}
               />
-
               <HeroCarousel />
             </div>
           </div>
 
-          <div className="xl:max-w-[393px] w-full">
-            <div className="flex flex-col sm:flex-row xl:flex-col gap-5">
-              <div className="w-full relative rounded-[10px] bg-white p-4 sm:p-7.5">
-                <div className="flex items-center gap-14">
-                  <div>
-                    <h2 className="max-w-[153px] font-semibold text-dark text-xl mb-20">
-                      <a href="#"> iPhone 14 Plus & 14 Pro Max </a>
-                    </h2>
-
-                    <div>
-                      <p className="font-medium text-dark-4 text-custom-sm mb-1.5">
-                        limited time offer
-                      </p>
-                      <span className="flex items-center gap-3">
-                        <span className="font-medium text-heading-5 text-red">
-                          $699
-                        </span>
-                        <span className="font-medium text-2xl text-dark-4 line-through">
-                          $999
-                        </span>
-                      </span>
-                    </div>
-                  </div>
-
-                  <div>
-                    <Image
-                      src="/images/hero/hero-02.png"
-                      alt="mobile image"
-                      width={123}
-                      height={161}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="w-full relative rounded-[10px] bg-white p-4 sm:p-7.5">
-                <div className="flex items-center gap-14">
-                  <div>
-                    <h2 className="max-w-[153px] font-semibold text-dark text-xl mb-20">
-                      <a href="#"> Wireless Headphone </a>
-                    </h2>
-
-                    <div>
-                      <p className="font-medium text-dark-4 text-custom-sm mb-1.5">
-                        limited time offer
-                      </p>
-                      <span className="flex items-center gap-3">
-                        <span className="font-medium text-heading-5 text-red">
-                          $699
-                        </span>
-                        <span className="font-medium text-2xl text-dark-4 line-through">
-                          $999
-                        </span>
-                      </span>
-                    </div>
-                  </div>
-
-                  <div>
-                    <Image
-                      src="/images/hero/hero-01.png"
-                      alt="mobile image"
-                      width={123}
-                      height={161}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              
+          {/* Promoções laterais */}
+          <aside
+            className="xl:max-w-[393px] w-full"
+            aria-label="Ofertas rápidas"
+          >
+            {/* mesma altura do carrossel e dividida em 2 linhas */}
+            <div className="grid grid-rows-2 gap-5 h-[380px] md:h-[440px] xl:h-[520px]">
+              {PROMOS.map((promo) => (
+                <PromoCard key={promo.id} item={promo} />
+              ))}
             </div>
-          </div>
+          </aside>
         </div>
       </div>
 
-      {/* <!-- Hero features --> */}
       <HeroFeature />
     </section>
   );

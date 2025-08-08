@@ -30,9 +30,9 @@ export const products: Product[] = [
   },
   {
     id: "3",
-    name: "Fones de Ouvido Sony WH-1000XM5",
+    name: "Fone de Ouvido Sony WH-1000XM5",
     description:
-      "Fones de ouvido sem fio com cancelamento de ruído ativo, bateria de 30h e qualidade de áudio excepcional.",
+      "Fone de ouvido sem fio com cancelamento de ruído ativo, bateria de 30h e qualidade de áudio excepcional.",
     price: 1899.99,
     image:
       "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop",
