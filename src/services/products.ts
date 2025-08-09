@@ -56,16 +56,3 @@ export async function getProductById(id: string): Promise<Product | null> {
   return data;
 }
 
-export async function getCategories(): Promise<string[]> {
-  const { data, error } = await supabase
-    .from("products")
-    .select("category", { distinct: true })
-    .order("category", { ascending: true });
-
-  if (error) {
-    console.error("Error fetching categories:", error.message);
-    return [];
-  }
-
-  return data?.map((c) => c.category) ?? [];
-}

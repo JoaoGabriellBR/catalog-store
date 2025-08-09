@@ -14,19 +14,23 @@ const SingleItem = ({ item, removeItemFromCart }) => {
     <div className="flex items-center justify-between gap-5">
       <div className="w-full flex items-center gap-6">
         <div className="flex items-center justify-center rounded-[10px] bg-gray-3 max-w-[90px] w-full h-22.5">
-          <Image
-            src={item.image_url}
-            alt="product"
-            width={100}
-            height={100}
-          />
+          <Image src={item.image_url} alt="product" width={100} height={100} />
         </div>
 
         <div>
           <h3 className="font-medium text-dark mb-1 ease-out duration-200 hover:text-blue">
             <a href="#"> {item.name} </a>
           </h3>
-          <p className="text-custom-sm">Preço: R$ {item.price.toFixed(2)}</p>
+          <p className="text-custom-sm">
+            Preço:{" "}
+            <span className="font-semibold">R$ {item.price.toFixed(2)}</span>
+          </p>
+          <p className="text-custom-sm">
+            Quantidade: <span className="font-semibold">{item.quantity}</span>{" "}
+            <span className="font-semibold">
+              {item.quantity === 1 ? "produto" : "produtos"}
+            </span>
+          </p>
         </div>
       </div>
 

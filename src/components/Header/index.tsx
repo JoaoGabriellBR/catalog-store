@@ -7,7 +7,8 @@ import Dropdown from "./Dropdown";
 import { useAppSelector } from "@/redux/store";
 import { useCartModalContext } from "@/app/context/CartSidebarModalContext";
 import type { Product } from "@/types/product";
-import { getProducts, getCategories } from "@/services/products";
+import { getProducts } from "@/services/products";
+import { categories } from "@/constants/categories";
 import SearchResults from "./SearchResults";
 import useDebounce from "@/hooks/useDebounce";
 import { useAuth } from "@/app/context/AuthContext";
@@ -29,7 +30,6 @@ const Header: React.FC = () => {
   const { user } = useAuth();
 
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
   const { openCartModal } = useCartModalContext();
 
   const product = useAppSelector((state) => state.cartReducer.items);
@@ -46,15 +46,6 @@ const Header: React.FC = () => {
     };
     window.addEventListener("scroll", handleStickyMenu);
     return () => window.removeEventListener("scroll", handleStickyMenu);
-  }, []);
-
-  // Load categories once
-  useEffect(() => {
-    const load = async () => {
-      const data = await getCategories();
-      setCategories(["Todos", ...data]);
-    };
-    load();
   }, []);
 
   // Fetch products when searching

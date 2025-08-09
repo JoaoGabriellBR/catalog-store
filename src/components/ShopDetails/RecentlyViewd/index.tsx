@@ -45,7 +45,7 @@ const RecentlyViewdItems = () => {
                 Categorias
               </span>
               <h2 className="font-semibold text-xl xl:text-heading-5 text-dark">
-                Visto Recentemente
+                Produtos que você talvez goste (:
               </h2>
             </div>
 
