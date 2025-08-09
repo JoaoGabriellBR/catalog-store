@@ -1,21 +1,20 @@
 "use client";
 import React from "react";
 import OrderSummary from "./OrderSummary";
-import { AppDispatch, useAppSelector } from "@/redux/store";
+import { useAppSelector } from "@/redux/store";
 import SingleItem from "./SingleItem";
 import Breadcrumb from "../Common/Breadcrumb";
 import Link from "next/link";
-import { removeAllItemsFromCart } from "@/redux/features/cart-slice";
-import { useDispatch } from "react-redux";
+import { useCartActions } from "@/hooks/useCartActions";
 import { TableHeader } from "@/types/table-header";
 import { ShoppingCart } from "lucide-react";
 
 const Cart = () => {
   const cartItems = useAppSelector((state) => state.cartReducer.items);
-  const dispatch = useDispatch<AppDispatch>();
+  const { clearCart } = useCartActions();
 
   const handleClearCart = () => {
-    dispatch(removeAllItemsFromCart());
+    clearCart();
   };
 
   const tableHeader = [

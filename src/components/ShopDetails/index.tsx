@@ -4,10 +4,7 @@ import Breadcrumb from "../Common/Breadcrumb";
 import Image from "next/image";
 import Newsletter from "../Common/Newsletter";
 import ProductYouMayLike from "./ProductYouMayLike";
-import { useDispatch } from "react-redux";
-
-import { addItemToCart } from "@/redux/features/cart-slice";
-import { AppDispatch } from "@/redux/store";
+import { useCartActions } from "@/hooks/useCartActions";
 import {
   ArrowLeft,
   CircleCheckBig,
@@ -29,9 +26,11 @@ const ProductDetails = ({ product }: ProductProps) => {
   // const [previewImg, setPreviewImg] = useState(0);
   const [quantity, setQuantity] = useState(1);
 
-  const dispatch = useDispatch<AppDispatch>();
+  const { addToCart } = useCartActions();
   const handleAddToCart = () => {
-    dispatch(addItemToCart({ ...product, quantity }));
+    if (product) {
+      addToCart({ ...product, quantity });
+    }
   };
 
   useEffect(() => {

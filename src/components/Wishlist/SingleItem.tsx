@@ -1,7 +1,6 @@
 import React from "react";
-import { addItemToCart } from "@/redux/features/cart-slice";
 import { useFavorites } from "@/app/context/FavoritesContext";
-import { useDispatch } from "react-redux";
+import { useCartActions } from "@/hooks/useCartActions";
 
 import Image from "next/image";
 import { ShoppingCart, X } from "lucide-react";
@@ -9,14 +8,14 @@ import Link from "next/link";
 
 const SingleItem = ({ item }) => {
   const { toggleFavorite } = useFavorites();
-  const dispatch = useDispatch(); // for cart
+  const { addToCart } = useCartActions();
 
   const handleRemoveFromWishlist = () => {
     toggleFavorite(item);
   };
 
   const handleAddToCart = () => {
-    dispatch(addItemToCart({ ...item, quantity: 1 }));
+    addToCart({ ...item, quantity: 1 });
   };
 
   return (

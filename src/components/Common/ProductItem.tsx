@@ -6,11 +6,11 @@ import { useDispatch } from "react-redux";
 import { Eye, ShoppingBag, ShoppingCart, Star } from "lucide-react";
 import { useModalContext } from "@/app/context/QuickViewModalContext";
 import { updateQuickView } from "@/redux/features/quickView-slice";
-import { addItemToCart } from "@/redux/features/cart-slice";
 import { updateproductDetails } from "@/redux/features/product-details";
 import { AppDispatch } from "@/redux/store";
 import type { Product } from "@/types/product";
 import FavoriteButton from "./FavoriteButton";
+import { useCartActions } from "@/hooks/useCartActions";
 
 interface ProductItemProps {
   item: Product;
@@ -19,6 +19,7 @@ interface ProductItemProps {
 const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { openModal } = useModalContext();
+  const { addToCart } = useCartActions();
 
   const handleQuickView = () => {
     dispatch(updateQuickView(item));
@@ -26,7 +27,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
   };
 
   const handleAddToCart = () => {
-    dispatch(addItemToCart({ ...item, quantity: 1 }));
+    addToCart({ ...item, quantity: 1 });
   };
 
   const handleShowDetails = () => {

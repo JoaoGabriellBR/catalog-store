@@ -2,22 +2,22 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
 import { Eye, ShoppingBag, ShoppingCart, Star } from "lucide-react";
+import { useDispatch } from "react-redux";
 import { useModalContext } from "@/app/context/QuickViewModalContext";
 import { updateQuickView } from "@/redux/features/quickView-slice";
-import { addItemToCart } from "@/redux/features/cart-slice";
-import { AppDispatch } from "@/redux/store";
 import type { Product } from "@/types/product";
 import FavoriteButton from "../Common/FavoriteButton";
+import { useCartActions } from "@/hooks/useCartActions";
 
 interface SingleListItemProps {
   item: Product;
 }
 
 const SingleListItem: React.FC<SingleListItemProps> = ({ item }) => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
   const { openModal } = useModalContext();
+  const { addToCart } = useCartActions();
 
   const handleQuickView = () => {
     dispatch(updateQuickView(item));
@@ -25,7 +25,7 @@ const SingleListItem: React.FC<SingleListItemProps> = ({ item }) => {
   };
 
   const handleAddToCart = () => {
-    dispatch(addItemToCart({ ...item, quantity: 1 }));
+    addToCart({ ...item, quantity: 1 });
   };
 
   return (

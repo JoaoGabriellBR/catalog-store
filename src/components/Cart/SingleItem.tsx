@@ -1,32 +1,26 @@
 import React, { useState } from "react";
-import { AppDispatch } from "@/redux/store";
-import { useDispatch } from "react-redux";
-import {
-  removeItemFromCart,
-  updateCartItemQuantity,
-} from "@/redux/features/cart-slice";
+import { useCartActions } from "@/hooks/useCartActions";
 
 import Image from "next/image";
 import Link from "next/link";
 
 const SingleItem = ({ item }) => {
   const [quantity, setQuantity] = useState(item.quantity);
-
-  const dispatch = useDispatch<AppDispatch>();
+  const { removeFromCart, updateQuantity } = useCartActions();
 
   const handleRemoveFromCart = () => {
-    dispatch(removeItemFromCart(item.id));
+    removeFromCart(item.id);
   };
 
   const handleIncreaseQuantity = () => {
     setQuantity(quantity + 1);
-    dispatch(updateCartItemQuantity({ id: item.id, quantity: quantity + 1 }));
+    updateQuantity(item.id, quantity + 1);
   };
 
   const handleDecreaseQuantity = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
-      dispatch(updateCartItemQuantity({ id: item.id, quantity: quantity - 1 }));
+      updateQuantity(item.id, quantity - 1);
     } else {
       return;
     }

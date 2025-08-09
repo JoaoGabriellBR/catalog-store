@@ -1,69 +1,57 @@
+"use client";
 import React, { useEffect, useState } from "react";
-import SingleOrder from "./SingleOrder";
-import ordersData from "./ordersData";
+import { useAuth } from "@/app/context/AuthContext";
+import { getOrders } from "@/services/orders";
+import { Order } from "@/types/order";
 
 const Orders = () => {
-  const [orders, setOrders] = useState<any>([]);
+  const { user } = useAuth();
+  const [orders, setOrders] = useState<Order[]>([]);
 
   useEffect(() => {
-    fetch(`/api/order`)
-      .then((res) => res.json())
-      .then((data) => {
-        setOrders(data.orders);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  }, []);
+    const fetchOrders = async () => {
+      if (user) {
+        const data = await getOrders(user.id);
+        setOrders(data);
+      }
+    };
+    fetchOrders();
+  }, [user]);
+
+  if (!orders.length) {
+    return (
+      <p className="py-9.5 px-4 sm:px-7.5 xl:px-10">
+        Você ainda não fez nenhum pedido.
+      </p>
+    );
+  }
 
   return (
-    <>
-      <div className="w-full overflow-x-auto">
-        <div className="min-w-[770px]">
-          {/* <!-- order item --> */}
-          {ordersData.length > 0 && (
-            <div className="items-center justify-between py-4.5 px-7.5 hidden md:flex ">
-              <div className="min-w-[111px]">
-                <p className="text-custom-sm text-dark">Order</p>
-              </div>
-              <div className="min-w-[175px]">
-                <p className="text-custom-sm text-dark">Date</p>
-              </div>
-
-              <div className="min-w-[128px]">
-                <p className="text-custom-sm text-dark">Status</p>
-              </div>
-
-              <div className="min-w-[213px]">
-                <p className="text-custom-sm text-dark">Title</p>
-              </div>
-
-              <div className="min-w-[113px]">
-                <p className="text-custom-sm text-dark">Total</p>
-              </div>
-
-              <div className="min-w-[113px]">
-                <p className="text-custom-sm text-dark">Action</p>
-              </div>
-            </div>
-          )}
-          {ordersData.length > 0 ? (
-            ordersData.map((orderItem, key) => (
-              <SingleOrder key={key} orderItem={orderItem} smallView={false} />
-            ))
-          ) : (
-            <p className="py-9.5 px-4 sm:px-7.5 xl:px-10">
-              You don&apos;t have any orders!
+    <div className="space-y-6">
+      {orders.map((order) => (
+        <div key={order.id} className="border rounded-md p-4">
+          <div className="flex justify-between mb-2">
+            <p className="text-sm text-dark">Pedido #{order.id}</p>
+            <p className="text-sm text-dark">
+              {new Date(order.created_at).toLocaleDateString()}
             </p>
-          )}
+          </div>
+          <ul className="mb-2">
+            {order.items.map((item) => (
+              <li key={item.id} className="flex justify-between text-sm">
+                <span>
+                  {item.name} x{item.quantity}
+                </span>
+                <span>R$ {(item.price * item.quantity).toFixed(2)}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="font-medium text-right">
+            Total: R$ {order.total.toFixed(2)}
+          </p>
         </div>
-
-        {ordersData.length > 0 &&
-          ordersData.map((orderItem, key) => (
-            <SingleOrder key={key} orderItem={orderItem} smallView={true} />
-          ))}
-      </div>
-    </>
+      ))}
+    </div>
   );
 };
 

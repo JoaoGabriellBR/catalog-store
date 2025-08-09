@@ -17,6 +17,7 @@ import PreviewSliderModal from "@/components/Common/PreviewSlider";
 
 import ScrollToTop from "@/components/Common/ScrollToTop";
 import PreLoader from "@/components/Common/PreLoader";
+import CartInitializer from "@/components/CartInitializer";
 
 export default function RootLayout({
   children,
@@ -42,6 +43,7 @@ export default function RootLayout({
                   <CartModalProvider>
                     <ModalProvider>
                       <PreviewSliderProvider>
+                        <CartInitializer />
                         <Header />
                         {children}
                         <QuickViewModal />

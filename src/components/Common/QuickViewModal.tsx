@@ -3,13 +3,13 @@ import React, { useEffect, useState } from "react";
 
 import { useModalContext } from "@/app/context/QuickViewModalContext";
 import { AppDispatch, useAppSelector } from "@/redux/store";
-import { addItemToCart } from "@/redux/features/cart-slice";
 import { useDispatch } from "react-redux";
 import Image from "next/image";
 import { usePreviewSlider } from "@/app/context/PreviewSliderContext";
 import { updateproductDetails } from "@/redux/features/product-details";
 import { X, Minus, Plus, ShoppingCart, ShoppingBag } from "lucide-react";
 import FavoriteButton from "./FavoriteButton";
+import { useCartActions } from "@/hooks/useCartActions";
 
 const QuickViewModal = () => {
   const { isModalOpen, closeModal } = useModalContext();
@@ -17,6 +17,7 @@ const QuickViewModal = () => {
   const [quantity, setQuantity] = useState(1);
 
   const dispatch = useDispatch<AppDispatch>();
+  const { addToCart } = useCartActions();
 
   // get the product data
   const product = useAppSelector((state) => state.quickViewReducer.value);
@@ -25,12 +26,9 @@ const QuickViewModal = () => {
 
   // Adicionar ao carrinho
   const handleAddToCart = () => {
-    dispatch(
-      addItemToCart({
-        ...product,
-        quantity,
-      })
-    );
+    if (product) {
+      addToCart({ ...product, quantity });
+    }
   };
 
   useEffect(() => {

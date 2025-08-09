@@ -23,6 +23,9 @@ export const cart = createSlice({
   name: "cart",
   initialState,
   reducers: {
+    setCartItems: (state, action: PayloadAction<CartItem[]>) => {
+      state.items = action.payload;
+    },
     addItemToCart: (state, action: PayloadAction<CartItem>) => {
       const { id, name, description, price, image_url, category, quantity } = action.payload;
       const existingItem = state.items.find((item) => item.id === id);
@@ -72,9 +75,12 @@ export const selectTotalPrice = createSelector([selectCartItems], (items) => {
 });
 
 export const {
+  setCartItems,
   addItemToCart,
   removeItemFromCart,
   updateCartItemQuantity,
   removeAllItemsFromCart,
 } = cart.actions;
 export default cart.reducer;
+
+export type { CartItem };
