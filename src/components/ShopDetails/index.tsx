@@ -4,6 +4,7 @@ import Breadcrumb from "../Common/Breadcrumb";
 import Image from "next/image";
 import ProductYouMayLike from "./ProductYouMayLike";
 import { useCartActions } from "@/hooks/useCartActions";
+import Loader from "@/components/Common/Loader";
 import {
   ArrowLeft,
   CircleCheckBig,
@@ -26,9 +27,12 @@ const ProductDetails = ({ product }: ProductProps) => {
   const [quantity, setQuantity] = useState(1);
 
   const { addToCart } = useCartActions();
-  const handleAddToCart = () => {
+  const [adding, setAdding] = useState(false);
+  const handleAddToCart = async () => {
     if (product) {
-      addToCart({ ...product, quantity });
+      setAdding(true);
+      await addToCart({ ...product, quantity });
+      setAdding(false);
     }
   };
 
@@ -153,13 +157,21 @@ const ProductDetails = ({ product }: ProductProps) => {
                   </div>
                   <div className="flex flex-row items-center gap-4.5 flex-wrap">
                     <button
-                      disabled={quantity === 0 && true}
-                      onClick={() => handleAddToCart()}
-                      className={`inline-flex font-medium text-white bg-blue py-3 px-7 rounded-md ease-out duration-200 hover:bg-blue-dark
+                      disabled={quantity === 0 || adding}
+                      onClick={handleAddToCart}
+                      className={`inline-flex font-medium text-white bg-blue py-3 px-7 rounded-md ease-out duration-200 hover:bg-blue-dark disabled:opacity-70
                   `}
                     >
-                      <ShoppingCart className="w-5 h-5 mr-2" />
-                      Comprar agora
+                      {adding ? (
+                        <>
+                          <Loader className="w-5 h-5 mr-2" /> Comprando...
+                        </>
+                      ) : (
+                        <>
+                          <ShoppingCart className="w-5 h-5 mr-2" />
+                          Comprar agora
+                        </>
+                      )}
                     </button>
 
                     {product && (

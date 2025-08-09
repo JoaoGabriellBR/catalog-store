@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
@@ -11,6 +11,7 @@ import { AppDispatch } from "@/redux/store";
 import type { Product } from "@/types/product";
 import FavoriteButton from "./FavoriteButton";
 import { useCartActions } from "@/hooks/useCartActions";
+import Loader from "@/components/Common/Loader";
 
 interface ProductItemProps {
   item: Product;
@@ -20,14 +21,17 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { openModal } = useModalContext();
   const { addToCart } = useCartActions();
+  const [adding, setAdding] = useState(false);
 
   const handleQuickView = () => {
     dispatch(updateQuickView(item));
     openModal();
   };
 
-  const handleAddToCart = () => {
-    addToCart({ ...item, quantity: 1 });
+  const handleAddToCart = async () => {
+    setAdding(true);
+    await addToCart({ ...item, quantity: 1 });
+    setAdding(false);
   };
 
   const handleShowDetails = () => {
@@ -87,10 +91,20 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
         {/* Add to Cart - mostra só no hover */}
         <button
           onClick={handleAddToCart}
-          className="mt-auto inline-flex items-center justify-center gap-2 rounded-md bg-blue px-4 py-2 text-sm font-medium text-white transition-opacity duration-200 opacity-0 group-hover:opacity-100"
+          disabled={adding}
+          className="mt-auto inline-flex items-center justify-center gap-2 rounded-md bg-blue px-4 py-2 text-sm font-medium text-white transition-opacity duration-200 opacity-0 group-hover:opacity-100 disabled:opacity-70"
         >
-          <ShoppingCart size={18} className="stroke-current" />
-          Adicionar ao carrinho
+          {adding ? (
+            <>
+              <Loader className="w-4 h-4" />
+              Adicionando...
+            </>
+          ) : (
+            <>
+              <ShoppingCart size={18} className="stroke-current" />
+              Adicionar ao carrinho
+            </>
+          )}
         </button>
       </div>
     </div>

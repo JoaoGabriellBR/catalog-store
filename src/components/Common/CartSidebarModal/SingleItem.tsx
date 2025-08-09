@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCartActions } from "@/hooks/useCartActions";
 import { Trash2 } from "lucide-react";
 import type { CartItem } from "@/redux/features/cart-slice";
+import Loader from "@/components/Common/Loader";
 
 interface Props {
   item: CartItem;
@@ -11,9 +12,12 @@ interface Props {
 
 const SingleItem = ({ item }: Props) => {
   const { removeFromCart } = useCartActions();
+  const [removing, setRemoving] = useState(false);
 
-  const handleRemoveFromCart = () => {
-    removeFromCart(item.id);
+  const handleRemoveFromCart = async () => {
+    setRemoving(true);
+    await removeFromCart(item.id);
+    setRemoving(false);
   };
 
   return (
@@ -43,9 +47,10 @@ const SingleItem = ({ item }: Props) => {
       <button
         onClick={handleRemoveFromCart}
         aria-label="button for remove product from cart"
-        className="flex items-center justify-center rounded-lg max-w-[38px] w-full h-9.5 bg-gray-2 border border-gray-3 text-dark ease-out duration-200 hover:bg-red-light-6 hover:border-red-light-4 hover:text-red"
+        disabled={removing}
+        className="flex items-center justify-center rounded-lg max-w-[38px] w-full h-9.5 bg-gray-2 border border-gray-3 text-dark ease-out duration-200 hover:bg-red-light-6 hover:border-red-light-4 hover:text-red disabled:opacity-50"
       >
-        <Trash2 className="w-5 h-5" />
+        {removing ? <Loader className="w-5 h-5" /> : <Trash2 className="w-5 h-5" />}
       </button>
     </div>
   );

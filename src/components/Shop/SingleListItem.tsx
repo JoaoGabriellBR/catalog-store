@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Eye, ShoppingBag, ShoppingCart, Star } from "lucide-react";
@@ -9,6 +9,7 @@ import { updateQuickView } from "@/redux/features/quickView-slice";
 import type { Product } from "@/types/product";
 import FavoriteButton from "../Common/FavoriteButton";
 import { useCartActions } from "@/hooks/useCartActions";
+import Loader from "@/components/Common/Loader";
 
 interface SingleListItemProps {
   item: Product;
@@ -18,14 +19,17 @@ const SingleListItem: React.FC<SingleListItemProps> = ({ item }) => {
   const dispatch = useDispatch();
   const { openModal } = useModalContext();
   const { addToCart } = useCartActions();
+  const [adding, setAdding] = useState(false);
 
   const handleQuickView = () => {
     dispatch(updateQuickView(item));
     openModal();
   };
 
-  const handleAddToCart = () => {
-    addToCart({ ...item, quantity: 1 });
+  const handleAddToCart = async () => {
+    setAdding(true);
+    await addToCart({ ...item, quantity: 1 });
+    setAdding(false);
   };
 
   return (
@@ -80,10 +84,20 @@ const SingleListItem: React.FC<SingleListItemProps> = ({ item }) => {
         {/* Botão Adicionar ao carrinho (só no hover) */}
         <button
           onClick={handleAddToCart}
-          className="mt-4 self-start inline-flex items-center gap-2 rounded-md bg-blue px-4 py-2 text-sm font-medium text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+          disabled={adding}
+          className="mt-4 self-start inline-flex items-center gap-2 rounded-md bg-blue px-4 py-2 text-sm font-medium text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 disabled:opacity-70"
         >
-          <ShoppingCart size={18} className="stroke-current" />
-          Adicionar ao carrinho
+          {adding ? (
+            <>
+              <Loader className="w-4 h-4" />
+              Adicionando...
+            </>
+          ) : (
+            <>
+              <ShoppingCart size={18} className="stroke-current" />
+              Adicionar ao carrinho
+            </>
+          )}
         </button>
       </div>
     </div>

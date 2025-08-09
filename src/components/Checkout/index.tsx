@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { MessageCircle } from "lucide-react";
+import Loader from "@/components/Common/Loader";
 
 import { useAppSelector } from "@/redux/store";
 import { selectTotalPrice } from "@/redux/features/cart-slice";
@@ -99,8 +100,15 @@ const Checkout = () => {
               disabled={loading}
               className="w-full sm:w-1/2 flex justify-center items-center font-medium text-white bg-green-light py-3 px-6 rounded-md ease-out duration-200 hover:bg-opacity-95 disabled:opacity-70"
             >
-              <MessageCircle className="mr-2" />
-              {loading ? "Processando..." : "Confirmar"}
+              {loading ? (
+                <>
+                  <Loader className="mr-2 h-4 w-4" /> Processando...
+                </>
+              ) : (
+                <>
+                  <MessageCircle className="mr-2" /> Confirmar
+                </>
+              )}
             </button>
           </div>
         </div>

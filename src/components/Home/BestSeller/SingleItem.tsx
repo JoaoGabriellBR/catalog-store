@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Product } from "@/types/product";
 import { useModalContext } from "@/app/context/QuickViewModalContext";
 import { useDispatch } from "react-redux";
@@ -9,12 +9,14 @@ import Image from "next/image";
 import Link from "next/link";
 import FavoriteButton from "@/components/Common/FavoriteButton";
 import { useCartActions } from "@/hooks/useCartActions";
+import Loader from "@/components/Common/Loader";
 import { Eye, ShoppingCart, Star } from "lucide-react";
 
 const SingleItem = ({ item }: { item: Product }) => {
   const { openModal } = useModalContext();
   const dispatch = useDispatch<AppDispatch>();
   const { addToCart } = useCartActions();
+  const [adding, setAdding] = useState(false);
 
   // update the QuickView state
   const handleQuickViewUpdate = () => {
@@ -22,8 +24,10 @@ const SingleItem = ({ item }: { item: Product }) => {
   };
 
   // Adicionar ao carrinho
-  const handleAddToCart = () => {
-    addToCart({ ...item, quantity: 1 });
+  const handleAddToCart = async () => {
+    setAdding(true);
+    await addToCart({ ...item, quantity: 1 });
+    setAdding(false);
   };
 
   return (
@@ -67,12 +71,13 @@ const SingleItem = ({ item }: { item: Product }) => {
           </button>
 
           <button
-            onClick={() => handleAddToCart()}
+            onClick={handleAddToCart}
             aria-label="button for Adicionar ao carrinho"
             id="addCartOne"
-            className="flex items-center justify-center w-9 h-9 rounded-[5px] shadow-1 ease-out duration-200 text-dark bg-white hover:text-white hover:bg-blue"
+            disabled={adding}
+            className="flex items-center justify-center w-9 h-9 rounded-[5px] shadow-1 ease-out duration-200 text-dark bg-white hover:text-white hover:bg-blue disabled:opacity-50"
           >
-            <ShoppingCart className="w-4 h-4" />
+            {adding ? <Loader className="w-4 h-4" /> : <ShoppingCart className="w-4 h-4" />}
           </button>
 
           <FavoriteButton

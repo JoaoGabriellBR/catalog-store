@@ -1,32 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFavorites } from "@/app/context/FavoritesContext";
 import { useCartActions } from "@/hooks/useCartActions";
 
 import Image from "next/image";
 import { ShoppingCart, X } from "lucide-react";
 import Link from "next/link";
+import Loader from "@/components/Common/Loader";
 
 const SingleItem = ({ item }) => {
-  const { toggleFavorite } = useFavorites();
+  const { toggleFavorite, loadingIds } = useFavorites();
   const { addToCart } = useCartActions();
+  const [adding, setAdding] = useState(false);
 
   const handleRemoveFromWishlist = () => {
     toggleFavorite(item);
   };
 
-  const handleAddToCart = () => {
-    addToCart({ ...item, quantity: 1 });
+  const handleAddToCart = async () => {
+    setAdding(true);
+    await addToCart({ ...item, quantity: 1 });
+    setAdding(false);
   };
 
   return (
     <div className="flex items-center border-t border-gray-3 py-5 px-10">
       <div className="min-w-[83px]">
         <button
-          onClick={() => handleRemoveFromWishlist()}
+          onClick={handleRemoveFromWishlist}
           aria-label="botão para remover produto da lista de desejos"
-          className="flex items-center justify-center rounded-lg max-w-[38px] w-full h-9.5 bg-gray-2 border border-gray-3 ease-out duration-200 hover:bg-red-light-6 hover:border-red-light-4 hover:text-red"
+          disabled={loadingIds.has(item.id)}
+          className="flex items-center justify-center rounded-lg max-w-[38px] w-full h-9.5 bg-gray-2 border border-gray-3 ease-out duration-200 hover:bg-red-light-6 hover:border-red-light-4 hover:text-red disabled:opacity-50"
         >
-          <X className="w-4 h-4 text-gray-6" />
+          {loadingIds.has(item.id) ? (
+            <Loader className="w-4 h-4 text-gray-6" />
+          ) : (
+            <X className="w-4 h-4 text-gray-6" />
+          )}
         </button>
       </div>
 
@@ -57,10 +66,19 @@ const SingleItem = ({ item }) => {
 
       <div className="min-w-[150px] flex justify-end">
         <button
-          onClick={() => handleAddToCart()}
-          className="inline-flex text-dark hover:text-white bg-gray-1 border border-gray-3 py-2.5 px-6 rounded-md ease-out duration-200 hover:bg-blue hover:border-gray-3"
+          onClick={handleAddToCart}
+          disabled={adding}
+          className="inline-flex text-dark hover:text-white bg-gray-1 border border-gray-3 py-2.5 px-6 rounded-md ease-out duration-200 hover:bg-blue hover:border-gray-3 disabled:opacity-50"
         >
-          Adicionar ao carrinho
+          {adding ? (
+            <>
+              <Loader className="w-4 h-4 mr-2" /> Adicionando...
+            </>
+          ) : (
+            <>
+              <ShoppingCart className="w-4 h-4 mr-2" /> Adicionar ao carrinho
+            </>
+          )}
         </button>
       </div>
     </div>

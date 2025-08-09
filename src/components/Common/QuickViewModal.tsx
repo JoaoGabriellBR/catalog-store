@@ -10,6 +10,7 @@ import { updateproductDetails } from "@/redux/features/product-details";
 import { X, Minus, Plus, ShoppingCart, ShoppingBag } from "lucide-react";
 import FavoriteButton from "./FavoriteButton";
 import { useCartActions } from "@/hooks/useCartActions";
+import Loader from "@/components/Common/Loader";
 
 const QuickViewModal = () => {
   const { isModalOpen, closeModal } = useModalContext();
@@ -18,6 +19,7 @@ const QuickViewModal = () => {
 
   const dispatch = useDispatch<AppDispatch>();
   const { addToCart } = useCartActions();
+  const [adding, setAdding] = useState(false);
 
   // get the product data
   const product = useAppSelector((state) => state.quickViewReducer.value);
@@ -25,9 +27,11 @@ const QuickViewModal = () => {
   const [activePreview, setActivePreview] = useState(0);
 
   // Adicionar ao carrinho
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     if (product) {
-      addToCart({ ...product, quantity });
+      setAdding(true);
+      await addToCart({ ...product, quantity });
+      setAdding(false);
     }
   };
 
@@ -153,13 +157,21 @@ const QuickViewModal = () => {
 
               <div className="flex flex-wrap items-center gap-4">
                 <button
-                  disabled={quantity === 0 && true}
-                  onClick={() => handleAddToCart()}
-                  className={`inline-flex font-medium text-white bg-blue py-3 px-7 rounded-md ease-out duration-200 hover:bg-blue-dark
+                  disabled={quantity === 0 || adding}
+                  onClick={handleAddToCart}
+                  className={`inline-flex font-medium text-white bg-blue py-3 px-7 rounded-md ease-out duration-200 hover:bg-blue-dark disabled:opacity-70
                   `}
                 >
-                  <ShoppingCart className="w-5 h-5 mr-2" />
-                  Adicionar ao carrinho
+                  {adding ? (
+                    <>
+                      <Loader className="w-5 h-5 mr-2" /> Adicionando...
+                    </>
+                  ) : (
+                    <>
+                      <ShoppingCart className="w-5 h-5 mr-2" />
+                      Adicionar ao carrinho
+                    </>
+                  )}
                 </button>
 
                 {product && (

@@ -49,6 +49,8 @@ const MyAccount = () => {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [savingProfile, setSavingProfile] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
 
   const {
     register,
@@ -79,6 +81,7 @@ const MyAccount = () => {
   }, []);
 
   const handleLogout = async () => {
+    setLoggingOut(true);
     await supabase.auth.signOut();
     router.push("/");
   };
@@ -89,6 +92,7 @@ const MyAccount = () => {
   const handleProfileSave = async () => {
     setProfileMessage(null);
     if (!user) return;
+    setSavingProfile(true);
     const { error } = await supabase.auth.updateUser({
       data: { full_name: profile.fullName },
     });
@@ -100,6 +104,7 @@ const MyAccount = () => {
         text: "Nome atualizado com sucesso",
       });
     }
+    setSavingProfile(false);
   };
 
   const onPasswordSubmit = async (data: PasswordFormData) => {
@@ -185,10 +190,11 @@ const MyAccount = () => {
 
                     <button
                       onClick={handleLogout}
-                      className="flex items-center rounded-md gap-2.5 py-3 px-4.5 ease-out duração-200 hover:bg-blue hover:text-white text-dark-2 bg-gray-1"
+                      disabled={loggingOut}
+                      className="flex items-center rounded-md gap-2.5 py-3 px-4.5 ease-out duração-200 hover:bg-blue hover:text-white text-dark-2 bg-gray-1 disabled:opacity-50"
                     >
-                      <LogOut />
-                      Sair
+                      {loggingOut ? <Loader className="mr-2 h-4 w-4" /> : <LogOut />}
+                      {loggingOut ? "Saindo..." : "Sair"}
                     </button>
                   </div>
                 </div>
@@ -248,9 +254,16 @@ const MyAccount = () => {
                 <button
                   type="button"
                   onClick={handleProfileSave}
-                  className="inline-flex font-medium text-white bg-blue py-3 px-7 rounded-md ease-out duração-200 hover:bg-blue-dark"
+                  disabled={savingProfile}
+                  className="inline-flex items-center font-medium text-white bg-blue py-3 px-7 rounded-md ease-out duração-200 hover:bg-blue-dark disabled:opacity-50"
                 >
-                  Salvar Alterações
+                  {savingProfile ? (
+                    <>
+                      <Loader className="mr-2 h-4 w-4" /> Salvando...
+                    </>
+                  ) : (
+                    "Salvar Alterações"
+                  )}
                 </button>
                 {profileMessage && (
                   <p
@@ -390,9 +403,15 @@ const MyAccount = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="inline-flex font-medium text-white bg-blue py-3 px-7 rounded-md ease-out duração-200 hover:bg-blue-dark disabled:opacity-50"
+                    className="inline-flex items-center font-medium text-white bg-blue py-3 px-7 rounded-md ease-out duração-200 hover:bg-blue-dark disabled:opacity-50"
                   >
-                    {isSubmitting ? "Salvando..." : "Mudar Senha"}
+                    {isSubmitting ? (
+                      <>
+                        <Loader className="mr-2 h-4 w-4" /> Salvando...
+                      </>
+                    ) : (
+                      "Mudar Senha"
+                    )}
                   </button>
                   {passwordMessage && (
                     <p

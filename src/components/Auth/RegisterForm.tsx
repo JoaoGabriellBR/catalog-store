@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { z } from "zod";
 import { supabase } from "../../../lib/supabaseClient";
 import InputField from "./InputField";
@@ -205,12 +206,12 @@ const RegisterForm: React.FC = () => {
 
               <p className="text-center mt-6">
                 Já possui uma conta
-                <a
+                <Link
                   href="/signin"
                   className="text-dark ease-out duration-200 hover:text-blue pl-2"
                 >
                   Entrar Agora
-                </a>
+                </Link>
               </p>
             </form>
           </div>

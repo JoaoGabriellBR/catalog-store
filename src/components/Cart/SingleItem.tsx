@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import type { CartItem } from "@/redux/features/cart-slice";
+import Loader from "@/components/Common/Loader";
 
 interface Props {
   item: CartItem;
@@ -13,22 +14,30 @@ interface Props {
 const SingleItem = ({ item }: Props) => {
   const [quantity, setQuantity] = useState<number>(item.quantity);
   const { removeFromCart, updateQuantity } = useCartActions();
+  const [updating, setUpdating] = useState(false);
+  const [removing, setRemoving] = useState(false);
 
-  const handleRemoveFromCart = () => {
-    removeFromCart(item.id);
+  const handleRemoveFromCart = async () => {
+    setRemoving(true);
+    await removeFromCart(item.id);
+    setRemoving(false);
   };
 
-  const handleIncreaseQuantity = () => {
-    setQuantity(quantity + 1);
-    updateQuantity(item.id, quantity + 1);
+  const handleIncreaseQuantity = async () => {
+    setUpdating(true);
+    const newQty = quantity + 1;
+    setQuantity(newQty);
+    await updateQuantity(item.id, newQty);
+    setUpdating(false);
   };
 
-  const handleDecreaseQuantity = () => {
+  const handleDecreaseQuantity = async () => {
     if (quantity > 1) {
-      setQuantity(quantity - 1);
-      updateQuantity(item.id, quantity - 1);
-    } else {
-      return;
+      setUpdating(true);
+      const newQty = quantity - 1;
+      setQuantity(newQty);
+      await updateQuantity(item.id, newQty);
+      setUpdating(false);
     }
   };
 
@@ -62,11 +71,12 @@ const SingleItem = ({ item }: Props) => {
       <div className="min-w-[275px]">
         <div className="w-max flex items-center rounded-md border border-gray-3">
           <button
-            onClick={() => handleDecreaseQuantity()}
+            onClick={handleDecreaseQuantity}
             aria-label="button for remove product"
-            className="flex items-center justify-center w-11.5 h-11.5 ease-out duration-200 hover:text-blue"
+            disabled={updating || removing}
+            className="flex items-center justify-center w-11.5 h-11.5 ease-out duration-200 hover:text-blue disabled:opacity-50"
           >
-            <Minus className="w-5 h-5" />
+            {updating ? <Loader className="w-5 h-5" /> : <Minus className="w-5 h-5" />}
           </button>
 
           <span className="flex items-center justify-center w-16 h-11.5 border-x border-gray-4">
@@ -74,11 +84,12 @@ const SingleItem = ({ item }: Props) => {
           </span>
 
           <button
-            onClick={() => handleIncreaseQuantity()}
+            onClick={handleIncreaseQuantity}
             aria-label="button for add product"
-            className="flex items-center justify-center w-11.5 h-11.5 ease-out duration-200 hover:text-blue"
+            disabled={updating || removing}
+            className="flex items-center justify-center w-11.5 h-11.5 ease-out duration-200 hover:text-blue disabled:opacity-50"
           >
-            <Plus className="w-5 h-5" />
+            {updating ? <Loader className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
           </button>
         </div>
       </div>
@@ -89,11 +100,12 @@ const SingleItem = ({ item }: Props) => {
 
       <div className="min-w-[50px] flex justify-end">
         <button
-          onClick={() => handleRemoveFromCart()}
+          onClick={handleRemoveFromCart}
           aria-label="button for remove product from cart"
-          className="flex items-center justify-center rounded-lg max-w-[38px] w-full h-9.5 bg-gray-2 border border-gray-3 text-dark ease-out duration-200 hover:bg-red-light-6 hover:border-red-light-4 hover:text-red"
+          disabled={removing}
+          className="flex items-center justify-center rounded-lg max-w-[38px] w-full h-9.5 bg-gray-2 border border-gray-3 text-dark ease-out duration-200 hover:bg-red-light-6 hover:border-red-light-4 hover:text-red disabled:opacity-50"
         >
-          <Trash2 className="w-5 h-5" />
+          {removing ? <Loader className="w-5 h-5" /> : <Trash2 className="w-5 h-5" />}
         </button>
       </div>
     </div>
@@ -101,3 +113,4 @@ const SingleItem = ({ item }: Props) => {
 };
 
 export default SingleItem;
+
