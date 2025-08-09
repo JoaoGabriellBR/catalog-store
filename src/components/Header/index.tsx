@@ -269,16 +269,6 @@ const Header: React.FC = () => {
             <div className="hidden xl:block">
               <ul className="flex items-center gap-5.5">
                 <li className="py-4">
-                  <a
-                    href="#"
-                    className="flex items-center gap-1.5 font-medium text-custom-sm text-dark hover:text-blue transition-colors"
-                  >
-                    <Clock size={16} className="stroke-current" />
-                    Visto recentemente
-                  </a>
-                </li>
-
-                <li className="py-4">
                   <Link
                     href="/wishlist"
                     className="flex items-center gap-1.5 font-medium text-custom-sm text-dark hover:text-blue transition-colors"

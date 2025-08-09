@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import Breadcrumb from "../Common/Breadcrumb";
 import Image from "next/image";
-import Newsletter from "../Common/Newsletter";
 import ProductYouMayLike from "./ProductYouMayLike";
 import { useCartActions } from "@/hooks/useCartActions";
 import {
@@ -177,7 +176,6 @@ const ProductDetails = ({ product }: ProductProps) => {
         </div>
       </section>
       <ProductYouMayLike />
-      <Newsletter />
     </>
   );
 };
