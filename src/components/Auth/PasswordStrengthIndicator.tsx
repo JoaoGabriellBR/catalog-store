@@ -69,7 +69,7 @@ export function PasswordStrengthIndicator({
   const barColor = hasError ? "bg-red" : strength.bgColor;
 
   return (
-    <div className="space-y-2 mt-2">
+    <div className="space-y-2 mb-2">
       <div className="flex items-center justify-between">
         <span className="text-xs text-muted-foreground">Força da senha:</span>
         <span className={`text-xs font-medium ${color}`}>{strength.label}</span>

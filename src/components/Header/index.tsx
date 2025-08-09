@@ -10,6 +10,7 @@ import type { Product } from "@/types/product";
 import { getProducts } from "@/services/products";
 import { categories } from "@/constants/categories";
 import SearchResults from "./SearchResults";
+import InputField from "@/components/Common/InputField";
 import useDebounce from "@/hooks/useDebounce";
 import { useAuth } from "@/app/context/AuthContext";
 import { useFavorites } from "@/app/context/FavoritesContext";
@@ -96,21 +97,23 @@ const Header: React.FC = () => {
             <div className="max-w-[475px] w-full">
               <form onSubmit={(e) => e.preventDefault()}>
                 <div className="flex items-center">
-                    <CustomSelect
-                      options={options}
-                      onSelect={setSelectedCategory}
-                    />
-                  <div className="relative w-full max-w-[333px] sm:min-w-[333px]">
+                  <CustomSelect
+                    options={options}
+                    onSelect={setSelectedCategory}
+                  />
+                  <div className="relative w-full max-w=[333px] sm:min-w-[333px]">
                     <span className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-5.5 bg-gray-4" />
-                    <input
+                    <InputField
                       type="search"
                       name="search"
                       id="search"
                       placeholder="Pesquisar produto..."
                       autoComplete="off"
                       value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
+                      onChange={(e) => setSearchQuery(e.currentTarget.value)}
                       className="custom-search w-full rounded-r-[5px] bg-gray-1 border border-gray-3 border-l-0 py-2.5 pl-4 pr-10 outline-none transition-colors duration-200"
+                      containerClassName="m-0"
+                      variant="unstyled"
                     />
                     <button
                       type="submit"
@@ -141,11 +144,11 @@ const Header: React.FC = () => {
                     className="flex items-center gap-2.5 hover:text-blue transition-colors"
                   >
                     <User size={24} className="stroke-current text-blue" />
-                      <p className="font-medium text-custom-sm text-dark">
-                        {user.user_metadata?.full_name
-                          ? user.user_metadata.full_name.split(" ")[0]
-                          : user.email}
-                      </p>
+                    <p className="font-medium text-custom-sm text-dark">
+                      {user.user_metadata?.full_name
+                        ? user.user_metadata.full_name.split(" ")[0]
+                        : user.email}
+                    </p>
                   </Link>
                 ) : (
                   <Link
@@ -153,13 +156,12 @@ const Header: React.FC = () => {
                     className="flex items-center gap-2.5 hover:text-blue transition-colors"
                   >
                     <User size={24} className="stroke-current text-blue" />
-                    <p className="font-medium text-custom-sm text-dark">Entrar</p>
+                    <p className="font-medium text-custom-sm text-dark">
+                      Entrar
+                    </p>
                   </Link>
                 )}
-                <Link
-                  href="/wishlist"
-                  className="flex items-center gap-2.5"
-                >
+                <Link href="/wishlist" className="flex items-center gap-2.5">
                   <span className="relative inline-block">
                     <Heart size={24} className="stroke-current" />
                     <span className="absolute -right-2 -top-2.5 flex h-4.5 w-4.5 items-center justify-center rounded-full bg-blue text-2xs font-medium text-white">

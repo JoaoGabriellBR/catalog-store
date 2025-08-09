@@ -8,10 +8,11 @@ import { useRouter } from "next/navigation";
 import { supabase } from "../../../lib/supabaseClient";
 import { useAuth } from "@/app/context/AuthContext";
 import Loader from "@/components/Common/Loader";
-import { LogOut, ShoppingBasket, User, Eye, EyeOff } from "lucide-react";
+import { LogOut, ShoppingBasket, User } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@/lib/zodResolver";
+import InputField from "@/components/Common/InputField";
 
 const passwordSchema = z
   .object({
@@ -46,9 +47,7 @@ const MyAccount = () => {
     type: "error" | "success";
     text: string;
   } | null>(null);
-  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const [savingProfile, setSavingProfile] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
 
@@ -149,10 +148,8 @@ const MyAccount = () => {
           <div className="flex flex-col xl:flex-row gap-7.5">
             <div className="xl:max-w-[370px] w-full bg-white rounded-xl shadow-1">
               <div className="flex xl:flex-col">
-                
                 <div className="flex flex-row items-center gap-4 p-4 sm:p-7.5 xl:p-9">
-
-                    <User className="w-20 h-20 text-gray-500" />
+                  <User className="w-20 h-20 text-gray-500" />
 
                   <div>
                     <p className="font-medium text-dark mb-0.5">
@@ -193,7 +190,11 @@ const MyAccount = () => {
                       disabled={loggingOut}
                       className="flex items-center rounded-md gap-2.5 py-3 px-4.5 ease-out duração-200 hover:bg-blue hover:text-white text-dark-2 bg-gray-1 disabled:opacity-50"
                     >
-                      {loggingOut ? <Loader className="mr-2 h-4 w-4" /> : <LogOut />}
+                      {loggingOut ? (
+                        <Loader className="mr-2 h-4 w-4" />
+                      ) : (
+                        <LogOut />
+                      )}
                       {loggingOut ? "Saindo..." : "Sair"}
                     </button>
                   </div>
@@ -217,36 +218,35 @@ const MyAccount = () => {
               <div className="bg-white shadow-1 rounded-xl p-4 sm:p-8.5">
                 <div className="flex flex-col lg:flex-row gap-5 sm:gap-8 mb-5">
                   <div className="w-full">
-                    <label htmlFor="firstName" className="block mb-2.5">
-                      Nome <span className="text-red">*</span>
-                    </label>
-
-                    <input
-                      type="text"
+                    <InputField
+                      label="Nome"
                       id="firstName"
+                      type="text"
                       value={profile.fullName}
                       onChange={(e) =>
-                        setProfile({ ...profile, fullName: e.target.value })
+                        setProfile({
+                          ...profile,
+                          fullName: e.currentTarget.value,
+                        })
                       }
-                      className="rounded-md border border-gray-3 bg-gray-1 placeholder:text-dark-5 w-full py-2.5 px-5 outline-none duração-200 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20"
+                      required
+                      className="py-2.5"
                     />
                   </div>
                 </div>
 
                 <div className="mb-5">
                   <div className="w-full">
-                    <label htmlFor="email" className="block mb-2.5">
-                      Email <span className="text-red">*</span>
-                    </label>
-
-                    <input
-                      type="email"
+                    <InputField
+                      label="Email"
                       id="email"
+                      type="email"
                       value={profile.email}
                       onChange={(e) =>
-                        setProfile({ ...profile, email: e.target.value })
+                        setProfile({ ...profile, email: e.currentTarget.value })
                       }
-                      className="rounded-md border border-gray-3 bg-gray-1 placeholder:text-dark-5 w-full py-2.5 px-5 outline-none duração-200 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20"
+                      required
+                      className="py-2.5"
                     />
                   </div>
                 </div>
@@ -290,115 +290,37 @@ const MyAccount = () => {
               <form onSubmit={handleSubmit(onPasswordSubmit)} noValidate>
                 <div className="bg-white shadow-1 rounded-xl p-4 sm:p-8.5">
                   <div className="mb-5">
-                    <label htmlFor="currentPassword" className="block mb-2.5">
-                      Senha Antiga
-                    </label>
-
-                    <div className="relative">
-                      <input
-                        type={showCurrentPassword ? "text" : "password"}
-                        id="currentPassword"
-                        autoComplete="on"
-                        {...register("currentPassword")}
-                        className={`rounded-md border bg-gray-1 w-full py-2.5 px-5 outline-none duração-200 focus:border-transparent focus:shadow-input focus:ring-2 ${
-                          errors.currentPassword
-                            ? "border-red focus:ring-red/20"
-                            : "border-gray-3 focus:ring-blue/20"
-                        } pr-12`}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowCurrentPassword((prev) => !prev)}
-                        className="absolute inset-y-0 right-0 flex items-center pr-3 text-dark-5"
-                        aria-label={showCurrentPassword ? "Ocultar senha" : "Mostrar senha"}
-                      >
-                        {showCurrentPassword ? (
-                          <EyeOff className="h-5 w-5" />
-                        ) : (
-                          <Eye className="h-5 w-5" />
-                        )}
-                      </button>
-                    </div>
-                    {errors.currentPassword && (
-                      <p className="mt-1 text-sm text-red">
-                        {errors.currentPassword.message}
-                      </p>
-                    )}
+                    <InputField
+                      label="Senha Antiga"
+                      id="currentPassword"
+                      type="password"
+                      registration={register("currentPassword")}
+                      error={errors.currentPassword}
+                      className="py-2.5"
+                    />
                   </div>
 
-                    <div className="mb-5">
-                      <label htmlFor="newPassword" className="block mb-2.5">
-                        Nova Senha
-                      </label>
+                  <div className="mb-5">
+                    <InputField
+                      label="Nova Senha"
+                      id="newPassword"
+                      type="password"
+                      registration={register("newPassword")}
+                      error={errors.newPassword}
+                      className="py-2.5"
+                    />
+                  </div>
 
-                      <div className="relative">
-                        <input
-                          type={showNewPassword ? "text" : "password"}
-                          id="newPassword"
-                          autoComplete="on"
-                          {...register("newPassword")}
-                          className={`rounded-md border bg-gray-1 w-full py-2.5 px-5 outline-none duração-200 focus:border-transparent focus:shadow-input focus:ring-2 ${
-                            errors.newPassword
-                              ? "border-red focus:ring-red/20"
-                              : "border-gray-3 focus:ring-blue/20"
-                          } pr-12`}
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShowNewPassword((prev) => !prev)}
-                          className="absolute inset-y-0 right-0 flex items-center pr-3 text-dark-5"
-                          aria-label={showNewPassword ? "Ocultar senha" : "Mostrar senha"}
-                        >
-                          {showNewPassword ? (
-                            <EyeOff className="h-5 w-5" />
-                          ) : (
-                            <Eye className="h-5 w-5" />
-                          )}
-                        </button>
-                      </div>
-                      {errors.newPassword && (
-                        <p className="mt-1 text-sm text-red">
-                          {errors.newPassword.message}
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="mb-5">
-                      <label htmlFor="confirmPassword" className="block mb-2.5">
-                        Confirmar Nova Senha
-                      </label>
-
-                      <div className="relative">
-                        <input
-                          type={showConfirmPassword ? "text" : "password"}
-                          id="confirmPassword"
-                          autoComplete="on"
-                          {...register("confirmPassword")}
-                          className={`rounded-md border bg-gray-1 w-full py-2.5 px-5 outline-none duração-200 focus:border-transparent focus:shadow-input focus:ring-2 ${
-                            errors.confirmPassword
-                              ? "border-red focus:ring-red/20"
-                              : "border-gray-3 focus:ring-blue/20"
-                          } pr-12`}
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShowConfirmPassword((prev) => !prev)}
-                          className="absolute inset-y-0 right-0 flex items-center pr-3 text-dark-5"
-                          aria-label={showConfirmPassword ? "Ocultar senha" : "Mostrar senha"}
-                        >
-                          {showConfirmPassword ? (
-                            <EyeOff className="h-5 w-5" />
-                          ) : (
-                            <Eye className="h-5 w-5" />
-                          )}
-                        </button>
-                      </div>
-                      {errors.confirmPassword && (
-                        <p className="mt-1 text-sm text-red">
-                          {errors.confirmPassword.message}
-                        </p>
-                      )}
-                    </div>
+                  <div className="mb-5">
+                    <InputField
+                      label="Confirmar Nova Senha"
+                      id="confirmPassword"
+                      type="password"
+                      registration={register("confirmPassword")}
+                      error={errors.confirmPassword}
+                      className="py-2.5"
+                    />
+                  </div>
 
                   <button
                     type="submit"
