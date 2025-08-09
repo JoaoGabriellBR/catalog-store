@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { supabase } from "../../../lib/supabaseClient";
 import { useAuth } from "@/app/context/AuthContext";
 import Loader from "@/components/Common/Loader";
-import { LogOut, ShoppingBasket, User } from "lucide-react";
+import { LogOut, ShoppingBasket, User, Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@/lib/zodResolver";
@@ -42,6 +42,13 @@ const MyAccount = () => {
     type: "error" | "success";
     text: string;
   } | null>(null);
+  const [profileMessage, setProfileMessage] = useState<{
+    type: "error" | "success";
+    text: string;
+  } | null>(null);
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const {
     register,
@@ -78,6 +85,22 @@ const MyAccount = () => {
 
   const openAddressModal = () => setAddressModal(true);
   const closeAddressModal = () => setAddressModal(false);
+
+  const handleProfileSave = async () => {
+    setProfileMessage(null);
+    if (!user) return;
+    const { error } = await supabase.auth.updateUser({
+      data: { full_name: profile.fullName },
+    });
+    if (error) {
+      setProfileMessage({ type: "error", text: error.message });
+    } else {
+      setProfileMessage({
+        type: "success",
+        text: "Nome atualizado com sucesso",
+      });
+    }
+  };
 
   const onPasswordSubmit = async (data: PasswordFormData) => {
     setPasswordMessage(null);
@@ -224,10 +247,22 @@ const MyAccount = () => {
 
                 <button
                   type="button"
+                  onClick={handleProfileSave}
                   className="inline-flex font-medium text-white bg-blue py-3 px-7 rounded-md ease-out duração-200 hover:bg-blue-dark"
                 >
                   Salvar Alterações
                 </button>
+                {profileMessage && (
+                  <p
+                    className={`mt-4 text-sm ${
+                      profileMessage.type === "success"
+                        ? "text-green-600"
+                        : "text-red"
+                    }`}
+                  >
+                    {profileMessage.text}
+                  </p>
+                )}
               </div>
 
               <p className="text-custom-sm mt-5 mb-9">
@@ -246,17 +281,31 @@ const MyAccount = () => {
                       Senha Antiga
                     </label>
 
-                    <input
-                      type="password"
-                      id="currentPassword"
-                      autoComplete="on"
-                      {...register("currentPassword")}
-                      className={`rounded-md border bg-gray-1 w-full py-2.5 px-5 outline-none duração-200 focus:border-transparent focus:shadow-input focus:ring-2 ${
-                        errors.currentPassword
-                          ? "border-red focus:ring-red/20"
-                          : "border-gray-3 focus:ring-blue/20"
-                      }`}
-                    />
+                    <div className="relative">
+                      <input
+                        type={showCurrentPassword ? "text" : "password"}
+                        id="currentPassword"
+                        autoComplete="on"
+                        {...register("currentPassword")}
+                        className={`rounded-md border bg-gray-1 w-full py-2.5 px-5 outline-none duração-200 focus:border-transparent focus:shadow-input focus:ring-2 ${
+                          errors.currentPassword
+                            ? "border-red focus:ring-red/20"
+                            : "border-gray-3 focus:ring-blue/20"
+                        } pr-12`}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowCurrentPassword((prev) => !prev)}
+                        className="absolute inset-y-0 right-0 flex items-center pr-3 text-dark-5"
+                        aria-label={showCurrentPassword ? "Ocultar senha" : "Mostrar senha"}
+                      >
+                        {showCurrentPassword ? (
+                          <EyeOff className="h-5 w-5" />
+                        ) : (
+                          <Eye className="h-5 w-5" />
+                        )}
+                      </button>
+                    </div>
                     {errors.currentPassword && (
                       <p className="mt-1 text-sm text-red">
                         {errors.currentPassword.message}
@@ -264,51 +313,79 @@ const MyAccount = () => {
                     )}
                   </div>
 
-                  <div className="mb-5">
-                    <label htmlFor="newPassword" className="block mb-2.5">
-                      Nova Senha
-                    </label>
+                    <div className="mb-5">
+                      <label htmlFor="newPassword" className="block mb-2.5">
+                        Nova Senha
+                      </label>
 
-                    <input
-                      type="password"
-                      id="newPassword"
-                      autoComplete="on"
-                      {...register("newPassword")}
-                      className={`rounded-md border bg-gray-1 w-full py-2.5 px-5 outline-none duração-200 focus:border-transparent focus:shadow-input focus:ring-2 ${
-                        errors.newPassword
-                          ? "border-red focus:ring-red/20"
-                          : "border-gray-3 focus:ring-blue/20"
-                      }`}
-                    />
-                    {errors.newPassword && (
-                      <p className="mt-1 text-sm text-red">
-                        {errors.newPassword.message}
-                      </p>
-                    )}
-                  </div>
+                      <div className="relative">
+                        <input
+                          type={showNewPassword ? "text" : "password"}
+                          id="newPassword"
+                          autoComplete="on"
+                          {...register("newPassword")}
+                          className={`rounded-md border bg-gray-1 w-full py-2.5 px-5 outline-none duração-200 focus:border-transparent focus:shadow-input focus:ring-2 ${
+                            errors.newPassword
+                              ? "border-red focus:ring-red/20"
+                              : "border-gray-3 focus:ring-blue/20"
+                          } pr-12`}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowNewPassword((prev) => !prev)}
+                          className="absolute inset-y-0 right-0 flex items-center pr-3 text-dark-5"
+                          aria-label={showNewPassword ? "Ocultar senha" : "Mostrar senha"}
+                        >
+                          {showNewPassword ? (
+                            <EyeOff className="h-5 w-5" />
+                          ) : (
+                            <Eye className="h-5 w-5" />
+                          )}
+                        </button>
+                      </div>
+                      {errors.newPassword && (
+                        <p className="mt-1 text-sm text-red">
+                          {errors.newPassword.message}
+                        </p>
+                      )}
+                    </div>
 
-                  <div className="mb-5">
-                    <label htmlFor="confirmPassword" className="block mb-2.5">
-                      Confirmar Nova Senha
-                    </label>
+                    <div className="mb-5">
+                      <label htmlFor="confirmPassword" className="block mb-2.5">
+                        Confirmar Nova Senha
+                      </label>
 
-                    <input
-                      type="password"
-                      id="confirmPassword"
-                      autoComplete="on"
-                      {...register("confirmPassword")}
-                      className={`rounded-md border bg-gray-1 w-full py-2.5 px-5 outline-none duração-200 focus:border-transparent focus:shadow-input focus:ring-2 ${
-                        errors.confirmPassword
-                          ? "border-red focus:ring-red/20"
-                          : "border-gray-3 focus:ring-blue/20"
-                      }`}
-                    />
-                    {errors.confirmPassword && (
-                      <p className="mt-1 text-sm text-red">
-                        {errors.confirmPassword.message}
-                      </p>
-                    )}
-                  </div>
+                      <div className="relative">
+                        <input
+                          type={showConfirmPassword ? "text" : "password"}
+                          id="confirmPassword"
+                          autoComplete="on"
+                          {...register("confirmPassword")}
+                          className={`rounded-md border bg-gray-1 w-full py-2.5 px-5 outline-none duração-200 focus:border-transparent focus:shadow-input focus:ring-2 ${
+                            errors.confirmPassword
+                              ? "border-red focus:ring-red/20"
+                              : "border-gray-3 focus:ring-blue/20"
+                          } pr-12`}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowConfirmPassword((prev) => !prev)}
+                          className="absolute inset-y-0 right-0 flex items-center pr-3 text-dark-5"
+                          aria-label={showConfirmPassword ? "Ocultar senha" : "Mostrar senha"}
+                        >
+                          {showConfirmPassword ? (
+                            <EyeOff className="h-5 w-5" />
+                          ) : (
+                            <Eye className="h-5 w-5" />
+                          )}
+                        </button>
+                      </div>
+                      {errors.confirmPassword && (
+                        <p className="mt-1 text-sm text-red">
+                          {errors.confirmPassword.message}
+                        </p>
+                      )}
+                    </div>
 
                   <button
                     type="submit"

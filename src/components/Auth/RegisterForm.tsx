@@ -7,7 +7,7 @@ import { supabase } from "../../../lib/supabaseClient";
 import InputField from "./InputField";
 import Loader from "@/components/Common/Loader";
 import { PasswordStrengthIndicator } from "./PasswordStrengthIndicator";
-import { Circle } from "lucide-react";
+import { Circle, Eye, EyeOff } from "lucide-react";
 import Breadcrumb from "@/components/Common/Breadcrumb";
 import { zodResolver } from "@/lib/zodResolver";
 
@@ -47,6 +47,7 @@ const RegisterForm: React.FC = () => {
   } = useForm<RegisterFormData>({ resolver: zodResolver(registerSchema) });
 
   const passwordValue = watch("password", "");
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     const checkUser = async () => {
@@ -133,18 +134,32 @@ const RegisterForm: React.FC = () => {
                 <label htmlFor="password" className="block mb-2.5">
                   Senha <span>*</span>
                 </label>
-                <input
-                  type="password"
-                  id="password"
-                  placeholder="Digite sua senha"
-                  autoComplete="on"
-                  {...register("password")}
-                  className={`rounded-lg w-full py-3 px-5 outline-none duration-200 bg-gray-1 placeholder:text-dark-5 border ${
-                    errors.password
-                      ? "border-red focus:border-red focus:ring-2 focus:ring-red/20"
-                      : "border-gray-3 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20"
-                  }`}
-                />
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    placeholder="Digite sua senha"
+                    autoComplete="on"
+                    {...register("password")}
+                    className={`rounded-lg w-full py-3 px-5 outline-none duration-200 bg-gray-1 placeholder:text-dark-5 border ${
+                      errors.password
+                        ? "border-red focus:border-red focus:ring-2 focus:ring-red/20"
+                        : "border-gray-3 focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20"
+                    } pr-12`}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    className="absolute inset-y-0 right-0 flex items-center pr-4 text-dark-5"
+                    aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-5 w-5" />
+                    ) : (
+                      <Eye className="h-5 w-5" />
+                    )}
+                  </button>
+                </div>
                 <PasswordStrengthIndicator
                   password={passwordValue}
                   hasError={!!errors.password}

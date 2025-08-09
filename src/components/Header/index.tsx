@@ -130,9 +130,11 @@ const Header: React.FC = () => {
                     className="flex items-center gap-2.5 hover:text-blue transition-colors"
                   >
                     <User size={24} className="stroke-current text-blue" />
-                    <p className="font-medium text-custom-sm text-dark">
-                      {user.user_metadata?.full_name || user.email}
-                    </p>
+                      <p className="font-medium text-custom-sm text-dark">
+                        {user.user_metadata?.full_name
+                          ? user.user_metadata.full_name.split(" ")[0]
+                          : user.email}
+                      </p>
                   </Link>
                 ) : (
                   <Link

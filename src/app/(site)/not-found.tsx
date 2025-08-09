@@ -1,9 +1,9 @@
-import Error from "@/components/Error";
+import NotFound from "@/components/NotFound";
 
-export default function NotFound() {
+export default function NotFoundPage() {
   return (
     <main>
-      <Error />
+      <NotFound />
     </main>
   );
 }
