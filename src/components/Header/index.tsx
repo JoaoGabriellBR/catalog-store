@@ -88,7 +88,7 @@ const Header: React.FC = () => {
           }`}
         >
           {/* Logo + Busca */}
-          <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-5 sm:gap-10 w-full">
+          <div className="z-20 flex flex-col sm:flex-row items-center sm:justify-between gap-5 sm:gap-10 w-full">
             <Link href="/" className="flex items-center gap-2 w-full sm:w-auto">
               <ShoppingBag size={25} className="stroke-current text-blue" />
               <h1 className="text-3xl font-bold text-dark">Stg Catalog</h1>
@@ -131,7 +131,7 @@ const Header: React.FC = () => {
           </div>
 
           {/* Usuário, Carrinho e Hamburger */}
-          <div className="flex items-center gap-7.5 w-full lg:w-auto">
+          <div className="flex items-center gap-7.5 w-full lg:w-auto z-10">
             <span className="hidden xl:block w-px h-7.5 bg-gray-4" />
             <div className="flex items-center gap-5 w-full lg:w-auto justify-between">
               <div className="flex items-center gap-5">

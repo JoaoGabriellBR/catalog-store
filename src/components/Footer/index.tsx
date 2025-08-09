@@ -230,39 +230,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div className="w-full sm:w-auto">
-            <h2 className="mb-7.5 text-custom-1 font-medium text-dark">
-              Quick Link
-            </h2>
 
-            <ul className="flex flex-col gap-3">
-              <li>
-                <a className="ease-out duration-200 hover:text-blue" href="#">
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a className="ease-out duration-200 hover:text-blue" href="#">
-                  Refund Policy
-                </a>
-              </li>
-              <li>
-                <a className="ease-out duration-200 hover:text-blue" href="#">
-                  Terms of Use
-                </a>
-              </li>
-              <li>
-                <a className="ease-out duration-200 hover:text-blue" href="#">
-                  FAQ’s
-                </a>
-              </li>
-              <li>
-                <a className="ease-out duration-200 hover:text-blue" href="#">
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </div>
         </div>
         {/* <!-- footer menu end --> */}
       </div>
