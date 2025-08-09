@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Breadcrumb from "../Common/Breadcrumb";
 import Image from "next/image";
 import Newsletter from "../Common/Newsletter";
-import RecentlyViewdItems from "./RecentlyViewd";
+import ProductYouMayLike from "./ProductYouMayLike";
 import { useDispatch } from "react-redux";
 
 import { addItemToCart } from "@/redux/features/cart-slice";
@@ -61,38 +61,40 @@ const ProductDetails = ({ product }: ProductProps) => {
 
   return (
     <>
-      <Breadcrumb title={"Detalhes do Produto"} pages={["detalhes do produto"]} />
+      <Breadcrumb
+        title={"Detalhes do Produto"}
+        pages={["detalhes do produto"]}
+      />
 
       <section className="overflow-hidden relative pb-20 pt-5 lg:pt-20 xl:pt-28">
         <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
           <div className="flex flex-col lg:flex-row gap-7.5 xl:gap-17.5">
             <div className="lg:max-w-[570px] w-full">
               <div className="lg:min-h-[512px] rounded-lg shadow-1 bg-gray-2 p-4 sm:p-7.5 relative flex items-center justify-center">
-                  <Image
-                    src={product?.image_url}
-                    alt="products-details"
-                    width={400}
-                    height={400}
-                  />
+                <Image
+                  src={product?.image_url}
+                  alt="products-details"
+                  width={400}
+                  height={400}
+                />
               </div>
 
               <div className="flex flex-wrap sm:flex-nowrap gap-4.5 mt-6">
                 <button
                   className={`flex items-center justify-center w-15 sm:w-25 h-15 sm:h-25 overflow-hidden rounded-lg bg-gray-2 shadow-1 ease-out duration-200 border-2 hover:border-blue`}
                 >
-                    <Image
-                      width={50}
-                      height={50}
-                      src={product?.image_url}
-                      alt="thumbnail"
-                    />
+                  <Image
+                    width={50}
+                    height={50}
+                    src={product?.image_url}
+                    alt="thumbnail"
+                  />
                 </button>
               </div>
             </div>
 
             {/* <!-- product content --> */}
             <div className="max-w-[539px] w-full flex flex-col gap-6">
-
               <span className="flex flex-row items-center gap-2 text-sm text-gray-500 bg-gray-100 rounded">
                 <ShoppingBag className="w-4 h-4 inline-block" />
                 {product?.category}
@@ -172,7 +174,7 @@ const ProductDetails = ({ product }: ProductProps) => {
           </div>
         </div>
       </section>
-      <RecentlyViewdItems />
+      <ProductYouMayLike />
       <Newsletter />
     </>
   );

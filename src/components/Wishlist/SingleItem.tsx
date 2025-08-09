@@ -7,6 +7,7 @@ import { addItemToCart } from "@/redux/features/cart-slice";
 
 import Image from "next/image";
 import { ShoppingCart, X } from "lucide-react";
+import Link from "next/link";
 
 const SingleItem = ({ item }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -50,7 +51,7 @@ const SingleItem = ({ item }) => {
 
             <div>
               <h3 className="text-dark ease-out duration-200 hover:text-blue">
-                <a href="#"> {item.name} </a>
+                <Link href={`/product/${item.id}`}> {item.name} </Link>
               </h3>
             </div>
           </div>
