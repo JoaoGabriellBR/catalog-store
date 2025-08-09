@@ -58,8 +58,12 @@ const ProductYouMayLike = () => {
           {/* <!-- Swiper --> */}
           <Swiper
             ref={sliderRef}
-            slidesPerView={4}
             spaceBetween={20}
+            breakpoints={{
+              0: { slidesPerView: 1.2, spaceBetween: 12 },
+              640: { slidesPerView: 2, spaceBetween: 16 },
+              1024: { slidesPerView: 4, spaceBetween: 20 },
+            }}
             className="justify-between"
           >
             {items.map((item) => (

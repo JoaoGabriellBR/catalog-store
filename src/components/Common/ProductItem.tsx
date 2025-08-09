@@ -3,14 +3,14 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
-import { Eye, Heart, ShoppingBag, ShoppingCart, Star } from "lucide-react";
+import { Eye, ShoppingBag, ShoppingCart, Star } from "lucide-react";
 import { useModalContext } from "@/app/context/QuickViewModalContext";
 import { updateQuickView } from "@/redux/features/quickView-slice";
 import { addItemToCart } from "@/redux/features/cart-slice";
-import { addItemToWishlist } from "@/redux/features/wishlist-slice";
 import { updateproductDetails } from "@/redux/features/product-details";
 import { AppDispatch } from "@/redux/store";
 import type { Product } from "@/types/product";
+import FavoriteButton from "./FavoriteButton";
 
 interface ProductItemProps {
   item: Product;
@@ -29,10 +29,6 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
     dispatch(addItemToCart({ ...item, quantity: 1 }));
   };
 
-  const handleAddToWishlist = () => {
-    dispatch(addItemToWishlist({ ...item, status: "available", quantity: 1 }));
-  };
-
   const handleShowDetails = () => {
     dispatch(updateproductDetails(item));
   };
@@ -48,13 +44,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
         >
           <Eye size={20} className="stroke-current" />
         </button>
-        <button
-          onClick={handleAddToWishlist}
-          aria-label="Adicionar aos favoritos"
-          className="p-2 bg-white rounded-md shadow hover:bg-blue hover:text-white transition-colors"
-        >
-          <Heart size={20} className="stroke-current" />
-        </button>
+        <FavoriteButton product={item} />
       </div>
 
       {/* Image */}

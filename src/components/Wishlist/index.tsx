@@ -1,21 +1,12 @@
 "use client";
 import React from "react";
 import Breadcrumb from "../Common/Breadcrumb";
-import { useAppSelector } from "@/redux/store";
 import SingleItem from "./SingleItem";
-import { removeAllItemsFromWishlist } from "@/redux/features/wishlist-slice";
-import { AppDispatch } from "@/redux/store";
-import { useDispatch } from "react-redux";
+import { useFavorites } from "@/app/context/FavoritesContext";
 import { TableHeader } from "@/types/table-header";
 
 export const Wishlist = () => {
-  const wishlistItems = useAppSelector((state) => state.wishlistReducer.items);
-
-  const dispatch = useDispatch<AppDispatch>();
-
-  const handleRemoveFromWishlist = () => {
-    dispatch(removeAllItemsFromWishlist());
-  };
+  const { favorites: wishlistItems, clearFavorites } = useFavorites();
 
   const tableHeader = [
     { minWidth: "min-w-[387px]", title: "Produto" },
@@ -32,10 +23,7 @@ export const Wishlist = () => {
             <h2 className="font-medium text-dark text-2xl">
               Sua lista de desejos
             </h2>
-            <button
-              className="text-blue"
-              onClick={() => handleRemoveFromWishlist()}
-            >
+            <button className="text-blue" onClick={() => clearFavorites()}>
               Limpar lista de desejos
             </button>
           </div>

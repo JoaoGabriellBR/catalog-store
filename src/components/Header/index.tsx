@@ -12,6 +12,7 @@ import { categories } from "@/constants/categories";
 import SearchResults from "./SearchResults";
 import useDebounce from "@/hooks/useDebounce";
 import { useAuth } from "@/app/context/AuthContext";
+import { useFavorites } from "@/app/context/FavoritesContext";
 import {
   Search,
   User,
@@ -33,6 +34,11 @@ const Header: React.FC = () => {
   const { openCartModal } = useCartModalContext();
 
   const product = useAppSelector((state) => state.cartReducer.items);
+  const { count: favoritesCount } = useFavorites();
+  const totalCartItems = product.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
 
   const handleClearSearch = () => {
     setSearchQuery("");
@@ -150,6 +156,17 @@ const Header: React.FC = () => {
                     <p className="font-medium text-custom-sm text-dark">Entrar</p>
                   </Link>
                 )}
+                <Link
+                  href="/wishlist"
+                  className="flex items-center gap-2.5"
+                >
+                  <span className="relative inline-block">
+                    <Heart size={24} className="stroke-current" />
+                    <span className="absolute -right-2 -top-2.5 flex h-4.5 w-4.5 items-center justify-center rounded-full bg-blue text-2xs font-medium text-white">
+                      {favoritesCount}
+                    </span>
+                  </span>
+                </Link>
                 <button
                   onClick={openCartModal}
                   className="flex items-center gap-2.5"
@@ -157,7 +174,7 @@ const Header: React.FC = () => {
                   <span className="relative inline-block">
                     <ShoppingCart size={24} className="stroke-current" />
                     <span className="absolute -right-2 -top-2.5 flex h-4.5 w-4.5 items-center justify-center rounded-full bg-blue text-2xs font-medium text-white">
-                      {product.length}
+                      {totalCartItems}
                     </span>
                   </span>
                 </button>

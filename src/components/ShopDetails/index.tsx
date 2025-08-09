@@ -11,7 +11,6 @@ import { AppDispatch } from "@/redux/store";
 import {
   ArrowLeft,
   CircleCheckBig,
-  Heart,
   Link,
   Minus,
   Plus,
@@ -19,6 +18,7 @@ import {
   ShoppingCart,
   Truck,
 } from "lucide-react";
+import FavoriteButton from "@/components/Common/FavoriteButton";
 import { Product } from "@/types/product";
 
 type ProductProps = {
@@ -164,9 +164,12 @@ const ProductDetails = ({ product }: ProductProps) => {
                       Comprar agora
                     </button>
 
-                    <button className="flex items-center justify-center w-12 h-12 rounded-md border border-gray-3 ease-out duration-200 hover:text-white hover:bg-dark hover:border-transparent">
-                      <Heart className="w-5 h-5" />
-                    </button>
+                    {product && (
+                      <FavoriteButton
+                        product={product}
+                        className="flex items-center justify-center w-12 h-12 rounded-md border border-gray-3 ease-out duration-200 hover:text-white hover:bg-dark hover:border-transparent"
+                      />
+                    )}
                   </div>
                 </div>
               </form>

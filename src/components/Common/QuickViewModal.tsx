@@ -8,7 +8,8 @@ import { useDispatch } from "react-redux";
 import Image from "next/image";
 import { usePreviewSlider } from "@/app/context/PreviewSliderContext";
 import { updateproductDetails } from "@/redux/features/product-details";
-import { X, Minus, Plus, Heart, ShoppingCart, ShoppingBag } from "lucide-react";
+import { X, Minus, Plus, ShoppingCart, ShoppingBag } from "lucide-react";
+import FavoriteButton from "./FavoriteButton";
 
 const QuickViewModal = () => {
   const { isModalOpen, closeModal } = useModalContext();
@@ -163,9 +164,12 @@ const QuickViewModal = () => {
                   Adicionar ao carrinho
                 </button>
 
-                <button className="flex items-center justify-center w-12 h-12 rounded-md border border-gray-3 ease-out duration-200 hover:text-white hover:bg-dark hover:border-transparent">
-                  <Heart className="w-5 h-5" />
-                </button>
+                {product && (
+                  <FavoriteButton
+                    product={product}
+                    className="flex items-center justify-center w-12 h-12 rounded-md border border-gray-3 ease-out duration-200 hover:text-white hover:bg-dark hover:border-transparent"
+                  />
+                )}
               </div>
             </div>
           </div>

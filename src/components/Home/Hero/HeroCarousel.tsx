@@ -62,7 +62,7 @@ const HeroCarousel: React.FC<{ data?: Slide[] }> = ({
       {data.map((item, idx) => (
         <SwiperSlide key={item.id}>
           <div className="flex items-center pt-6 sm:pt-0 flex-col-reverse sm:flex-row">
-            <div className="max-w-[394px] py-10 sm:py-15 lg:py-24.5 pl-4 sm:pl-7.5 lg:pl-12.5">
+            <div className="w-full sm:max-w-[394px] py-10 sm:py-15 lg:py-24.5 pl-4 sm:pl-7.5 lg:pl-12.5 text-center sm:text-left">
               {item.sale && (
                 <div className="flex items-center gap-4 mb-7.5 sm:mb-10">
                   <span className="block font-semibold text-heading-3 sm:text-heading-1 text-blue">
@@ -93,13 +93,14 @@ const HeroCarousel: React.FC<{ data?: Slide[] }> = ({
               )}
             </div>
 
-            <div className="relative">
+            <div className="relative w-full flex justify-center sm:justify-end">
               <Image
                 src={item.image}
                 alt={item.title}
                 width={451}
                 height={458}
                 priority={idx === 0}
+                className="w-full h-auto max-w-xs sm:max-w-[451px]"
               />
             </div>
           </div>

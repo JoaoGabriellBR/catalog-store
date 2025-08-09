@@ -1,28 +1,22 @@
 import React from "react";
-import { AppDispatch } from "@/redux/store";
-import { useDispatch } from "react-redux";
-
-import { removeItemFromWishlist } from "@/redux/features/wishlist-slice";
 import { addItemToCart } from "@/redux/features/cart-slice";
+import { useFavorites } from "@/app/context/FavoritesContext";
+import { useDispatch } from "react-redux";
 
 import Image from "next/image";
 import { ShoppingCart, X } from "lucide-react";
 import Link from "next/link";
 
 const SingleItem = ({ item }) => {
-  const dispatch = useDispatch<AppDispatch>();
+  const { toggleFavorite } = useFavorites();
+  const dispatch = useDispatch(); // for cart
 
   const handleRemoveFromWishlist = () => {
-    dispatch(removeItemFromWishlist(item.id));
+    toggleFavorite(item);
   };
 
   const handleAddToCart = () => {
-    dispatch(
-      addItemToCart({
-        ...item,
-        quantity: 1,
-      })
-    );
+    dispatch(addItemToCart({ ...item, quantity: 1 }));
   };
 
   return (
