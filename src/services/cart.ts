@@ -30,24 +30,40 @@ export async function addOrUpdateCartItem(
   productId: string,
   quantity: number
 ) {
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("cart_items")
-    .select("quantity")
+    .select("id, quantity")
     .eq("user_id", userId)
     .eq("product_id", productId)
-    .single();
-
-  const newQuantity = data ? data.quantity + quantity : quantity;
-
-  const { error } = await supabase
-    .from("cart_items")
-    .upsert(
-      { user_id: userId, product_id: productId, quantity: newQuantity },
-      { onConflict: "user_id,product_id" }
-    );
+    .maybeSingle();
 
   if (error) {
-    console.error("Error adding to cart", error.message);
+    console.error("Error checking cart item", error.message);
+    return;
+  }
+
+  if (data) {
+    const { error: updateError } = await supabase
+      .from("cart_items")
+      .update({ quantity: data.quantity + quantity })
+      .eq("user_id", userId)
+      .eq("product_id", productId);
+
+    if (updateError) {
+      console.error("Error updating cart item", updateError.message);
+    }
+  } else {
+    const { error: insertError } = await supabase
+      .from("cart_items")
+      .insert({
+        user_id: userId,
+        product_id: productId,
+        quantity,
+      });
+
+    if (insertError) {
+      console.error("Error inserting cart item", insertError.message);
+    }
   }
 }
 

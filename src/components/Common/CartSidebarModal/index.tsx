@@ -9,10 +9,12 @@ import SingleItem from "./SingleItem";
 import Link from "next/link";
 import EmptyCart from "./EmptyCart";
 import { MessageCircle, ShoppingCart, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const CartSidebarModal = () => {
   const { isCartModalOpen, closeCartModal } = useCartModalContext();
   const cartItems = useAppSelector((state) => state.cartReducer.items);
+  const router = useRouter();
 
   const totalPrice = useSelector(selectTotalPrice);
 
@@ -84,13 +86,18 @@ const CartSidebarModal = () => {
                 Ver carrinho
               </Link>
 
-              <Link
-                href="/checkout"
-                className="w-full flex justify-center font-medium text-white bg-green-light py-[13px] px-6 rounded-md ease-out duration-200 hover:bg-opacity-95"
-              >
-                <MessageCircle className="mr-2" />
-                Pagamento
-              </Link>
+                <button
+                  onClick={() => {
+                    if (!cartItems.length) return;
+                    closeCartModal();
+                    router.push("/checkout");
+                  }}
+                  className="w-full flex justify-center font-medium text-white bg-green-light py-[13px] px-6 rounded-md ease-out duration-200 hover:bg-opacity-95 disabled:opacity-70"
+                  disabled={!cartItems.length}
+                >
+                  <MessageCircle className="mr-2" />
+                  Pagamento
+                </button>
             </div>
           </div>
         </div>
