@@ -121,15 +121,10 @@ const MyAccount = () => {
           <div className="flex flex-col xl:flex-row gap-7.5">
             <div className="xl:max-w-[370px] w-full bg-white rounded-xl shadow-1">
               <div className="flex xl:flex-col">
-                <div className="hidden lg:flex flex-wrap items-center gap-5 py-6 px-4 sm:px-7.5 xl:px-9 border-r xl:border-r-0 xl:border-b border-gray-3">
-                  <div className="max-w-[64px] w-full h-16 rounded-full overflow-hidden">
-                    <Image
-                      src="/images/users/user-04.jpg"
-                      alt="user"
-                      width={64}
-                      height={64}
-                    />
-                  </div>
+                
+                <div className="flex flex-row items-center gap-4 p-4 sm:p-7.5 xl:p-9">
+
+                    <User className="w-20 h-20 text-gray-500" />
 
                   <div>
                     <p className="font-medium text-dark mb-0.5">
