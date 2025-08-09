@@ -2,7 +2,7 @@
 import Breadcrumb from "@/components/Common/Breadcrumb";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { supabase } from "../../../../lib/supabaseClient";
@@ -20,6 +20,7 @@ export type LoginFormData = z.infer<typeof loginSchema>;
 
 const Signin = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [message, setMessage] = useState<string | null>(null);
   const { user, loading } = useAuth();
 
@@ -31,9 +32,10 @@ const Signin = () => {
 
   useEffect(() => {
     if (!loading && user) {
-      router.replace("/my-account");
+      const next = searchParams?.get("next") || "/my-account";
+      router.replace(next);
     }
-  }, [user, loading, router]);
+  }, [user, loading, router, searchParams]);
 
   const onSubmit = async (data: LoginFormData) => {
     setMessage(null);
@@ -44,7 +46,8 @@ const Signin = () => {
     if (error) {
       setMessage(error.message);
     } else {
-      router.push("/my-account");
+      const next = searchParams?.get("next") || "/my-account";
+      router.push(next);
     }
   };
 

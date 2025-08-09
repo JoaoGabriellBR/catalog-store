@@ -2,6 +2,7 @@
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth } from "@/app/context/AuthContext";
+import { useAuthGuard } from "@/hooks/useAuthGuard";
 import {
   addItemToCart,
   removeItemFromCart,
@@ -22,6 +23,8 @@ import { AppDispatch } from "@/redux/store";
 export const useCartActions = () => {
   const { user } = useAuth();
   const dispatch = useDispatch<AppDispatch>();
+  const { getAuthenticatedUserOrRedirect, ensureAuthenticated } =
+    useAuthGuard();
 
   const initializeCart = useCallback(async () => {
     if (!user) return;
@@ -30,26 +33,42 @@ export const useCartActions = () => {
   }, [user, dispatch]);
 
   const addToCart = async (item: CartItem, quantity = 1) => {
-    if (!user) return;
-    await addOrUpdateCartItem(user.id, item.id, quantity);
+    const authUser = getAuthenticatedUserOrRedirect(
+      "Você precisa estar logado para adicionar itens ao carrinho.",
+      "cart"
+    );
+    if (!authUser) return;
+    await addOrUpdateCartItem(authUser.id, item.id, quantity);
     dispatch(addItemToCart({ ...item, quantity }));
   };
 
   const updateQuantity = async (id: string, quantity: number) => {
-    if (!user) return;
-    await setCartItemQuantity(user.id, id, quantity);
+    const authUser = getAuthenticatedUserOrRedirect(
+      "Você precisa estar logado para alterar a quantidade.",
+      "cart"
+    );
+    if (!authUser) return;
+    await setCartItemQuantity(authUser.id, id, quantity);
     dispatch(updateCartItemQuantity({ id, quantity }));
   };
 
   const removeFromCart = async (id: string) => {
-    if (!user) return;
-    await removeCartItem(user.id, id);
+    const authUser = getAuthenticatedUserOrRedirect(
+      "Você precisa estar logado para remover itens do carrinho.",
+      "cart"
+    );
+    if (!authUser) return;
+    await removeCartItem(authUser.id, id);
     dispatch(removeItemFromCart(id));
   };
 
   const clearCart = async () => {
-    if (!user) return;
-    await clearCartItems(user.id);
+    const authUser = getAuthenticatedUserOrRedirect(
+      "Você precisa estar logado para limpar o carrinho.",
+      "cart"
+    );
+    if (!authUser) return;
+    await clearCartItems(authUser.id);
     dispatch(removeAllItemsFromCart());
   };
 

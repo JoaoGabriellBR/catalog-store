@@ -1,8 +1,20 @@
 "use client";
-import { createContext, useContext, useEffect, useState, useCallback } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+} from "react";
 import type { Product } from "@/types/product";
-import { addFavorite, removeFavorite, getFavorites, clearFavorites as clearAll } from "@/services/favorites";
+import {
+  addFavorite,
+  removeFavorite,
+  getFavorites,
+  clearFavorites as clearAll,
+} from "@/services/favorites";
 import { useAuth } from "./AuthContext";
+import { useAuthGuard } from "@/hooks/useAuthGuard";
 
 interface FavoritesContextType {
   favorites: Product[];
@@ -13,10 +25,17 @@ interface FavoritesContextType {
   loadingIds: Set<string>;
 }
 
-const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined);
+const FavoritesContext = createContext<FavoritesContextType | undefined>(
+  undefined
+);
 
-export const FavoritesProvider = ({ children }: { children: React.ReactNode }) => {
+export const FavoritesProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const { user } = useAuth();
+  const { ensureAuthenticated } = useAuthGuard();
   const [favorites, setFavorites] = useState<Product[]>([]);
   const [loadingIds, setLoadingIds] = useState<Set<string>>(new Set());
 
@@ -34,7 +53,13 @@ export const FavoritesProvider = ({ children }: { children: React.ReactNode }) =
   }, [loadFavorites]);
 
   const toggleFavorite = async (product: Product) => {
-    if (!user) return;
+    if (
+      !ensureAuthenticated(
+        "Você precisa estar logado para favoritar produtos.",
+        "favorite"
+      )
+    )
+      return;
     const productId = product.id;
     setLoadingIds((prev) => new Set(prev).add(productId));
     const already = favorites.some((p) => p.id === productId);
@@ -56,16 +81,30 @@ export const FavoritesProvider = ({ children }: { children: React.ReactNode }) =
   };
 
   const clearFavorites = async () => {
-    if (!user) return;
+    if (
+      !ensureAuthenticated(
+        "Você precisa estar logado para limpar os favoritos.",
+        "favorite"
+      )
+    )
+      return;
     await clearAll(user.id);
     setFavorites([]);
   };
 
-  const isFavorite = (productId: string) => favorites.some((p) => p.id === productId);
+  const isFavorite = (productId: string) =>
+    favorites.some((p) => p.id === productId);
 
   return (
     <FavoritesContext.Provider
-      value={{ favorites, count: favorites.length, isFavorite, toggleFavorite, clearFavorites, loadingIds }}
+      value={{
+        favorites,
+        count: favorites.length,
+        isFavorite,
+        toggleFavorite,
+        clearFavorites,
+        loadingIds,
+      }}
     >
       {children}
     </FavoritesContext.Provider>
@@ -74,7 +113,7 @@ export const FavoritesProvider = ({ children }: { children: React.ReactNode }) =
 
 export const useFavorites = () => {
   const ctx = useContext(FavoritesContext);
-  if (!ctx) throw new Error("useFavorites must be used within FavoritesProvider");
+  if (!ctx)
+    throw new Error("useFavorites must be used within FavoritesProvider");
   return ctx;
 };
-

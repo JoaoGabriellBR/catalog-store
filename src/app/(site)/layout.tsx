@@ -13,6 +13,8 @@ import { FavoritesProvider } from "../context/FavoritesContext";
 import QuickViewModal from "@/components/Common/QuickViewModal";
 import CartSidebarModal from "@/components/Common/CartSidebarModal";
 import { PreviewSliderProvider } from "../context/PreviewSliderContext";
+import { LoginRequiredModalProvider } from "../context/LoginRequiredModalContext";
+import LoginRequiredModal from "@/components/Common/LoginRequiredModal";
 import PreviewSliderModal from "@/components/Common/PreviewSlider";
 
 import ScrollToTop from "@/components/Common/ScrollToTop";
@@ -39,20 +41,23 @@ export default function RootLayout({
           <>
             <ReduxProvider>
               <AuthProvider>
-                <FavoritesProvider>
-                  <CartModalProvider>
-                    <ModalProvider>
-                      <PreviewSliderProvider>
-                        <CartInitializer />
-                        <Header />
-                        {children}
-                        <QuickViewModal />
-                        <CartSidebarModal />
-                        <PreviewSliderModal />
-                      </PreviewSliderProvider>
-                    </ModalProvider>
-                  </CartModalProvider>
-                </FavoritesProvider>
+                <LoginRequiredModalProvider>
+                  <FavoritesProvider>
+                    <CartModalProvider>
+                      <ModalProvider>
+                        <PreviewSliderProvider>
+                          <CartInitializer />
+                          <Header />
+                          {children}
+                          <QuickViewModal />
+                          <CartSidebarModal />
+                          <PreviewSliderModal />
+                          <LoginRequiredModal />
+                        </PreviewSliderProvider>
+                      </ModalProvider>
+                    </CartModalProvider>
+                  </FavoritesProvider>
+                </LoginRequiredModalProvider>
               </AuthProvider>
             </ReduxProvider>
             <ScrollToTop />
