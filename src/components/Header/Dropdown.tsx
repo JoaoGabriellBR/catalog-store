@@ -3,6 +3,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import type { Menu } from "@/types/Menu";
 import type { User } from "@supabase/supabase-js";
+import { ChevronDown } from "lucide-react";
 
 interface DropdownProps {
   menuItem: Menu;
@@ -33,29 +34,15 @@ const Dropdown = ({ menuItem, stickyMenu, user }: DropdownProps) => {
         pathUrl.includes(menuItem.title) && "before:!w-full"
       }`}
     >
-      <a
-        href="#"
+      <button
+        type="button"
         className={`hover:text-blue text-custom-sm font-medium text-dark flex items-center gap-1.5 capitalize ${
           stickyMenu ? "xl:py-4" : "xl:py-6"
         } ${pathUrl.includes(menuItem.title) && "!text-blue"}`}
       >
         {menuItem.title}
-        <svg
-          className="fill-current cursor-pointer"
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M2.95363 5.67461C3.13334 5.46495 3.44899 5.44067 3.65866 5.62038L7.99993 9.34147L12.3412 5.62038C12.5509 5.44067 12.8665 5.46495 13.0462 5.67461C13.2259 5.88428 13.2017 6.19993 12.992 6.37964L8.32532 10.3796C8.13808 10.5401 7.86178 10.5401 7.67453 10.3796L3.00787 6.37964C2.7982 6.19993 2.77392 5.88428 2.95363 5.67461Z"
-            fill=""
-          />
-        </svg>
-      </a>
+        <ChevronDown className="w-4 h-4" />
+      </button>
 
       {/* <!-- Dropdown Start --> */}
       <ul

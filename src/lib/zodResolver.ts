@@ -14,7 +14,7 @@ export const zodResolver =
       formErrors[path] = {
         type: err.code,
         message: err.message,
-      };
+      } as any;
     });
     return { values: {}, errors: formErrors };
   };
