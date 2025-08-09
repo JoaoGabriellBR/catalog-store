@@ -1,6 +1,8 @@
 import { supabase } from "../../lib/supabaseClient";
 import type { Product } from "@/types/product";
 
+type FavoriteRow = { products: Product | Product[] };
+
 export async function getFavorites(userId: string): Promise<Product[]> {
   const { data, error } = await supabase
     .from("favorites")
@@ -12,7 +14,12 @@ export async function getFavorites(userId: string): Promise<Product[]> {
     return [];
   }
 
-  return data?.map((row: any) => row.products) ?? [];
+  if (!data) return [];
+
+  const rows = data as unknown as FavoriteRow[];
+  return rows.flatMap((row) =>
+    Array.isArray(row.products) ? row.products : [row.products]
+  );
 }
 
 export async function addFavorite(userId: string, productId: string) {

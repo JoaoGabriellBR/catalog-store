@@ -64,9 +64,9 @@ const InputField: React.FC<InputFieldProps> = ({
   // Build value/defaultValue only when explicitly provided to avoid switching controlled/uncontrolled
   const valueProps: Partial<React.InputHTMLAttributes<HTMLInputElement>> = {};
   if (value !== undefined) {
-    valueProps.value = value as any;
+    valueProps.value = value;
   } else if (defaultValue !== undefined) {
-    valueProps.defaultValue = defaultValue as any;
+    valueProps.defaultValue = defaultValue;
   }
 
   const baseInputClasses =

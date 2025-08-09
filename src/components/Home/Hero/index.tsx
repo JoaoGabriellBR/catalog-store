@@ -41,12 +41,14 @@ const PROMOS: PromoItem[] = [
 ];
 
 const PromoCard = React.memo(function PromoCard({ item }: { item: PromoItem }) {
-  const Wrapper = item.href ? Link : "div";
-  const wrapperProps = item.href ? { href: item.href } : {};
+  const Wrapper: React.ElementType = item.href ? Link : "div";
+  const wrapperProps: Record<string, unknown> = item.href
+    ? { href: item.href }
+    : {};
 
   return (
     <Wrapper
-      {...(wrapperProps as any)}
+      {...wrapperProps}
       className="w-full h-full min-h-0 relative rounded-[10px] bg-white p-4 sm:p-6 transition-shadow hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 flex"
     >
       <div className="flex items-start justify-between gap-6 w-full">

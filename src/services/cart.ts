@@ -14,15 +14,27 @@ export async function getCartItems(userId: string): Promise<CartItem[]> {
     return [];
   }
 
-  return data.map((row: any) => ({
-    id: row.products.id,
-    name: row.products.name,
-    description: row.products.description,
-    price: row.products.price,
-    image_url: row.products.image_url,
-    category: row.products.category,
-    quantity: row.quantity,
-  }));
+  return data.map(
+    (row: {
+      quantity: number;
+      products: {
+        id: string;
+        name: string;
+        description: string;
+        price: number;
+        image_url: string;
+        category: string;
+      };
+    }) => ({
+      id: row.products.id,
+      name: row.products.name,
+      description: row.products.description,
+      price: row.products.price,
+      image_url: row.products.image_url,
+      category: row.products.category,
+      quantity: row.quantity,
+    })
+  );
 }
 
 export async function addOrUpdateCartItem(
@@ -53,13 +65,11 @@ export async function addOrUpdateCartItem(
       console.error("Error updating cart item", updateError.message);
     }
   } else {
-    const { error: insertError } = await supabase
-      .from("cart_items")
-      .insert({
-        user_id: userId,
-        product_id: productId,
-        quantity,
-      });
+    const { error: insertError } = await supabase.from("cart_items").insert({
+      user_id: userId,
+      product_id: productId,
+      quantity,
+    });
 
     if (insertError) {
       console.error("Error inserting cart item", insertError.message);
