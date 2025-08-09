@@ -58,14 +58,14 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
       </div>
 
       {/* Image */}
-      <div className="relative w-full aspect-square overflow-hidden bg-gray-100">
-        <Image
-          src={item.image}
-          alt={item.name}
-          fill
-          className="object-contain transition-transform duration-200 group-hover:scale-110"
-        />
-      </div>
+        <div className="relative w-full aspect-square overflow-hidden bg-gray-100">
+          <Image
+            src={item.image_url}
+            alt={item.name}
+            fill
+            className="object-contain transition-transform duration-200 group-hover:scale-110"
+          />
+        </div>
 
       {/* Info */}
       <div className="p-4 flex flex-col flex-grow">

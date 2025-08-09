@@ -1,17 +1,22 @@
 "use client";
-import React from "react";
-import shopData from "@/components/Shop/shopData";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import ProductItem from "@/components/Common/ProductItem";
 import Image from "next/image";
 import Link from "next/link";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useCallback, useRef } from "react";
 import "swiper/css/navigation";
 import "swiper/css";
+import { getProducts } from "@/services/products";
+import type { Product } from "@/types/product";
 
 const RecentlyViewdItems = () => {
   const sliderRef = useRef(null);
+  const [items, setItems] = useState<Product[]>([]);
+
+  useEffect(() => {
+    getProducts({ limit: 8 }).then(({ products }) => setItems(products));
+  }, []);
 
   const handlePrev = useCallback(() => {
     if (!sliderRef.current) return;
@@ -83,18 +88,18 @@ const RecentlyViewdItems = () => {
             </div>
           </div>
 
-          <Swiper
-            ref={sliderRef}
-            slidesPerView={4}
-            spaceBetween={20}
-            className="justify-between"
-          >
-            {shopData.map((item, key) => (
-              <SwiperSlide key={key}>
-                <ProductItem item={item} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
+            <Swiper
+              ref={sliderRef}
+              slidesPerView={4}
+              spaceBetween={20}
+              className="justify-between"
+            >
+              {items.map((item) => (
+                <SwiperSlide key={item.id}>
+                  <ProductItem item={item} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
         </div>
       </div>
     </section>

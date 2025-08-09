@@ -3,9 +3,10 @@ import React, { useEffect, useState } from "react";
 import Breadcrumb from "../Common/Breadcrumb";
 import SingleListItem from "../Shop/SingleListItem";
 import CustomSelect from "./CustomSelect";
-import shopData from "../Shop/shopData";
 import { Grid, List, ChevronLeft, ChevronRight } from "lucide-react";
 import ProductItem from "../Common/ProductItem";
+import { getProducts } from "@/services/products";
+import type { Product } from "@/types/product";
 
 const AllProducts: React.FC = () => {
   const [productStyle, setProductStyle] = useState<"grid" | "list">("grid");
@@ -17,19 +18,30 @@ const AllProducts: React.FC = () => {
   ];
 
   const itemsPerPage = 12;
-  const totalItems = shopData.length;
+  const [products, setProducts] = useState<Product[]>([]);
+  const [totalItems, setTotalItems] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(totalItems / itemsPerPage);
-
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentItems = shopData.slice(startIndex, endIndex);
+  const endIndex = startIndex + products.length;
 
   useEffect(() => {
     if (currentPage > totalPages) {
       setCurrentPage(totalPages || 1);
     }
   }, [currentPage, totalPages]);
+
+  useEffect(() => {
+    const load = async () => {
+      const { products: data, count } = await getProducts({
+        limit: itemsPerPage,
+        offset: (currentPage - 1) * itemsPerPage,
+      });
+      setProducts(data);
+      setTotalItems(count);
+    };
+    load();
+  }, [currentPage]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -95,7 +107,7 @@ const AllProducts: React.FC = () => {
                     : "flex flex-col gap-7.5"
                 }
               >
-                {currentItems.map((item) =>
+                {products.map((item) =>
                   productStyle === "grid" ? (
                     <ProductItem item={item} key={item.id} />
                   ) : (

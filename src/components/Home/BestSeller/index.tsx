@@ -1,10 +1,18 @@
-import React from "react";
+"use client"
+import React, { useEffect, useState } from "react";
 import SingleItem from "./SingleItem";
 import Image from "next/image";
 import Link from "next/link";
-import shopData from "@/components/Shop/shopData";
+import { getProducts } from "@/services/products";
+import type { Product } from "@/types/product";
 
 const BestSeller = () => {
+  const [items, setItems] = useState<Product[]>([]);
+
+  useEffect(() => {
+    getProducts({ limit: 6 }).then(({ products }) => setItems(products));
+  }, []);
+
   return (
     <section className="overflow-hidden">
       <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
@@ -28,8 +36,8 @@ const BestSeller = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7.5">
           {/* <!-- Best Sellers item --> */}
-          {shopData.slice(1, 7).map((item, key) => (
-            <SingleItem item={item} key={key} />
+          {items.map((item) => (
+            <SingleItem item={item} key={item.id} />
           ))}
         </div>
 

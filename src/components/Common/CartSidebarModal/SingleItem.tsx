@@ -15,7 +15,7 @@ const SingleItem = ({ item, removeItemFromCart }) => {
       <div className="w-full flex items-center gap-6">
         <div className="flex items-center justify-center rounded-[10px] bg-gray-3 max-w-[90px] w-full h-22.5">
           <Image
-            src={item.image}
+            src={item.image_url}
             alt="product"
             width={100}
             height={100}

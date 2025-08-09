@@ -53,15 +53,15 @@ const SingleListItem: React.FC<SingleListItemProps> = ({ item }) => {
       </div>
 
       {/* Imagem */}
-      <div className="flex-shrink-0 w-full sm:w-[270px] p-4 bg-gray-100 flex items-center justify-center">
-        <Image
-          src={item.image}
-          alt={item.name}
-          width={250}
-          height={250}
-          className="object-contain transition-transform duration-200 group-hover:scale-110"
-        />
-      </div>
+        <div className="flex-shrink-0 w-full sm:w-[270px] p-4 bg-gray-100 flex items-center justify-center">
+          <Image
+            src={item.image_url}
+            alt={item.name}
+            width={250}
+            height={250}
+            className="object-contain transition-transform duration-200 group-hover:scale-110"
+          />
+        </div>
 
       {/* Detalhes */}
       <div className="flex flex-col flex-grow p-4 justify-between">

@@ -68,24 +68,24 @@ const ProductDetails = ({ product }: ProductProps) => {
           <div className="flex flex-col lg:flex-row gap-7.5 xl:gap-17.5">
             <div className="lg:max-w-[570px] w-full">
               <div className="lg:min-h-[512px] rounded-lg shadow-1 bg-gray-2 p-4 sm:p-7.5 relative flex items-center justify-center">
-                <Image
-                  src={product?.image}
-                  alt="products-details"
-                  width={400}
-                  height={400}
-                />
+                  <Image
+                    src={product?.image_url}
+                    alt="products-details"
+                    width={400}
+                    height={400}
+                  />
               </div>
 
               <div className="flex flex-wrap sm:flex-nowrap gap-4.5 mt-6">
                 <button
                   className={`flex items-center justify-center w-15 sm:w-25 h-15 sm:h-25 overflow-hidden rounded-lg bg-gray-2 shadow-1 ease-out duration-200 border-2 hover:border-blue`}
                 >
-                  <Image
-                    width={50}
-                    height={50}
-                    src={product?.image}
-                    alt="thumbnail"
-                  />
+                    <Image
+                      width={50}
+                      height={50}
+                      src={product?.image_url}
+                      alt="thumbnail"
+                    />
                 </button>
               </div>
             </div>

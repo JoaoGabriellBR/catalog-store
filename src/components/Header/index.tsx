@@ -1,13 +1,13 @@
 "use client";
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import CustomSelect from "./CustomSelect";
 import { menuData } from "./menuData";
 import Dropdown from "./Dropdown";
 import { useAppSelector } from "@/redux/store";
 import { useCartModalContext } from "@/app/context/CartSidebarModalContext";
-import { products, categories } from "../../../lib/productsData";
 import type { Product } from "@/types/product";
+import { getProducts, getCategories } from "@/services/products";
 import SearchResults from "./SearchResults";
 import useDebounce from "@/hooks/useDebounce";
 import { useAuth } from "@/app/context/AuthContext";
@@ -28,26 +28,15 @@ const Header: React.FC = () => {
   const debouncedQuery = useDebounce(searchQuery, 300);
   const { user } = useAuth();
 
-  const filteredProducts: Product[] = useMemo(() => {
-    if (!debouncedQuery) return [];
-    const query = debouncedQuery.toLowerCase();
-    const isValidCategory = categories.includes(selectedCategory);
-    return products.filter((item) => {
-      const matchesQuery = item.name.toLowerCase().includes(query);
-      const matchesCategory =
-        !isValidCategory || selectedCategory === "Todos"
-          ? true
-          : item.category === selectedCategory;
-      return matchesQuery && matchesCategory;
-    });
-  }, [debouncedQuery, selectedCategory]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
   const { openCartModal } = useCartModalContext();
 
   const product = useAppSelector((state) => state.cartReducer.items);
 
   const handleClearSearch = () => {
     setSearchQuery("");
-    filteredProducts.length = 0;
+    setFilteredProducts([]);
   };
 
   // Sticky menu
@@ -58,6 +47,31 @@ const Header: React.FC = () => {
     window.addEventListener("scroll", handleStickyMenu);
     return () => window.removeEventListener("scroll", handleStickyMenu);
   }, []);
+
+  // Load categories once
+  useEffect(() => {
+    const load = async () => {
+      const data = await getCategories();
+      setCategories(["Todos", ...data]);
+    };
+    load();
+  }, []);
+
+  // Fetch products when searching
+  useEffect(() => {
+    const fetch = async () => {
+      if (!debouncedQuery) {
+        setFilteredProducts([]);
+        return;
+      }
+      const { products } = await getProducts({
+        search: debouncedQuery,
+        category: selectedCategory,
+      });
+      setFilteredProducts(products);
+    };
+    fetch();
+  }, [debouncedQuery, selectedCategory]);
 
   // user state is managed by AuthProvider
 

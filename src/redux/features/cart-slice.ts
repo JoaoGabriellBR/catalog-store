@@ -10,7 +10,7 @@ type CartItem = {
   name: string;
   description: string;
   price: number;
-  image: string;
+  image_url: string;
   category: string;
   quantity: number;
 };
@@ -24,7 +24,7 @@ export const cart = createSlice({
   initialState,
   reducers: {
     addItemToCart: (state, action: PayloadAction<CartItem>) => {
-      const { id, name, description, price, image, category, quantity } = action.payload;
+      const { id, name, description, price, image_url, category, quantity } = action.payload;
       const existingItem = state.items.find((item) => item.id === id);
 
       if (existingItem) {
@@ -35,7 +35,7 @@ export const cart = createSlice({
           name,
           description,
           price,
-          image,
+          image_url,
           category,
           quantity,
         });

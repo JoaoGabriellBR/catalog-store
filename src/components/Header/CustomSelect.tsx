@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from "react";
 
 interface Option {
@@ -27,7 +28,10 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ options, onSelect }) => {
   useEffect(() => {
     // closing modal while clicking outside
     function handleClickOutside(event: MouseEvent) {
-      if (!event.target || !(event.target as HTMLElement).closest(".dropdown-content")) {
+      if (
+        !event.target ||
+        !(event.target as HTMLElement).closest(".dropdown-content")
+      ) {
         setIsOpen(false);
       }
     }
@@ -42,14 +46,17 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ options, onSelect }) => {
   }, [isOpen]);
 
   return (
-    <div className="dropdown-content custom-select relative" style={{ width: "200px" }}>
+    <div
+      className="dropdown-content custom-select relative"
+      style={{ width: "200px" }}
+    >
       <div
         className={`select-selected whitespace-nowrap ${
           isOpen ? "select-arrow-active" : ""
         }`}
         onClick={toggleDropdown}
       >
-        {selectedOption.label}
+        {selectedOption?.label}
       </div>
       <div className={`select-items ${isOpen ? "" : "select-hide"}`}>
         {options.map((option, index) => (

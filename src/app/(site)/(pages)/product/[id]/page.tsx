@@ -2,8 +2,9 @@
 import React, { useEffect, useState } from "react";
 import ProductDetails from "@/components/ShopDetails";
 import { useParams } from "next/navigation";
-import { products } from "../../../../../../lib/productsData";
 import { Metadata } from "next";
+import { getProductById } from "@/services/products";
+import type { Product } from "@/types/product";
 
 // export const metadata: Metadata = {
 //   title: "Detalhes do Produto | Loja STG Catalog",
@@ -12,12 +13,11 @@ import { Metadata } from "next";
 
 const ProductsPage = () => {
   const { id } = useParams(); // nome do param
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
-    const productId = Number(id);
-    const found = products.find((p) => Number(p.id) === productId);
-    setProduct(found ?? null);
+    if (!id || typeof id !== "string") return;
+    getProductById(id).then((data) => setProduct(data));
   }, [id]);
 
   if (!product) {

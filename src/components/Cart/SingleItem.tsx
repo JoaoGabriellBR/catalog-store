@@ -36,9 +36,9 @@ const SingleItem = ({ item }) => {
       <div className="min-w-[400px]">
         <div className="flex items-center justify-between gap-5">
           <div className="w-full flex items-center gap-5.5">
-            <div className="flex items-center justify-center rounded-[5px] bg-gray-2 max-w-[80px] w-full h-17.5">
-              <Image width={200} height={200} src={item.image} alt="product" />
-            </div>
+              <div className="flex items-center justify-center rounded-[5px] bg-gray-2 max-w-[80px] w-full h-17.5">
+                <Image width={200} height={200} src={item.image_url} alt="product" />
+              </div>
 
             <div>
               <h3 className="text-dark ease-out duration-200 hover:text-blue">

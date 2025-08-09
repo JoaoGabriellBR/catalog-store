@@ -24,17 +24,17 @@ const SearchResults: React.FC<SearchResultsProps> = ({
           className="p-2 hover:bg-gray-1"
           onClick={handleClearSearch}
         >
-          <Link
-            href={`/product/${item.id}`}
-            className="flex items-center gap-3"
-          >
-            <Image
-              src={item.image}
-              alt={item.name}
-              width={40}
-              height={40}
-              className="rounded"
-            />
+            <Link
+              href={`/product/${item.id}`}
+              className="flex items-center gap-3"
+            >
+              <Image
+                src={item.image_url}
+                alt={item.name}
+                width={40}
+                height={40}
+                className="rounded"
+              />
             <div className="flex flex-col">
               <span className="text-sm font-medium text-dark">{item.name}</span>
               <span className="text-xs text-gray-6">{item.category}</span>

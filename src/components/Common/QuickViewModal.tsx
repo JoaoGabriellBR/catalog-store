@@ -73,25 +73,25 @@ const QuickViewModal = () => {
                 <div className="flex flex-col gap-5">
                   {/* Simplified image display since we only have one image */}
                   <div className="flex items-center justify-center w-20 h-20 overflow-hidden rounded-lg bg-gray-1 border-2 border-blue">
-                    {product?.image && (
-                      <Image
-                        src={product.image}
-                        alt="thumbnail"
-                        width={61}
-                        height={61}
-                        className="aspect-square"
-                      />
-                    )}
+                    {product?.image_url && (
+                        <Image
+                          src={product.image_url}
+                          alt="thumbnail"
+                          width={61}
+                          height={61}
+                          className="aspect-square"
+                        />
+                      )}
                   </div>
                 </div>
 
                 <div className="relative z-1 overflow-hidden flex items-center justify-center w-full sm:min-h-[508px] bg-gray-1 rounded-lg border border-gray-3">
-                  <Image
-                    src={product.image}
-                    alt="products-details"
-                    width={400}
-                    height={400}
-                  />
+                    <Image
+                      src={product.image_url}
+                      alt="products-details"
+                      width={400}
+                      height={400}
+                    />
                 </div>
               </div>
             </div>

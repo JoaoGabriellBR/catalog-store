@@ -11,7 +11,7 @@ const initialState = {
     name: "",
     description: "",
     price: 0,
-    image: "",
+    image_url: "",
     category: "",
   } as Product,
 } as InitialState;
