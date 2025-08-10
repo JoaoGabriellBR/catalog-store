@@ -1,7 +1,7 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import SingleItem from "./SingleItem";
-import Image from "next/image";
+import { Tag } from "lucide-react";
 import Link from "next/link";
 import { getProducts } from "@/services/products";
 import type { Product } from "@/types/product";
@@ -20,12 +20,7 @@ const BestSeller = () => {
         <div className="mb-10 flex items-center justify-between">
           <div>
             <span className="flex items-center gap-2.5 font-medium text-dark mb-1.5">
-              <Image
-                src="/images/icons/icon-07.svg"
-                alt="icon"
-                width={17}
-                height={17}
-              />
+              <Tag className="w-[17px] h-[17px]" />
               This Month
             </span>
             <h2 className="font-semibold text-xl xl:text-heading-5 text-dark">

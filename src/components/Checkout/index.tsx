@@ -330,9 +330,9 @@ const Checkout: React.FC = () => {
                 className="divide-y divide-gray-3 mb-4"
                 aria-label="Itens do pedido"
               >
-                {cartItems.map((item) => (
+                {cartItems.map((item, index) => (
                   <li
-                    key={item.id}
+                    key={index}
                     className="flex items-center justify-between gap-3 py-3"
                   >
                     <div className="flex items-center gap-3 min-w-0">
