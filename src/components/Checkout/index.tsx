@@ -20,21 +20,10 @@ import { useAuth } from "@/app/context/AuthContext";
 import { useCartActions } from "@/hooks/useCartActions";
 import { createOrder } from "@/services/orders";
 import { useAuthGuard } from "@/hooks/useAuthGuard";
+import { formatCurrency } from "@/lib/formatCurrency";
 
 type PaymentMethod = "whatsapp" | "pix" | "credit";
 type ShippingMethod = "standard" | "express";
-
-function formatCurrencyBRL(value: number): string {
-  try {
-    return new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-      minimumFractionDigits: 2,
-    }).format(value);
-  } catch {
-    return `R$ ${value.toFixed(2)}`;
-  }
-}
 
 const Checkout: React.FC = () => {
   const cartItems = useAppSelector((state) => state.cartReducer.items);
@@ -75,16 +64,16 @@ const Checkout: React.FC = () => {
         "PRODUTOS:",
         ...cartItems.map(
           (item) =>
-            `• ${item.name} - Qtd: ${item.quantity} - ${formatCurrencyBRL(
+            `• ${item.name} - Qtd: ${item.quantity} - ${formatCurrency(
               item.price * item.quantity
             )}`
         ),
         "",
-        `Subtotal: ${formatCurrencyBRL(subtotal)}`,
-        `Frete (${
+        `Subtotal: ${formatCurrency(subtotal)}`,
+        `Frete (${ 
           shippingMethod === "express" ? "Expresso" : "Padrão"
-        }): ${formatCurrencyBRL(shippingCost)}`,
-        `TOTAL: ${formatCurrencyBRL(grandTotal)}`,
+        }): ${formatCurrency(shippingCost)}`,
+        `TOTAL: ${formatCurrency(grandTotal)}`,
         "",
         "Pedido via STG Catalog",
       ];
@@ -282,7 +271,7 @@ const Checkout: React.FC = () => {
                       id="ship-standard-desc"
                       className="text-dark-4 text-sm mt-1"
                     >
-                      5-8 dias úteis — {formatCurrencyBRL(0)}
+                      5-8 dias úteis — {formatCurrency(0)}
                     </p>
                   </div>
                 </label>
@@ -306,7 +295,7 @@ const Checkout: React.FC = () => {
                       id="ship-express-desc"
                       className="text-dark-4 text-sm mt-1"
                     >
-                      2-3 dias úteis — {formatCurrencyBRL(19.9)}
+                      2-3 dias úteis — {formatCurrency(19.9)}
                     </p>
                   </div>
                 </label>
@@ -355,7 +344,7 @@ const Checkout: React.FC = () => {
                       </div>
                     </div>
                     <span className="text-sm font-medium text-dark">
-                      {formatCurrencyBRL(item.price * item.quantity)}
+                      {formatCurrency(item.price * item.quantity)}
                     </span>
                   </li>
                 ))}
@@ -365,19 +354,19 @@ const Checkout: React.FC = () => {
                 <div className="flex items-center justify-between">
                   <span className="text-dark-4">Subtotal</span>
                   <span className="text-dark">
-                    {formatCurrencyBRL(subtotal)}
+                    {formatCurrency(subtotal)}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-dark-4">Frete</span>
                   <span className="text-dark">
-                    {formatCurrencyBRL(shippingCost)}
+                    {formatCurrency(shippingCost)}
                   </span>
                 </div>
                 <div className="flex items-center justify-between pt-2 border-t border-gray-3">
                   <span className="text-dark font-medium">Total</span>
                   <span className="text-dark font-semibold">
-                    {formatCurrencyBRL(grandTotal)}
+                    {formatCurrency(grandTotal)}
                   </span>
                 </div>
               </div>

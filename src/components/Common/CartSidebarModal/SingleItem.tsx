@@ -5,6 +5,7 @@ import { useCartActions } from "@/hooks/useCartActions";
 import { Trash2 } from "lucide-react";
 import type { CartItem } from "@/redux/features/cart-slice";
 import Button from "@/components/Common/Button";
+import { formatCurrency } from "@/lib/formatCurrency";
 
 interface Props {
   item: CartItem;
@@ -33,7 +34,7 @@ const SingleItem = ({ item }: Props) => {
           </h3>
           <p className="text-custom-sm">
             Preço:{" "}
-            <span className="font-semibold">R$ {item.price.toFixed(2)}</span>
+            <span className="font-semibold">{formatCurrency(item.price)}</span>
           </p>
           <p className="text-custom-sm">
             Quantidade: <span className="font-semibold">{item.quantity}</span>{" "}

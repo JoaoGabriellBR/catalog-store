@@ -2,16 +2,11 @@
 
 import { Clock, Package } from "lucide-react";
 import { Order } from "@/types/order";
+import { formatCurrency } from "@/lib/formatCurrency";
 
 interface OrderCardProps {
   order: Order;
 }
-
-const formatCurrency = (value: number) =>
-  value.toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  });
 
 const OrderCard = ({ order }: OrderCardProps) => {
   return (

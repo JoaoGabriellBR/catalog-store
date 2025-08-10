@@ -11,6 +11,7 @@ import EmptyCart from "./EmptyCart";
 import { MessageCircle, ShoppingCart, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Button from "@/components/Common/Button";
+import { formatCurrency } from "@/lib/formatCurrency";
 
 const CartSidebarModal = () => {
   const { isCartModalOpen, closeCartModal } = useCartModalContext();
@@ -78,7 +79,7 @@ const CartSidebarModal = () => {
               <p className="font-medium text-xl text-dark">Subtotal:</p>
 
               <p className="font-medium text-xl text-dark">
-                ${totalPrice.toFixed(2)}
+                {formatCurrency(totalPrice)}
               </p>
             </div>
 

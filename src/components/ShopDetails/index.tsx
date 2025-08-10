@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import FavoriteButton from "@/components/Common/FavoriteButton";
 import { Product } from "@/types/product";
+import { formatCurrency } from "@/lib/formatCurrency";
 
 type ProductProps = {
   product: Product | null;
@@ -114,7 +115,7 @@ const ProductDetails = ({ product }: ProductProps) => {
               <div className="">
                 <div className="flex items-end gap-3">
                   <span className="text-3xl font-extrabold text-blue">
-                    R$ {product?.price.toFixed(2)}
+                    {product && formatCurrency(product.price)}
                   </span>
                 </div>
               </div>

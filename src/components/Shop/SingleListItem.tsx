@@ -10,6 +10,7 @@ import type { Product } from "@/types/product";
 import FavoriteButton from "../Common/FavoriteButton";
 import { useCartActions } from "@/hooks/useCartActions";
 import Button from "@/components/Common/Button";
+import { formatCurrency } from "@/lib/formatCurrency";
 
 interface SingleListItemProps {
   item: Product;
@@ -70,7 +71,7 @@ const SingleListItem: React.FC<SingleListItemProps> = ({ item }) => {
 
           <div className="flex items-baseline space-x-3 mb-3">
             <span className="text-lg font-semibold text-gray-900">
-              R$ {item.price.toFixed(2)}
+              {formatCurrency(item.price)}
             </span>
             <span className="flex flex-row items-center gap-2 text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">
               <ShoppingBag size={16} className="text-gray-500" />

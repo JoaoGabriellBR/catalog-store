@@ -13,6 +13,7 @@ import FavoriteButton from "./FavoriteButton";
 import Button from "@/components/Common/Button";
 import { useCartActions } from "@/hooks/useCartActions";
 import Loader from "@/components/Common/Loader";
+import { formatCurrency } from "@/lib/formatCurrency";
 
 interface ProductItemProps {
   item: Product;
@@ -89,7 +90,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
         {/* Price */}
         <div className="flex items-baseline space-x-2 mb-4">
           <span className="text-lg font-semibold text-gray-900">
-            R$ {item.price.toFixed(2)}
+            {formatCurrency(item.price)}
           </span>
         </div>
 

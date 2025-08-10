@@ -8,6 +8,7 @@ import { X, Minus, Plus, ShoppingCart, ShoppingBag } from "lucide-react";
 import FavoriteButton from "./FavoriteButton";
 import { useCartActions } from "@/hooks/useCartActions";
 import Button from "@/components/Common/Button";
+import { formatCurrency } from "@/lib/formatCurrency";
 
 const QuickViewModal = () => {
   const { isModalOpen, closeModal } = useModalContext();
@@ -116,7 +117,7 @@ const QuickViewModal = () => {
                 <h4 className="font-semibold text-lg text-dark">Preço</h4>
 
                 <span className="font-semibold text-dark text-xl xl:text-heading-4">
-                  R$ {product.price.toFixed(2)}
+                  {formatCurrency(product.price)}
                 </span>
               </div>
 

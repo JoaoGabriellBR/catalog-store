@@ -12,6 +12,7 @@ import Button from "@/components/Common/Button";
 import { useCartActions } from "@/hooks/useCartActions";
 import Loader from "@/components/Common/Loader";
 import { Eye, ShoppingCart, Star } from "lucide-react";
+import { formatCurrency } from "@/lib/formatCurrency";
 
 const SingleItem = ({ item }: { item: Product }) => {
   const { openModal } = useModalContext();
@@ -57,7 +58,7 @@ const SingleItem = ({ item }: { item: Product }) => {
           </h3>
 
           <span className="flex items-center justify-center gap-2 font-medium text-lg">
-            <span className="text-dark">R$ {item.price.toFixed(2)}</span>
+            <span className="text-dark">{formatCurrency(item.price)}</span>
           </span>
         </div>
 

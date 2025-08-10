@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import type { CartItem } from "@/redux/features/cart-slice";
 import Button from "@/components/Common/Button";
+import { formatCurrency } from "@/lib/formatCurrency";
 
 interface Props {
   item: CartItem;
@@ -65,7 +66,7 @@ const SingleItem = ({ item }: Props) => {
       </div>
 
       <div className="min-w-[180px]">
-        <p className="text-dark">R$ {item.price.toFixed(2)}</p>
+        <p className="text-dark">{formatCurrency(item.price)}</p>
       </div>
 
       <div className="min-w-[275px]">
@@ -107,7 +108,7 @@ const SingleItem = ({ item }: Props) => {
       </div>
 
       <div className="min-w-[200px]">
-        <p className="text-dark">R$ {(item.price * quantity).toFixed(2)}</p>
+        <p className="text-dark">{formatCurrency(item.price * quantity)}</p>
       </div>
 
       <div className="min-w-[50px] flex justify-end">

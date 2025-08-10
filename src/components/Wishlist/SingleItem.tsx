@@ -7,6 +7,7 @@ import { ShoppingCart, X } from "lucide-react";
 import Link from "next/link";
 import Button from "@/components/Common/Button";
 import type { Product } from "@/types/product";
+import { formatCurrency } from "@/lib/formatCurrency";
 
 interface SingleItemProps {
   item: Product;
@@ -68,7 +69,7 @@ const SingleItem: React.FC<SingleItemProps> = ({ item }) => {
       </div>
 
       <div className="min-w-[415px]">
-        <p className="text-dark">R$ {item.price.toFixed(2)}</p>
+        <p className="text-dark">{formatCurrency(item.price)}</p>
       </div>
 
       <div className="min-w-[150px] flex justify-end">

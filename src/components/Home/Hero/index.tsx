@@ -6,13 +6,14 @@ import { useRouter } from "next/navigation";
 import { getProducts } from "@/services/products";
 import HeroCarousel from "./HeroCarousel";
 import HeroFeature from "./HeroFeature";
+import { formatCurrency } from "@/lib/formatCurrency";
 
 type PromoItem = {
   id: string | number;
   title: string;
   subtitle?: string;
-  price: string;
-  oldPrice?: string;
+  price: number;
+  oldPrice?: number;
   imageSrc: string;
   imageAlt: string;
   productQuery?: string;
@@ -23,8 +24,8 @@ const PROMOS: PromoItem[] = [
     id: 1,
     title: "Apple Watch Series 9",
     subtitle: "limited time offer",
-    price: "R$ 3999.99",
-    oldPrice: "R$ 4399.99",
+    price: 3999.99,
+    oldPrice: 4399.99,
     imageSrc: "/images/hero/apple-watch-series-9.png",
     imageAlt: "Apple Watch Series 9",
     productQuery: "Apple Watch Series 9",
@@ -33,8 +34,8 @@ const PROMOS: PromoItem[] = [
     id: 2,
     title: "iPad Pro 12.9",
     subtitle: "limited time offer",
-    price: "R$ 8999.99",
-    oldPrice: "R$ 9599.99",
+    price: 8999.99,
+    oldPrice: 9599.99,
     imageSrc: "/images/hero/ipad-pro-12.png",
     imageAlt: "iPad Pro 12.9",
     productQuery: "iPad Pro 12.9",
@@ -84,10 +85,12 @@ const PromoCard = React.memo(function PromoCard({ item }: { item: PromoItem }) {
           </div>
 
           <span className="w-full flex flex-col items-start font-semibold text-2xl text-blue">
-            <span className="text-sm text-red-light line-through">
-              {item.oldPrice}
-            </span>
-            <span>{item.price}</span>
+            {item.oldPrice && (
+              <span className="text-sm text-red-light line-through">
+                {formatCurrency(item.oldPrice)}
+              </span>
+            )}
+            <span>{formatCurrency(item.price)}</span>
           </span>
         </div>
 
