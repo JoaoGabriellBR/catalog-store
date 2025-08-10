@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { Menu } from "@/types/Menu";
 import type { User } from "@supabase/supabase-js";
 import { ChevronDown } from "lucide-react";
+import Button from "@/components/Common/Button";
 
 interface DropdownProps {
   menuItem: Menu;
@@ -19,10 +20,7 @@ const Dropdown = ({ menuItem, stickyMenu, user }: DropdownProps) => {
     () =>
       menuItem.submenu?.filter(
         (item) =>
-          !(
-            user &&
-            (item.path === "/signin" || item.path === "/signup")
-          )
+          !(user && (item.path === "/signin" || item.path === "/signup"))
       ) || [],
     [menuItem.submenu, user]
   );
@@ -34,15 +32,16 @@ const Dropdown = ({ menuItem, stickyMenu, user }: DropdownProps) => {
         pathUrl.includes(menuItem.title) && "before:!w-full"
       }`}
     >
-      <button
+      <Button
         type="button"
+        variant="ghost"
         className={`hover:text-blue text-custom-sm font-medium text-dark flex items-center gap-1.5 capitalize ${
           stickyMenu ? "xl:py-4" : "xl:py-6"
         } ${pathUrl.includes(menuItem.title) && "!text-blue"}`}
       >
         {menuItem.title}
         <ChevronDown className="w-4 h-4" />
-      </button>
+      </Button>
 
       {/* <!-- Dropdown Start --> */}
       <ul

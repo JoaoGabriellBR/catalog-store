@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { X, Lock, Heart, ShoppingCart } from "lucide-react";
 import { useLoginRequiredModal } from "@/app/context/LoginRequiredModalContext";
 import Link from "next/link";
+import Button from "@/components/Common/Button";
 
 export default function LoginRequiredModal() {
   const { isOpen, reason, close } = useLoginRequiredModal();
@@ -35,13 +36,15 @@ export default function LoginRequiredModal() {
 
       {/* modal content */}
       <div className="relative z-[1001] w-[92%] sm:w-[520px] max-w-[92%] rounded-2xl bg-white shadow-2xl p-6 sm:p-8 animate-[fadeIn_0.15s_ease-out]">
-        <button
-          aria-label="Fechar"
+        <Button
+          ariaLabel="Fechar"
           onClick={close}
-          className="absolute right-3 top-3 p-2 rounded-md hover:bg-gray-100 text-gray-500"
+          variant="ghost"
+          size="icon"
+          className="absolute right-3 top-3 text-gray-500 hover:bg-gray-100"
         >
           <X className="w-5 h-5" />
-        </button>
+        </Button>
 
         <div className="flex items-center gap-3 mb-4 text-blue">
           <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-blue/10">

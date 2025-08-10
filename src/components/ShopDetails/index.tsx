@@ -4,7 +4,7 @@ import Breadcrumb from "../Common/Breadcrumb";
 import Image from "next/image";
 import ProductYouMayLike from "./ProductYouMayLike";
 import { useCartActions } from "@/hooks/useCartActions";
-import Loader from "@/components/Common/Loader";
+import Button from "@/components/Common/Button";
 import {
   ArrowLeft,
   CircleCheckBig,
@@ -82,8 +82,10 @@ const ProductDetails = ({ product }: ProductProps) => {
               </div>
 
               <div className="flex flex-wrap sm:flex-nowrap gap-4.5 mt-6">
-                <button
-                  className={`flex items-center justify-center w-15 sm:w-25 h-15 sm:h-25 overflow-hidden rounded-lg bg-gray-2 shadow-1 ease-out duration-200 border-2 hover:border-blue`}
+                <Button
+                  variant="gray"
+                  size="icon"
+                  className="flex items-center justify-center w-15 sm:w-25 h-15 sm:h-25 overflow-hidden rounded-lg bg-gray-2 shadow-1 ease-out duration-200 border-2 hover:border-blue"
                 >
                   <Image
                     width={50}
@@ -91,7 +93,7 @@ const ProductDetails = ({ product }: ProductProps) => {
                     src={product?.image_url}
                     alt="thumbnail"
                   />
-                </button>
+                </Button>
               </div>
             </div>
 
@@ -135,44 +137,45 @@ const ProductDetails = ({ product }: ProductProps) => {
                     Quantidade
                   </h4>
                   <div className="flex items-center rounded-md border border-gray-3">
-                    <button
-                      aria-label="button for remove product"
-                      className="flex items-center justify-center w-12 h-12 ease-out duration-200 hover:text-blue"
+                    <Button
+                      ariaLabel="button for remove product"
                       onClick={() => quantity > 1 && setQuantity(quantity - 1)}
+                      variant="ghost"
+                      size="icon"
+                      className="w-12 h-12 hover:text-blue"
                     >
                       <Minus className="w-5 h-5" />
-                    </button>
+                    </Button>
 
                     <span className="flex items-center justify-center w-16 h-12 border-x border-gray-4">
                       {quantity}
                     </span>
 
-                    <button
+                    <Button
                       onClick={() => setQuantity(quantity + 1)}
-                      aria-label="button for add product"
-                      className="flex items-center justify-center w-12 h-12 ease-out duration-200 hover:text-blue"
+                      ariaLabel="button for add product"
+                      variant="ghost"
+                      size="icon"
+                      className="w-12 h-12 hover:text-blue"
                     >
                       <Plus className="w-5 h-5" />
-                    </button>
+                    </Button>
                   </div>
                   <div className="flex flex-row items-center gap-4.5 flex-wrap">
-                    <button
+                    <Button
                       disabled={quantity === 0 || adding}
+                      isLoading={adding}
                       onClick={handleAddToCart}
-                      className={`inline-flex font-medium text-white bg-blue py-3 px-7 rounded-md ease-out duration-200 hover:bg-blue-dark disabled:opacity-70
-                  `}
+                      variant="primary"
+                      className="px-7"
                     >
-                      {adding ? (
-                        <>
-                          <Loader className="w-5 h-5 mr-2" /> Comprando...
-                        </>
-                      ) : (
+                      {!adding && (
                         <>
                           <ShoppingCart className="w-5 h-5 mr-2" />
                           Comprar agora
                         </>
                       )}
-                    </button>
+                    </Button>
 
                     {product && (
                       <FavoriteButton

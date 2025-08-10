@@ -6,7 +6,7 @@ import Link from "next/link";
 import { z } from "zod";
 import { supabase } from "../../../lib/supabaseClient";
 import InputField from "@/components/Common/InputField";
-import Loader from "@/components/Common/Loader";
+import Button from "@/components/Common/Button";
 import { PasswordStrengthIndicator } from "./PasswordStrengthIndicator";
 import { Circle } from "lucide-react";
 import Breadcrumb from "@/components/Common/Breadcrumb";
@@ -155,19 +155,14 @@ const RegisterForm: React.FC = () => {
                 required
               />
 
-              <button
+              <Button
                 type="submit"
-                disabled={isSubmitting}
-                className="w-full flex justify-center font-medium text-white bg-dark py-3 px-6 rounded-lg ease-out duration-200 hover:bg-blue mt-7.5 disabled:opacity-50"
+                isLoading={isSubmitting}
+                variant="dark"
+                className="w-full mt-7.5"
               >
-                {isSubmitting ? (
-                  <>
-                    <Loader className="mr-2 h-4 w-4" /> Cadastrando...
-                  </>
-                ) : (
-                  "Criar Conta"
-                )}
-              </button>
+                Criar Conta
+              </Button>
 
               {message && (
                 <p

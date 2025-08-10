@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { supabase } from "../../../../lib/supabaseClient";
 import InputField from "../InputField";
-import Loader from "@/components/Common/Loader";
+import Button from "@/components/Common/Button";
 import { useAuth } from "@/app/context/AuthContext";
 import { zodResolver } from "@/lib/zodResolver";
 
@@ -81,19 +81,15 @@ const Signin = () => {
                 registration={register("password")}
                 error={errors.password}
               />
-              <button
+              <Button
                 type="submit"
-                disabled={isSubmitting}
-                className="w-full flex justify-center font-medium text-white bg-dark py-3 px-6 rounded-lg ease-out duration-200 hover:bg-blue mt-7.5 disabled:opacity-50"
+                isLoading={isSubmitting}
+                variant="dark"
+                size="md"
+                className="w-full mt-7.5"
               >
-                {isSubmitting ? (
-                  <>
-                    <Loader className="mr-2 h-4 w-4" /> Entrando...
-                  </>
-                ) : (
-                  "Entrar na conta"
-                )}
-              </button>
+                Entrar na conta
+              </Button>
               {message && (
                 <p className="text-center mt-4 text-red-600">{message}</p>
               )}

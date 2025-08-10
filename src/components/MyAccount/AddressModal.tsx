@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import InputField from "@/components/Common/InputField";
 import { X } from "lucide-react";
+import Button from "@/components/Common/Button";
 
 interface AddressModalProps {
   isOpen: boolean;
@@ -37,13 +38,15 @@ const AddressModal = ({ isOpen, closeModal }: AddressModalProps) => {
           x-show="addressModal"
           className="w-full max-w-[1100px] rounded-xl shadow-3 bg-white p-7.5 relative modal-content"
         >
-          <button
+          <Button
             onClick={closeModal}
-            aria-label="button for close modal"
-            className="absolute top-0 right-0 sm:top-3 sm:right-3 flex items-center justify-center w-10 h-10 rounded-full ease-in duration-150 bg-meta text-body hover:text-dark"
+            ariaLabel="button for close modal"
+            variant="ghost"
+            size="icon"
+            className="absolute top-0 right-0 sm:top-3 sm:right-3 text-body hover:text-dark"
           >
             <X className="w-6 h-6" />
-          </button>
+          </Button>
 
           <div>
             <form>
@@ -91,12 +94,9 @@ const AddressModal = ({ isOpen, closeModal }: AddressModalProps) => {
                 </div>
               </div>
 
-              <button
-                type="submit"
-                className="inline-flex font-medium text-white bg-blue py-3 px-7 rounded-md ease-out duration-200 hover:bg-blue-dark"
-              >
+              <Button type="submit" variant="primary" className="px-7">
                 Save Changes
-              </button>
+              </Button>
             </form>
           </div>
         </div>

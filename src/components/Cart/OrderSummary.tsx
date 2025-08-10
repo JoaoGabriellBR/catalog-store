@@ -6,6 +6,7 @@ import { MessageCircle } from "lucide-react";
 import React from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import Button from "@/components/Common/Button";
 
 const OrderSummary = () => {
   const cartItems = useAppSelector((state) => state.cartReducer.items);
@@ -60,14 +61,16 @@ const OrderSummary = () => {
             </div>
           </div>
 
-          <button
+          <Button
             type="button"
             onClick={handleCheckout}
-            className="w-full flex justify-center font-medium text-white bg-green-light py-3 px-6 mt-7 rounded-md ease-out duration-200 hover:bg-opacity-95"
+            variant="success"
+            className="w-full mt-7"
           >
-            <MessageCircle className="mr-2" />
-            Finalizar compra
-          </button>
+            <span className="inline-flex items-center">
+              <MessageCircle className="mr-2" /> Finalizar compra
+            </span>
+          </Button>
         </div>
       </div>
     </div>

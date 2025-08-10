@@ -10,6 +10,7 @@ import "swiper/css";
 import { getProducts } from "@/services/products";
 import type { Product } from "@/types/product";
 import { ChevronLeft, ChevronRight, Tag } from "lucide-react";
+import Button from "@/components/Common/Button";
 
 const ProductYouMayLike = () => {
   const sliderRef = useRef(null);
@@ -46,13 +47,21 @@ const ProductYouMayLike = () => {
             </div>
 
             <div className="flex items-center gap-3">
-              <button onClick={handlePrev} className="swiper-button-prev">
+              <Button
+                onClick={handlePrev}
+                variant="ghost"
+                className="swiper-button-prev"
+              >
                 <ChevronLeft className="w-6 h-6 inline-block" />
-              </button>
+              </Button>
 
-              <button onClick={handleNext} className="swiper-button-next">
+              <Button
+                onClick={handleNext}
+                variant="ghost"
+                className="swiper-button-next"
+              >
                 <ChevronRight className="w-6 h-6 inline-block" />
-              </button>
+              </Button>
             </div>
           </div>
           {/* <!-- Swiper --> */}

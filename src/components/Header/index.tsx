@@ -11,6 +11,7 @@ import { getProducts } from "@/services/products";
 import { categories } from "@/constants/categories";
 import SearchResults from "./SearchResults";
 import InputField from "@/components/Common/InputField";
+import Button from "@/components/Common/Button";
 import useDebounce from "@/hooks/useDebounce";
 import { useAuth } from "@/app/context/AuthContext";
 import { useFavorites } from "@/app/context/FavoritesContext";
@@ -115,14 +116,15 @@ const Header: React.FC = () => {
                       containerClassName="m-0"
                       variant="unstyled"
                     />
-                    <button
+                    <Button
                       type="submit"
-                      id="search-btn"
-                      aria-label="Pesquisar"
-                      className="absolute right-3 top-1/2 -translate-y-1/2 transition-colors duration-200 hover:text-blue"
+                      ariaLabel="Pesquisar"
+                      variant="ghost"
+                      size="icon"
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 hover:text-blue"
                     >
                       <Search size={18} className="stroke-current" />
-                    </button>
+                    </Button>
                     <SearchResults
                       results={filteredProducts}
                       handleClearSearch={handleClearSearch}
@@ -169,9 +171,10 @@ const Header: React.FC = () => {
                     </span>
                   </span>
                 </Link>
-                <button
+                <Button
                   onClick={openCartModal}
-                  className="flex items-center gap-2.5"
+                  variant="ghost"
+                  className="flex items-center gap-2.5 p-0 h-auto"
                 >
                   <span className="relative inline-block">
                     <ShoppingCart size={24} className="stroke-current" />
@@ -179,13 +182,13 @@ const Header: React.FC = () => {
                       {totalCartItems}
                     </span>
                   </span>
-                </button>
+                </Button>
               </div>
 
               {/* Hamburger mobile */}
-              <button
-                id="Toggle"
-                aria-label="Abrir menu"
+              <Button
+                ariaLabel="Abrir menu"
+                variant="ghost"
                 className="xl:hidden"
                 onClick={() => setNavigationOpen(!navigationOpen)}
               >
@@ -220,7 +223,7 @@ const Header: React.FC = () => {
                     />
                   </span>
                 </span>
-              </button>
+              </Button>
             </div>
           </div>
         </div>

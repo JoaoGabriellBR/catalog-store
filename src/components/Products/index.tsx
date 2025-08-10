@@ -4,6 +4,7 @@ import Breadcrumb from "../Common/Breadcrumb";
 import SingleListItem from "../Shop/SingleListItem";
 import CustomSelect from "./CustomSelect";
 import { Grid, List, ChevronLeft, ChevronRight } from "lucide-react";
+import Button from "@/components/Common/Button";
 import ProductItem from "../Common/ProductItem";
 import { getProducts } from "@/services/products";
 import type { Product } from "@/types/product";
@@ -64,7 +65,7 @@ const AllProducts: React.FC = () => {
                 <div className="flex flex-wrap items-center gap-4">
                   <CustomSelect options={sortOptions} />
                   <p>
-                    Exibindo {" "}
+                    Exibindo{" "}
                     <span className="font-medium text-dark">
                       {startIndex + 1}-{Math.min(endIndex, totalItems)}
                     </span>{" "}
@@ -73,29 +74,25 @@ const AllProducts: React.FC = () => {
                 </div>
 
                 <div className="flex items-center gap-2.5">
-                  <button
-                    aria-label="Exibir em grade"
+                  <Button
+                    ariaLabel="Exibir em grade"
                     onClick={() => setProductStyle("grid")}
-                    className={`flex h-9 w-10.5 items-center justify-center rounded-[5px] border transition-colors duration-200 ${
-                      productStyle === "grid"
-                        ? "bg-blue border-blue text-white"
-                        : "bg-gray-1 border-gray-3 text-dark hover:bg-blue hover:border-blue hover:text-white"
-                    }`}
+                    variant={productStyle === "grid" ? "primary" : "gray"}
+                    size="icon"
+                    className="h-9 w-10.5"
                   >
                     <Grid size={18} className="stroke-current" />
-                  </button>
+                  </Button>
 
-                  <button
-                    aria-label="Exibir em lista"
+                  <Button
+                    ariaLabel="Exibir em lista"
                     onClick={() => setProductStyle("list")}
-                    className={`flex h-9 w-10.5 items-center justify-center rounded-[5px] border transition-colors duration-200 ${
-                      productStyle === "list"
-                        ? "bg-blue border-blue text-white"
-                        : "bg-gray-1 border-gray-3 text-dark hover:bg-blue hover:border-blue hover:text-white"
-                    }`}
+                    variant={productStyle === "list" ? "primary" : "gray"}
+                    size="icon"
+                    className="h-9 w-10.5"
                   >
                     <List size={18} className="stroke-current" />
-                  </button>
+                  </Button>
                 </div>
               </div>
 
@@ -121,43 +118,50 @@ const AllProducts: React.FC = () => {
                 <nav className="rounded-md bg-white p-2 shadow-1">
                   <ul className="flex items-center gap-2">
                     <li>
-                      <button
+                      <Button
                         type="button"
-                        aria-label="Página anterior"
-                        onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                        ariaLabel="Página anterior"
+                        onClick={() =>
+                          setCurrentPage((p) => Math.max(1, p - 1))
+                        }
                         disabled={currentPage === 1}
-                        className="flex h-9 w-8 items-center justify-center rounded-[3px] disabled:text-gray-4 transition-colors duration-200 hover:bg-blue hover:text-white"
+                        variant="ghost"
+                        size="icon"
+                        className="h-9 w-8 disabled:text-gray-4 hover:bg-blue hover:text-white"
                       >
                         <ChevronLeft size={18} className="stroke-current" />
-                      </button>
+                      </Button>
                     </li>
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                      <li key={page}>
-                        <button
-                          type="button"
-                          onClick={() => setCurrentPage(page)}
-                          className={`flex items-center justify-center rounded-[3px] px-3.5 py-1.5 text-custom-sm transition-colors duration-200 ${
-                            page === currentPage
-                              ? "bg-blue text-white"
-                              : "hover:bg-blue hover:text-white"
-                          }`}
-                        >
-                          {page}
-                        </button>
-                      </li>
-                    ))}
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                      (page) => (
+                        <li key={page}>
+                          <Button
+                            type="button"
+                            onClick={() => setCurrentPage(page)}
+                            variant={page === currentPage ? "primary" : "ghost"}
+                            className={`px-3.5 py-1.5 text-custom-sm`}
+                          >
+                            {page}
+                          </Button>
+                        </li>
+                      )
+                    )}
                     <li>
-                      <button
+                      <Button
                         type="button"
-                        aria-label="Próxima página"
+                        ariaLabel="Próxima página"
                         onClick={() =>
                           setCurrentPage((p) => Math.min(totalPages, p + 1))
                         }
-                        disabled={currentPage === totalPages || totalPages === 0}
-                        className="flex h-9 w-8 items-center justify-center rounded-[3px] disabled:text-gray-4 transition-colors duration-200 hover:bg-blue hover:text-white"
+                        disabled={
+                          currentPage === totalPages || totalPages === 0
+                        }
+                        variant="ghost"
+                        size="icon"
+                        className="h-9 w-8 disabled:text-gray-4 hover:bg-blue hover:text-white"
                       >
                         <ChevronRight size={18} className="stroke-current" />
-                      </button>
+                      </Button>
                     </li>
                   </ul>
                 </nav>

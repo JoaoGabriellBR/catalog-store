@@ -10,6 +10,7 @@ import Link from "next/link";
 import EmptyCart from "./EmptyCart";
 import { MessageCircle, ShoppingCart, X } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Button from "@/components/Common/Button";
 
 const CartSidebarModal = () => {
   const { isCartModalOpen, closeCartModal } = useCartModalContext();
@@ -47,13 +48,15 @@ const CartSidebarModal = () => {
             <h2 className="font-medium text-dark text-lg sm:text-2xl">
               Carrinho
             </h2>
-            <button
+            <Button
               onClick={() => closeCartModal()}
-              aria-label="button for close modal"
-              className="flex items-center justify-center ease-in duration-150 bg-meta text-dark-5 hover:text-dark"
+              ariaLabel="button for close modal"
+              variant="ghost"
+              size="icon"
+              className="text-dark-5 hover:text-dark"
             >
               <X size={30} />
-            </button>
+            </Button>
           </div>
 
           <div className="h-[66vh] overflow-y-auto no-scrollbar">
@@ -73,31 +76,38 @@ const CartSidebarModal = () => {
             <div className="flex items-center justify-between gap-5 mb-6">
               <p className="font-medium text-xl text-dark">Subtotal:</p>
 
-              <p className="font-medium text-xl text-dark">${totalPrice.toFixed(2)}</p>
+              <p className="font-medium text-xl text-dark">
+                ${totalPrice.toFixed(2)}
+              </p>
             </div>
 
             <div className="flex items-center gap-4">
               <Link
                 onClick={() => closeCartModal()}
                 href="/cart"
-                className="w-full flex justify-center font-medium text-white bg-blue py-[13px] px-6 rounded-md ease-out duration-200 hover:bg-blue-dark"
+                className="w-full"
               >
-                <ShoppingCart className="mr-2" />
-                Ver carrinho
+                <Button variant="primary" className="w-full">
+                  <span className="inline-flex items-center">
+                    <ShoppingCart className="mr-2" /> Ver carrinho
+                  </span>
+                </Button>
               </Link>
 
-                <button
-                  onClick={() => {
-                    if (!cartItems.length) return;
-                    closeCartModal();
-                    router.push("/checkout");
-                  }}
-                  className="w-full flex justify-center font-medium text-white bg-green-light py-[13px] px-6 rounded-md ease-out duration-200 hover:bg-opacity-95 disabled:opacity-70"
-                  disabled={!cartItems.length}
-                >
-                  <MessageCircle className="mr-2" />
-                  Pagamento
-                </button>
+              <Button
+                onClick={() => {
+                  if (!cartItems.length) return;
+                  closeCartModal();
+                  router.push("/checkout");
+                }}
+                variant="success"
+                className="w-full"
+                disabled={!cartItems.length}
+              >
+                <span className="inline-flex items-center">
+                  <MessageCircle className="mr-2" /> Pagamento
+                </span>
+              </Button>
             </div>
           </div>
         </div>

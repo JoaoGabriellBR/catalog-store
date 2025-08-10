@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useCartActions } from "@/hooks/useCartActions";
 import { TableHeader } from "@/types/table-header";
 import { ShoppingCart } from "lucide-react";
-import Loader from "@/components/Common/Loader";
+import Button from "@/components/Common/Button";
 
 const Cart = () => {
   const cartItems = useAppSelector((state) => state.cartReducer.items);
@@ -41,14 +41,15 @@ const Cart = () => {
           <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
             <div className="flex flex-wrap items-center justify-between gap-5 mb-7.5">
               <h2 className="font-medium text-dark text-2xl">Seu carrinho</h2>
-              <button
-                className="text-blue flex items-center disabled:opacity-50"
+              <Button
                 onClick={handleClearCart}
-                disabled={clearing}
+                isLoading={clearing}
+                variant="ghost"
+                size="sm"
+                className="text-blue"
               >
-                {clearing && <Loader className="mr-2 h-4 w-4" />}
-                Limpar carrinho
-              </button>
+                {!clearing && "Limpar carrinho"}
+              </Button>
             </div>
 
             <div className="bg-white rounded-[10px] shadow-1">

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useCartActions } from "@/hooks/useCartActions";
 import { Trash2 } from "lucide-react";
 import type { CartItem } from "@/redux/features/cart-slice";
-import Loader from "@/components/Common/Loader";
+import Button from "@/components/Common/Button";
 
 interface Props {
   item: CartItem;
@@ -44,14 +44,20 @@ const SingleItem = ({ item }: Props) => {
         </div>
       </div>
 
-      <button
+      <Button
         onClick={handleRemoveFromCart}
-        aria-label="button for remove product from cart"
+        ariaLabel="button for remove product from cart"
         disabled={removing}
-        className="flex items-center justify-center rounded-lg max-w-[38px] w-full h-9.5 bg-gray-2 border border-gray-3 text-dark ease-out duration-200 hover:bg-red-light-6 hover:border-red-light-4 hover:text-red disabled:opacity-50"
+        size="icon"
+        variant="gray"
+        className="rounded-lg max-w-[38px] w-full h-9.5 hover:bg-red-light-6 hover:border-red-light-4 hover:text-red"
       >
-        {removing ? <Loader className="w-5 h-5" /> : <Trash2 className="w-5 h-5" />}
-      </button>
+        {removing ? (
+          <span className="animate-spin w-5 h-5 border-2 border-gray-300 border-t-transparent rounded-full" />
+        ) : (
+          <Trash2 className="w-5 h-5" />
+        )}
+      </Button>
     </div>
   );
 };

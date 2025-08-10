@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import type { ChangeEventHandler, FocusEventHandler } from "react";
 import type { FieldError, UseFormRegisterReturn } from "react-hook-form";
 import { Eye, EyeOff } from "lucide-react";
+import Button from "@/components/Common/Button";
 
 export interface InputFieldProps {
   type?: string;
@@ -103,18 +104,20 @@ const InputField: React.FC<InputFieldProps> = ({
           {...registration}
         />
         {isPassword && (
-          <button
+          <Button
             type="button"
             onClick={() => setShowPassword((prev) => !prev)}
-            className="absolute inset-y-0 right-0 flex items-center pr-4 text-dark-5"
-            aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+            ariaLabel={showPassword ? "Ocultar senha" : "Mostrar senha"}
+            variant="ghost"
+            size="icon"
+            className="absolute inset-y-0 right-0 my-auto mr-1 text-dark-5"
           >
             {showPassword ? (
               <EyeOff className="h-5 w-5" />
             ) : (
               <Eye className="h-5 w-5" />
             )}
-          </button>
+          </Button>
         )}
       </div>
       {hasError && (

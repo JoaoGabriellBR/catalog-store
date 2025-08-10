@@ -5,7 +5,7 @@ import { useCartActions } from "@/hooks/useCartActions";
 import Image from "next/image";
 import { ShoppingCart, X } from "lucide-react";
 import Link from "next/link";
-import Loader from "@/components/Common/Loader";
+import Button from "@/components/Common/Button";
 
 const SingleItem = ({ item }) => {
   const { toggleFavorite, loadingIds } = useFavorites();
@@ -25,31 +25,33 @@ const SingleItem = ({ item }) => {
   return (
     <div className="flex items-center border-t border-gray-3 py-5 px-10">
       <div className="min-w-[83px]">
-        <button
+        <Button
           onClick={handleRemoveFromWishlist}
-          aria-label="botão para remover produto da lista de desejos"
+          ariaLabel="botão para remover produto da lista de desejos"
           disabled={loadingIds.has(item.id)}
-          className="flex items-center justify-center rounded-lg max-w-[38px] w-full h-9.5 bg-gray-2 border border-gray-3 ease-out duration-200 hover:bg-red-light-6 hover:border-red-light-4 hover:text-red disabled:opacity-50"
+          size="icon"
+          variant="gray"
+          className="rounded-lg max-w-[38px] w-full h-9.5 hover:bg-red-light-6 hover:border-red-light-4 hover:text-red"
         >
           {loadingIds.has(item.id) ? (
-            <Loader className="w-4 h-4 text-gray-6" />
+            <span className="animate-spin w-4 h-4 border-2 border-gray-300 border-t-transparent rounded-full" />
           ) : (
             <X className="w-4 h-4 text-gray-6" />
           )}
-        </button>
+        </Button>
       </div>
 
       <div className="min-w-[387px]">
         <div className="flex items-center justify-between gap-5">
           <div className="w-full flex items-center gap-5.5">
-              <div className="flex items-center justify-center rounded-[5px] bg-gray-2 max-w-[80px] w-full h-17.5">
-                <Image
-                  src={item.image_url}
-                  alt="produto"
-                  width={200}
-                  height={200}
-                />
-              </div>
+            <div className="flex items-center justify-center rounded-[5px] bg-gray-2 max-w-[80px] w-full h-17.5">
+              <Image
+                src={item.image_url}
+                alt="produto"
+                width={200}
+                height={200}
+              />
+            </div>
 
             <div>
               <h3 className="text-dark ease-out duration-200 hover:text-blue">
@@ -65,21 +67,19 @@ const SingleItem = ({ item }) => {
       </div>
 
       <div className="min-w-[150px] flex justify-end">
-        <button
+        <Button
           onClick={handleAddToCart}
           disabled={adding}
-          className="inline-flex text-dark hover:text-white bg-gray-1 border border-gray-3 py-2.5 px-6 rounded-md ease-out duration-200 hover:bg-blue hover:border-gray-3 disabled:opacity-50"
+          isLoading={adding}
+          variant="outline"
+          className="py-2.5 px-6"
         >
-          {adding ? (
-            <>
-              <Loader className="w-4 h-4 mr-2" /> Adicionando...
-            </>
-          ) : (
+          {!adding && (
             <>
               <ShoppingCart className="w-4 h-4 mr-2" /> Adicionar ao carrinho
             </>
           )}
-        </button>
+        </Button>
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { MessageCircle } from "lucide-react";
-import Loader from "@/components/Common/Loader";
+import Button from "@/components/Common/Button";
 
 import { useAppSelector } from "@/redux/store";
 import { selectTotalPrice } from "@/redux/features/cart-slice";
@@ -26,11 +26,8 @@ const Checkout = () => {
       <section className="overflow-hidden py-20 bg-gray-2">
         <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0 text-center">
           <p className="mb-6">Seu carrinho está vazio.</p>
-          <Link
-            href="/products"
-            className="inline-flex justify-center font-medium text-white bg-blue py-3 px-6 rounded-md ease-out duration-200 hover:bg-blue-dark"
-          >
-            Continuar comprando
+          <Link href="/products">
+            <Button variant="primary">Continuar comprando</Button>
           </Link>
         </div>
       </section>
@@ -48,7 +45,9 @@ const Checkout = () => {
         "PRODUTOS:",
         ...cartItems.map(
           (item) =>
-            `• ${item.name} - Qtd: ${item.quantity} - R$ ${(item.price * item.quantity).toFixed(2)}`
+            `• ${item.name} - Qtd: ${item.quantity} - R$ ${(
+              item.price * item.quantity
+            ).toFixed(2)}`
         ),
         "",
         `TOTAL: R$ ${totalPrice.toFixed(2)}`,
@@ -58,7 +57,9 @@ const Checkout = () => {
 
       await createOrder(user.id, cartItems, totalPrice);
       await clearCart();
-      const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(messageLines.join("\n"))}`;
+      const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
+        messageLines.join("\n")
+      )}`;
       window.open(whatsappUrl, "_blank");
       router.push("/order-success");
     } finally {
@@ -74,7 +75,9 @@ const Checkout = () => {
     <section className="overflow-hidden py-20 bg-gray-2">
       <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
         <div className="bg-white rounded-xl shadow-1 p-6 sm:p-10">
-          <h2 className="font-medium text-dark text-2xl mb-6 text-center">Confirmar Pedido</h2>
+          <h2 className="font-medium text-dark text-2xl mb-6 text-center">
+            Confirmar Pedido
+          </h2>
           <ul className="mb-4 divide-y divide-gray-3">
             {cartItems.map((item) => (
               <li key={item.id} className="flex justify-between py-4 text-sm">
@@ -89,27 +92,25 @@ const Checkout = () => {
             Total: R$ {totalPrice.toFixed(2)}
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <button
+            <Button
               onClick={handleCancel}
-              className="w-full sm:w-1/2 px-6 py-3 rounded-md bg-gray-200 hover:bg-gray-300"
+              variant="gray"
+              className="w-full sm:w-1/2"
             >
               Cancelar
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={handleConfirm}
-              disabled={loading}
-              className="w-full sm:w-1/2 flex justify-center items-center font-medium text-white bg-green-light py-3 px-6 rounded-md ease-out duration-200 hover:bg-opacity-95 disabled:opacity-70"
+              isLoading={loading}
+              variant="success"
+              className="w-full sm:w-1/2"
             >
-              {loading ? (
-                <>
-                  <Loader className="mr-2 h-4 w-4" /> Processando...
-                </>
-              ) : (
+              {!loading && (
                 <>
                   <MessageCircle className="mr-2" /> Confirmar
                 </>
               )}
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -118,4 +119,3 @@ const Checkout = () => {
 };
 
 export default Checkout;
-

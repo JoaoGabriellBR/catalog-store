@@ -3,6 +3,7 @@ import React from "react";
 import Breadcrumb from "../Common/Breadcrumb";
 import SingleItem from "./SingleItem";
 import { useFavorites } from "@/app/context/FavoritesContext";
+import Button from "@/components/Common/Button";
 import { TableHeader } from "@/types/table-header";
 
 export const Wishlist = () => {
@@ -23,9 +24,14 @@ export const Wishlist = () => {
             <h2 className="font-medium text-dark text-2xl">
               Sua lista de desejos
             </h2>
-            <button className="text-blue" onClick={() => clearFavorites()}>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-blue"
+              onClick={() => clearFavorites()}
+            >
               Limpar lista de desejos
-            </button>
+            </Button>
           </div>
 
           <div className="bg-white rounded-[10px] shadow-1">

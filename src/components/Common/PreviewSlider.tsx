@@ -8,6 +8,7 @@ import Image from "next/image";
 import { usePreviewSlider } from "@/app/context/PreviewSliderContext";
 import { useAppSelector } from "@/redux/store";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import Button from "@/components/Common/Button";
 
 const PreviewSliderModal = () => {
   const { closePreviewModal, isModalPreviewOpen } = usePreviewSlider();
@@ -32,28 +33,32 @@ const PreviewSliderModal = () => {
         isModalPreviewOpen ? "fixed" : "hidden"
       }`}
     >
-      <button
+      <Button
         onClick={() => closePreviewModal()}
-        aria-label="button for close modal"
-        className="absolute top-0 right-0 sm:top-6 sm:right-6 flex items-center justify-center w-10 h-10 rounded-full ease-in duration-150 text-white hover:text-meta-5 z-10"
+        ariaLabel="button for close modal"
+        variant="ghost"
+        size="icon"
+        className="absolute top-0 right-0 sm:top-6 sm:right-6 text-white hover:text-meta-5 z-10"
       >
         <X size={36} />
-      </button>
+      </Button>
 
       <div>
-        <button
+        <Button
           className="rotate-180 absolute left-100 p-5 cursor-pointer z-10 "
           onClick={handlePrev}
+          variant="ghost"
         >
           <ChevronLeft color="white" size={36} />
-        </button>
+        </Button>
 
-        <button
+        <Button
           className="absolute right-100 p-5 cursor-pointer z-10"
           onClick={handleNext}
+          variant="ghost"
         >
           <ChevronRight color="white" size={36} />
-        </button>
+        </Button>
       </div>
 
       <Swiper ref={sliderRef} slidesPerView={1} spaceBetween={20}>

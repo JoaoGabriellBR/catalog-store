@@ -9,7 +9,7 @@ import { updateQuickView } from "@/redux/features/quickView-slice";
 import type { Product } from "@/types/product";
 import FavoriteButton from "../Common/FavoriteButton";
 import { useCartActions } from "@/hooks/useCartActions";
-import Loader from "@/components/Common/Loader";
+import Button from "@/components/Common/Button";
 
 interface SingleListItemProps {
   item: Product;
@@ -36,26 +36,28 @@ const SingleListItem: React.FC<SingleListItemProps> = ({ item }) => {
     <div className="group relative flex flex-col sm:flex-row bg-white rounded-lg overflow-hidden shadow-sm transition-transform duration-200 hover:shadow-lg">
       {/* Quick View & Wishlist */}
       <div className="absolute top-2 right-2 z-10 flex flex-col space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-        <button
+        <Button
           onClick={handleQuickView}
-          aria-label="Visualização rápida"
-          className="p-2 bg-white rounded-md shadow hover:bg-blue hover:text-white transition-colors"
+          ariaLabel="Visualização rápida"
+          variant="ghost"
+          size="icon"
+          className="bg-white rounded-md shadow hover:bg-blue hover:text-white"
         >
           <Eye size={20} className="stroke-current" />
-        </button>
+        </Button>
         <FavoriteButton product={item} />
       </div>
 
       {/* Imagem */}
-        <div className="flex-shrink-0 w-full sm:w-[270px] p-4 bg-gray-100 flex items-center justify-center">
-          <Image
-            src={item.image_url}
-            alt={item.name}
-            width={250}
-            height={250}
-            className="object-contain transition-transform duration-200 group-hover:scale-110"
-          />
-        </div>
+      <div className="flex-shrink-0 w-full sm:w-[270px] p-4 bg-gray-100 flex items-center justify-center">
+        <Image
+          src={item.image_url}
+          alt={item.name}
+          width={250}
+          height={250}
+          className="object-contain transition-transform duration-200 group-hover:scale-110"
+        />
+      </div>
 
       {/* Detalhes */}
       <div className="flex flex-col flex-grow p-4 justify-between">
@@ -82,23 +84,21 @@ const SingleListItem: React.FC<SingleListItemProps> = ({ item }) => {
         </div>
 
         {/* Botão Adicionar ao carrinho (só no hover) */}
-        <button
+        <Button
           onClick={handleAddToCart}
           disabled={adding}
-          className="mt-4 self-start inline-flex items-center gap-2 rounded-md bg-blue px-4 py-2 text-sm font-medium text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 disabled:opacity-70"
+          isLoading={adding}
+          variant="primary"
+          size="sm"
+          className="mt-4 self-start opacity-0 group-hover:opacity-100"
         >
-          {adding ? (
-            <>
-              <Loader className="w-4 h-4" />
-              Adicionando...
-            </>
-          ) : (
+          {!adding && (
             <>
               <ShoppingCart size={18} className="stroke-current" />
               Adicionar ao carrinho
             </>
           )}
-        </button>
+        </Button>
       </div>
     </div>
   );

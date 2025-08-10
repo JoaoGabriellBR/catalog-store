@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import type { CartItem } from "@/redux/features/cart-slice";
-import Loader from "@/components/Common/Loader";
+import Button from "@/components/Common/Button";
 
 interface Props {
   item: CartItem;
@@ -70,27 +70,39 @@ const SingleItem = ({ item }: Props) => {
 
       <div className="min-w-[275px]">
         <div className="w-max flex items-center rounded-md border border-gray-3">
-          <button
+          <Button
             onClick={handleDecreaseQuantity}
-            aria-label="button for remove product"
+            ariaLabel="button for remove product"
             disabled={updating || removing}
-            className="flex items-center justify-center w-11.5 h-11.5 ease-out duration-200 hover:text-blue disabled:opacity-50"
+            size="icon"
+            variant="ghost"
+            className="w-11.5 h-11.5 hover:text-blue"
           >
-            {updating ? <Loader className="w-5 h-5" /> : <Minus className="w-5 h-5" />}
-          </button>
+            {updating ? (
+              <span className="animate-spin w-5 h-5 border-2 border-gray-300 border-t-transparent rounded-full" />
+            ) : (
+              <Minus className="w-5 h-5" />
+            )}
+          </Button>
 
           <span className="flex items-center justify-center w-16 h-11.5 border-x border-gray-4">
             {quantity}
           </span>
 
-          <button
+          <Button
             onClick={handleIncreaseQuantity}
-            aria-label="button for add product"
+            ariaLabel="button for add product"
             disabled={updating || removing}
-            className="flex items-center justify-center w-11.5 h-11.5 ease-out duration-200 hover:text-blue disabled:opacity-50"
+            size="icon"
+            variant="ghost"
+            className="w-11.5 h-11.5 hover:text-blue"
           >
-            {updating ? <Loader className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
-          </button>
+            {updating ? (
+              <span className="animate-spin w-5 h-5 border-2 border-gray-300 border-t-transparent rounded-full" />
+            ) : (
+              <Plus className="w-5 h-5" />
+            )}
+          </Button>
         </div>
       </div>
 
@@ -99,18 +111,23 @@ const SingleItem = ({ item }: Props) => {
       </div>
 
       <div className="min-w-[50px] flex justify-end">
-        <button
+        <Button
           onClick={handleRemoveFromCart}
-          aria-label="button for remove product from cart"
+          ariaLabel="button for remove product from cart"
           disabled={removing}
-          className="flex items-center justify-center rounded-lg max-w-[38px] w-full h-9.5 bg-gray-2 border border-gray-3 text-dark ease-out duration-200 hover:bg-red-light-6 hover:border-red-light-4 hover:text-red disabled:opacity-50"
+          size="icon"
+          variant="gray"
+          className="rounded-lg max-w-[38px] w-full h-9.5 hover:bg-red-light-6 hover:border-red-light-4 hover:text-red"
         >
-          {removing ? <Loader className="w-5 h-5" /> : <Trash2 className="w-5 h-5" />}
-        </button>
+          {removing ? (
+            <span className="animate-spin w-5 h-5 border-2 border-gray-300 border-t-transparent rounded-full" />
+          ) : (
+            <Trash2 className="w-5 h-5" />
+          )}
+        </Button>
       </div>
     </div>
   );
 };
 
 export default SingleItem;
-
