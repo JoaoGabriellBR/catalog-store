@@ -45,9 +45,6 @@ const ProductDetails = ({ product }: ProductProps) => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 flex items-center justify-center">
         <div className="text-center animate-fade-in">
-          <div className="w-32 h-32 mx-auto mb-6 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center">
-            {/* <Package className="h-16 w-16 text-gray-400" /> */}
-          </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-4">
             Produto não encontrado
           </h1>

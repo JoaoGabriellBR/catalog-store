@@ -1,14 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Breadcrumb from "../Common/Breadcrumb";
-import Image from "next/image";
 import AddressModal from "./AddressModal";
 import Orders from "../Orders";
 import { useRouter } from "next/navigation";
 import { supabase } from "../../../lib/supabaseClient";
 import { useAuth } from "@/app/context/AuthContext";
 import Loader from "@/components/Common/Loader";
-import { LogOut, ShoppingBasket, User } from "lucide-react";
+import { CircleCheck, LogOut, ShoppingBasket, User } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@/lib/zodResolver";
@@ -85,7 +84,6 @@ const MyAccount = () => {
     router.push("/");
   };
 
-  const openAddressModal = () => setAddressModal(true);
   const closeAddressModal = () => setAddressModal(false);
 
   const handleProfileSave = async () => {
@@ -102,6 +100,9 @@ const MyAccount = () => {
         type: "success",
         text: "Nome atualizado com sucesso",
       });
+      setTimeout(() => {
+        setProfileMessage(null);
+      }, 4000);
     }
     setSavingProfile(false);
   };
@@ -143,15 +144,15 @@ const MyAccount = () => {
     <>
       <Breadcrumb title={"Minha Conta"} pages={["Minha Conta"]} />
 
-      <section className="overflow-hidden py-20 bg-gray-2">
+      <section className="overflow-hidden py-4 sm:py-4 md:py-10 lg:py-14 xl:py-20 bg-gray-2">
         <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
           <div className="flex flex-col xl:flex-row gap-7.5">
             <div className="xl:max-w-[370px] w-full bg-white rounded-xl shadow-1">
-              <div className="flex xl:flex-col">
+              <div className="flex flex-col">
                 <div className="flex flex-row items-center gap-4 p-4 sm:p-7.5 xl:p-9">
                   <User className="w-20 h-20 text-gray-500" />
 
-                  <div>
+                  <div className="">
                     <p className="font-medium text-dark mb-0.5">
                       {profile.fullName || user.email}
                     </p>
@@ -159,7 +160,7 @@ const MyAccount = () => {
                   </div>
                 </div>
 
-                <div className="p-4 sm:p-7.5 xl:p-9">
+                <div className="p-4 sm:p-7.5 xl:p-9 ">
                   <div className="flex flex-wrap xl:flex-nowrap xl:flex-col gap-4">
                     <button
                       onClick={() => setActiveTab("account-details")}
@@ -267,12 +268,13 @@ const MyAccount = () => {
                 </button>
                 {profileMessage && (
                   <p
-                    className={`mt-4 text-sm ${
+                    className={`mt-4 text-sm flex flex-row items-center gap-2 ${
                       profileMessage.type === "success"
-                        ? "text-green-600"
+                        ? "text-green"
                         : "text-red"
                     }`}
                   >
+                    <CircleCheck className="h-5 w-5" />
                     {profileMessage.text}
                   </p>
                 )}

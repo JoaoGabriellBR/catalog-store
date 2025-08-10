@@ -119,7 +119,7 @@ const Hero: React.FC = () => {
         <div className="flex flex-wrap gap-5 items-stretch">
           {/* Carrossel */}
           <div className="xl:max-w-[757px] w-full">
-            <div className="relative rounded-[10px] bg-white overflow-hidden h-[380px] md:h-[440px] xl:h-[520px]">
+            <div className="relative rounded-[10px] bg-white overflow-hidden h-auto md:h-[440px] xl:h-[520px]">
               {/* BG decorativo */}
               <Image
                 src="/images/hero/herobg.png"
