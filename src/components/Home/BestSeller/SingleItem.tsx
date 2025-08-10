@@ -10,7 +10,6 @@ import Link from "next/link";
 import FavoriteButton from "@/components/Common/FavoriteButton";
 import Button from "@/components/Common/Button";
 import { useCartActions } from "@/hooks/useCartActions";
-import Loader from "@/components/Common/Loader";
 import { Eye, ShoppingCart, Star } from "lucide-react";
 import { formatCurrency } from "@/lib/formatCurrency";
 

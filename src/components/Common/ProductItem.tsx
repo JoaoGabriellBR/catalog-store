@@ -49,7 +49,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
           ariaLabel="Visualização rápida"
           variant="ghost"
           size="icon"
-          className="bg-white rounded-md shadow hover:bg-blue hover:text-white"
+          className="bg-white rounded-md shadow hover:bg-blue hover:text-gray-7"
         >
           <Eye size={20} className="stroke-current" />
         </Button>

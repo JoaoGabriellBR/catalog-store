@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Eye, ShoppingBag, ShoppingCart, Star } from "lucide-react";
+import { Eye, ShoppingBag, ShoppingCart } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { useModalContext } from "@/app/context/QuickViewModalContext";
 import { updateQuickView } from "@/redux/features/quickView-slice";
