@@ -4,7 +4,7 @@ import ProductItem from "@/components/Common/ProductItem";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide, type SwiperRef } from "swiper/react";
 import "swiper/css/navigation";
 import "swiper/css";
 import { getProducts } from "@/services/products";
@@ -13,7 +13,7 @@ import { ChevronLeft, ChevronRight, Tag } from "lucide-react";
 import Button from "@/components/Common/Button";
 
 const ProductYouMayLike = () => {
-  const sliderRef = useRef(null);
+  const sliderRef = useRef<SwiperRef | null>(null);
   const [items, setItems] = useState<Product[]>([]);
 
   useEffect(() => {
@@ -21,13 +21,11 @@ const ProductYouMayLike = () => {
   }, []);
 
   const handlePrev = useCallback(() => {
-    if (!sliderRef.current) return;
-    sliderRef.current.swiper.slidePrev();
+    sliderRef.current?.swiper.slidePrev();
   }, []);
 
   const handleNext = useCallback(() => {
-    if (!sliderRef.current) return;
-    sliderRef.current.swiper.slideNext();
+    sliderRef.current?.swiper.slideNext();
   }, []);
 
   return (

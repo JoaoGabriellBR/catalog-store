@@ -60,6 +60,8 @@ export const FavoritesProvider = ({
       )
     )
       return;
+    if (!user) return;
+
     const productId = product.id;
     setLoadingIds((prev) => new Set(prev).add(productId));
     const already = favorites.some((p) => p.id === productId);
@@ -88,6 +90,7 @@ export const FavoritesProvider = ({
       )
     )
       return;
+    if (!user) return;
     await clearAll(user.id);
     setFavorites([]);
   };

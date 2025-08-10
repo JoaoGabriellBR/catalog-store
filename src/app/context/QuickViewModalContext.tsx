@@ -1,5 +1,10 @@
-"use client"
-import React, { createContext, useContext, useState } from "react";
+"use client";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  type PropsWithChildren,
+} from "react";
 
 interface ModalContextType {
   isModalOpen: boolean;
@@ -17,7 +22,7 @@ export const useModalContext = () => {
   return context;
 };
 
-export const ModalProvider = ({ children }) => {
+export const ModalProvider = ({ children }: PropsWithChildren) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -33,4 +38,4 @@ export const ModalProvider = ({ children }) => {
       {children}
     </ModalContext.Provider>
   );
-}; 
+};

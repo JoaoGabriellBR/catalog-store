@@ -255,7 +255,7 @@ const Header: React.FC = () => {
                         className="relative before:absolute before:top-0 before:left-0 before:h-[3px] before:w-0 before:rounded-b-sm before:bg-blue before:transition-width before:duration-200 hover:before:w-full"
                       >
                         <Link
-                          href={menuItem.path}
+                          href={menuItem.path ?? "#"}
                           className={`flex items-center text-custom-sm font-medium text-dark transition-colors hover:text-blue ${
                             stickyMenu ? "xl:py-4" : "xl:py-6"
                           }`}

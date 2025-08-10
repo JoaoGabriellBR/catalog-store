@@ -21,8 +21,9 @@ const CartSidebarModal = () => {
 
   useEffect(() => {
     // closing modal while clicking outside
-    function handleClickOutside(event) {
-      if (!event.target.closest(".modal-content")) {
+    function handleClickOutside(event: MouseEvent) {
+      const target = event.target as HTMLElement | null;
+      if (!target?.closest(".modal-content")) {
         closeCartModal();
       }
     }

@@ -23,7 +23,7 @@ export interface ButtonProps {
   isLoading?: boolean;
   variant?: ButtonVariant;
   size?: ButtonSize;
-  className?: string;
+  className?: string | undefined;
   ariaLabel?: string;
 }
 

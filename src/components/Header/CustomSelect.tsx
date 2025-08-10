@@ -13,7 +13,9 @@ interface CustomSelectProps {
 
 const CustomSelect: React.FC<CustomSelectProps> = ({ options, onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<Option>(options[0]);
+  const [selectedOption, setSelectedOption] = useState<Option | null>(
+    options[0] ?? null
+  );
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);

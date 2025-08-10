@@ -54,7 +54,7 @@ const Dropdown = ({ menuItem, stickyMenu, user }: DropdownProps) => {
         {items.map((item, i) => (
           <li key={i}>
             <Link
-              href={item.path}
+              href={item.path ?? "#"}
               className={`flex text-custom-sm hover:text-blue hover:bg-gray-1 py-[7px] px-4.5 ${
                 pathUrl === item.path && "text-blue bg-gray-1"
               } `}

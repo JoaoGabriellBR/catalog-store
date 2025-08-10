@@ -1,5 +1,5 @@
 "use client";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide, type SwiperRef } from "swiper/react";
 import { useCallback, useRef } from "react";
 import "swiper/css/navigation";
 import "swiper/css";
@@ -15,16 +15,14 @@ const PreviewSliderModal = () => {
 
   const data = useAppSelector((state) => state.productDetailsReducer.value);
 
-  const sliderRef = useRef(null);
+  const sliderRef = useRef<SwiperRef | null>(null);
 
   const handlePrev = useCallback(() => {
-    if (!sliderRef.current) return;
-    sliderRef.current.swiper.slidePrev();
+    sliderRef.current?.swiper.slidePrev();
   }, []);
 
   const handleNext = useCallback(() => {
-    if (!sliderRef.current) return;
-    sliderRef.current.swiper.slideNext();
+    sliderRef.current?.swiper.slideNext();
   }, []);
 
   return (

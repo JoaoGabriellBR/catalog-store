@@ -2,10 +2,8 @@
 import React, { useEffect, useState } from "react";
 
 import { useModalContext } from "@/app/context/QuickViewModalContext";
-import { AppDispatch, useAppSelector } from "@/redux/store";
-import { useDispatch } from "react-redux";
+import { useAppSelector } from "@/redux/store";
 import Image from "next/image";
-import { usePreviewSlider } from "@/app/context/PreviewSliderContext";
 import { X, Minus, Plus, ShoppingCart, ShoppingBag } from "lucide-react";
 import FavoriteButton from "./FavoriteButton";
 import { useCartActions } from "@/hooks/useCartActions";
@@ -32,8 +30,9 @@ const QuickViewModal = () => {
 
   useEffect(() => {
     // closing modal while clicking outside
-    function handleClickOutside(event) {
-      if (!event.target.closest(".modal-content")) {
+    function handleClickOutside(event: MouseEvent) {
+      const target = event.target as HTMLElement | null;
+      if (!target?.closest(".modal-content")) {
         closeModal();
       }
     }

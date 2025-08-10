@@ -6,8 +6,13 @@ import Image from "next/image";
 import { ShoppingCart, X } from "lucide-react";
 import Link from "next/link";
 import Button from "@/components/Common/Button";
+import type { Product } from "@/types/product";
 
-const SingleItem = ({ item }) => {
+interface SingleItemProps {
+  item: Product;
+}
+
+const SingleItem: React.FC<SingleItemProps> = ({ item }) => {
   const { toggleFavorite, loadingIds } = useFavorites();
   const { addToCart } = useCartActions();
   const [adding, setAdding] = useState(false);

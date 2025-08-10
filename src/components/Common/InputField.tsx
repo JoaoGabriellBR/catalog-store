@@ -19,7 +19,7 @@ export interface InputFieldProps {
   autoComplete?: string;
   disabled?: boolean;
   required?: boolean;
-  error?: string | FieldError;
+  error?: string | FieldError | undefined;
   className?: string; // extra classes for the input element
   registration?: UseFormRegisterReturn;
   // Optional: customize the outer container (useful to remove default margin)

@@ -1,13 +1,29 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const CustomSelect = ({ options }) => {
+interface Option {
+  label: string;
+  value: string;
+}
+
+interface CustomSelectProps {
+  options: Option[];
+  onSelect?: (option: Option) => void;
+}
+
+const CustomSelect: React.FC<CustomSelectProps> = ({
+  options,
+  onSelect,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(options[0]);
-  const selectRef = useRef(null);
+  const [selectedOption, setSelectedOption] = useState<Option | null>(
+    options[0] ?? null
+  );
+  const selectRef = useRef<HTMLDivElement | null>(null);
 
   // Function to close the dropdown when a click occurs outside the component
-  const handleClickOutside = (event) => {
-    if (selectRef.current && !selectRef.current.contains(event.target)) {
+  const handleClickOutside = (event: MouseEvent) => {
+    const target = event.target as Node | null;
+    if (selectRef.current && target && !selectRef.current.contains(target)) {
       setIsOpen(false);
     }
   };
@@ -26,8 +42,9 @@ const CustomSelect = ({ options }) => {
     setIsOpen(!isOpen);
   };
 
-  const handleOptionClick = (option) => {
+  const handleOptionClick = (option: Option) => {
     setSelectedOption(option);
+    onSelect?.(option);
     toggleDropdown();
   };
 
@@ -42,7 +59,7 @@ const CustomSelect = ({ options }) => {
         }`}
         onClick={toggleDropdown}
       >
-        {selectedOption.label}
+        {selectedOption?.label}
       </div>
       <div className={`select-items ${isOpen ? "" : "select-hide"}`}>
         {options.slice(1).map((option, index) => (

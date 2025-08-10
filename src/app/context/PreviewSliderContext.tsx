@@ -1,5 +1,10 @@
 "use client";
-import React, { createContext, useContext, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  type PropsWithChildren,
+} from "react";
 
 interface PreviewSliderType {
   isModalPreviewOpen: boolean;
@@ -17,7 +22,7 @@ export const usePreviewSlider = () => {
   return context;
 };
 
-export const PreviewSliderProvider = ({ children }) => {
+export const PreviewSliderProvider = ({ children }: PropsWithChildren) => {
   const [isModalPreviewOpen, setIsModalOpen] = useState(false);
 
   const openPreviewModal = () => {

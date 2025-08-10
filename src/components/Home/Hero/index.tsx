@@ -51,8 +51,9 @@ const PromoCard = React.memo(function PromoCard({ item }: { item: PromoItem }) {
     try {
       const query = item.productQuery || item.title;
       const { products } = await getProducts({ search: query, limit: 1 });
-      if (products.length > 0) {
-        router.push(`/product/${products[0].id}`);
+      const first = products[0];
+      if (first) {
+        router.push(`/product/${first.id}`);
       } else {
         router.push(`/products?search=${encodeURIComponent(query)}`);
       }

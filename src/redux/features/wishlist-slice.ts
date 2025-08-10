@@ -12,7 +12,7 @@ type WishListItem = {
   image_url: string;
   category: string;
   quantity: number;
-  status?: string;
+  status?: string | undefined;
 };
 
 const initialState: InitialState = {

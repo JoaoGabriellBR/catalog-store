@@ -14,27 +14,25 @@ export async function getCartItems(userId: string): Promise<CartItem[]> {
     return [];
   }
 
-  return data.map(
-    (row: {
-      quantity: number;
-      product_id: string;
-      products: {
-        name: string;
-        description: string;
-        price: number;
-        image_url: string;
-        category: string;
-      };
-    }) => ({
-      id: row.product_id,
-      name: row.products.name,
-      description: row.products.description,
-      price: row.products.price,
-      image_url: row.products.image_url,
-      category: row.products.category,
-      quantity: row.quantity,
-    })
-  );
+  return (data as unknown as Array<{
+    quantity: number;
+    product_id: string;
+    products: {
+      name: string;
+      description: string;
+      price: number;
+      image_url: string;
+      category: string;
+    };
+  }>).map((row) => ({
+    id: row.product_id,
+    name: row.products.name,
+    description: row.products.description,
+    price: row.products.price,
+    image_url: row.products.image_url,
+    category: row.products.category,
+    quantity: row.quantity,
+  }));
 }
 
 export async function addOrUpdateCartItem(
