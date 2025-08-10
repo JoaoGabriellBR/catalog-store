@@ -15,6 +15,7 @@ type ButtonVariant =
 type ButtonSize = "sm" | "md" | "lg" | "icon";
 
 export interface ButtonProps {
+  id?: string;
   type?: "button" | "submit" | "reset";
   children?: React.ReactNode;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;

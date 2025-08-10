@@ -74,7 +74,7 @@ const SingleItem = ({ item }: { item: Product }) => {
             ariaLabel="button for quick view"
             size="icon"
             variant="gray"
-            className="w-9 h-9 hover:text-white hover:bg-blue"
+            className="w-9 h-9 hover:text-gray-7 hover:bg-blue"
           >
             <Eye className="w-4 h-4" />
           </Button>
@@ -86,7 +86,7 @@ const SingleItem = ({ item }: { item: Product }) => {
             disabled={adding}
             size="icon"
             variant="gray"
-            className="w-9 h-9 hover:text-white hover:bg-blue"
+            className="w-9 h-9 hover:text-gray-7 hover:bg-blue"
           >
             {adding ? (
               <span className="animate-spin w-4 h-4 border-2 border-gray-300 border-t-transparent rounded-full" />
