@@ -14,7 +14,7 @@ interface DropdownProps {
 
 const Dropdown = ({ menuItem, stickyMenu, user }: DropdownProps) => {
   const [dropdownToggler, setDropdownToggler] = useState(false);
-  const pathUrl = usePathname();
+  const pathUrl = usePathname() || "";
 
   const items = useMemo(
     () =>

@@ -12,7 +12,8 @@ import type { Product } from "@/types/product";
 // };
 
 const ProductsPage = () => {
-  const { id } = useParams(); // nome do param
+  const params = useParams<{ id: string }>(); // nome do param
+  const id = params?.id;
   const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {

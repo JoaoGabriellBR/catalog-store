@@ -1,19 +1,19 @@
 "use client";
 import { useState, useEffect } from "react";
-import "../css/euclid-circular-a-font.css";
-import "../css/style.css";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
+import "./css/euclid-circular-a-font.css";
+import "./css/style.css";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
-import { ModalProvider } from "../context/QuickViewModalContext";
-import { CartModalProvider } from "../context/CartSidebarModalContext";
+import { ModalProvider } from "./context/QuickViewModalContext";
+import { CartModalProvider } from "./context/CartSidebarModalContext";
 import { ReduxProvider } from "@/redux/provider";
-import { AuthProvider } from "../context/AuthContext";
-import { FavoritesProvider } from "../context/FavoritesContext";
+import { AuthProvider } from "./context/AuthContext";
+import { FavoritesProvider } from "./context/FavoritesContext";
 import QuickViewModal from "@/components/Common/QuickViewModal";
 import CartSidebarModal from "@/components/Common/CartSidebarModal";
-import { PreviewSliderProvider } from "../context/PreviewSliderContext";
-import { LoginRequiredModalProvider } from "../context/LoginRequiredModalContext";
+import { PreviewSliderProvider } from "./context/PreviewSliderContext";
+import { LoginRequiredModalProvider } from "./context/LoginRequiredModalContext";
 import LoginRequiredModal from "@/components/Common/LoginRequiredModal";
 import PreviewSliderModal from "@/components/Common/PreviewSlider";
 

@@ -128,6 +128,9 @@ const MyAccount = () => {
         type: "success",
         text: "Senha alterada com sucesso",
       });
+      setTimeout(() => {
+        setPasswordMessage(null);
+      }, 4000);
       reset();
     }
   };
@@ -341,7 +344,7 @@ const MyAccount = () => {
                     <p
                       className={`mt-4 text-sm ${
                         passwordMessage.type === "success"
-                          ? "text-green-600"
+                          ? "text-green"
                           : "text-red"
                       }`}
                     >
