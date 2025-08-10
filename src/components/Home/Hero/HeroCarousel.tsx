@@ -52,7 +52,7 @@ const HeroCarousel: React.FC<{ data?: Slide[] }> = ({
 }) => {
   return (
     <Swiper
-      spaceBetween={30}
+      spaceBetween={16}
       centeredSlides
       autoplay={AUTOPLAY}
       pagination={PAGINATION}
@@ -61,14 +61,14 @@ const HeroCarousel: React.FC<{ data?: Slide[] }> = ({
     >
       {data.map((item, idx) => (
         <SwiperSlide key={item.id}>
-          <div className="flex items-center pt-6 sm:pt-0 flex-col-reverse sm:flex-row">
-            <div className="w-full sm:max-w-[394px] py-10 sm:py-15 lg:py-24.5 pl-4 sm:pl-7.5 lg:pl-12.5 text-center sm:text-left">
+          <div className="flex items-center pt-4 sm:pt-0 flex-col-reverse sm:flex-row gap-4">
+            <div className="w-full sm:max-w-[394px] py-6 sm:py-10 lg:py-24.5 pl-4 sm:pl-7.5 lg:pl-12.5 text-center sm:text-left">
               {item.sale && (
-                <div className="flex items-center gap-4 mb-7.5 sm:mb-10">
-                  <span className="block font-semibold text-heading-3 sm:text-heading-1 text-blue">
+                <div className="flex items-center justify-center sm:justify-start gap-3 sm:gap-4 mb-5 sm:mb-10">
+                  <span className="block font-semibold text-3xl sm:text-heading-1 text-blue">
                     {item.sale}
                   </span>
-                  <span className="block text-dark text-sm sm:text-custom-1 sm:leading-[24px]">
+                  <span className="block text-dark text-xs sm:text-custom-1 sm:leading-[24px]">
                     de
                     <br />
                     desconto
@@ -76,16 +76,18 @@ const HeroCarousel: React.FC<{ data?: Slide[] }> = ({
                 </div>
               )}
 
-              <h1 className="font-semibold text-dark text-xl sm:text-3xl mb-3">
+              <h1 className="font-semibold text-dark text-lg sm:text-3xl mb-3">
                 {item.title}
               </h1>
 
-              <p className="text-dark/80">{item.description}</p>
+              <p className="text-dark/80 text-sm sm:text-base max-w-prose mx-auto sm:mx-0">
+                {item.description}
+              </p>
 
               {item.ctaHref && (
                 <Link
                   href={item.ctaHref}
-                  className="inline-flex font-medium text-white text-custom-sm rounded-md bg-dark py-3 px-9 ease-out duration-200 hover:bg-blue mt-10"
+                  className="inline-flex font-medium text-white text-sm sm:text-custom-sm rounded-md bg-dark py-2.5 px-6 sm:py-3 sm:px-9 ease-out duration-200 hover:bg-blue mt-6 sm:mt-10"
                   aria-label={item.ctaLabel ?? "Saiba mais"}
                 >
                   {item.ctaLabel ?? "Saiba mais"}
@@ -97,10 +99,10 @@ const HeroCarousel: React.FC<{ data?: Slide[] }> = ({
               <Image
                 src={item.image}
                 alt={item.title}
-                width={451}
-                height={458}
+                width={380}
+                height={380}
                 priority={idx === 0}
-                className="w-full h-auto max-w-xs sm:max-w-[451px]"
+                className="w-full h-auto max-w-[280px] sm:max-w-[451px]"
               />
             </div>
           </div>
