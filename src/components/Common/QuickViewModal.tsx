@@ -6,7 +6,6 @@ import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import Image from "next/image";
 import { usePreviewSlider } from "@/app/context/PreviewSliderContext";
-import { updateproductDetails } from "@/redux/features/product-details";
 import { X, Minus, Plus, ShoppingCart, ShoppingBag } from "lucide-react";
 import FavoriteButton from "./FavoriteButton";
 import { useCartActions } from "@/hooks/useCartActions";
@@ -14,17 +13,13 @@ import Button from "@/components/Common/Button";
 
 const QuickViewModal = () => {
   const { isModalOpen, closeModal } = useModalContext();
-  const { openPreviewModal } = usePreviewSlider();
   const [quantity, setQuantity] = useState(1);
 
-  const dispatch = useDispatch<AppDispatch>();
   const { addToCart } = useCartActions();
   const [adding, setAdding] = useState(false);
 
   // get the product data
   const product = useAppSelector((state) => state.quickViewReducer.value);
-
-  const [activePreview, setActivePreview] = useState(0);
 
   // Adicionar ao carrinho
   const handleAddToCart = async () => {
@@ -91,12 +86,14 @@ const QuickViewModal = () => {
                 </div>
 
                 <div className="relative z-1 overflow-hidden flex items-center justify-center w-full sm:min-h-[508px] bg-gray-1 rounded-lg border border-gray-3">
-                  <Image
-                    src={product.image_url}
-                    alt="products-details"
-                    width={400}
-                    height={400}
-                  />
+                  {product.image_url && (
+                    <Image
+                      src={product.image_url}
+                      alt="products-details"
+                      width={400}
+                      height={400}
+                    />
+                  )}
                 </div>
               </div>
             </div>
