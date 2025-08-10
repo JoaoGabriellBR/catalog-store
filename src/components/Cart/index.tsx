@@ -33,7 +33,7 @@ const Cart = () => {
     <>
       {/* <!-- ===== Breadcrumb Section Start ===== --> */}
       <section>
-        <Breadcrumb title={"Carrinho de Compras"} pages={["Cart"]} />
+        <Breadcrumb title={"Carrinho de Compras"} pages={["Carrinho"]} />
       </section>
       {/* <!-- ===== Breadcrumb Section End ===== --> */}
       {cartItems.length > 0 ? (

@@ -1,8 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { getProducts } from "@/services/products";
 import HeroCarousel from "./HeroCarousel";
 import HeroFeature from "./HeroFeature";
 
@@ -14,7 +15,7 @@ type PromoItem = {
   oldPrice?: string;
   imageSrc: string;
   imageAlt: string;
-  href?: string;
+  productQuery?: string;
 };
 
 const PROMOS: PromoItem[] = [
@@ -26,7 +27,7 @@ const PROMOS: PromoItem[] = [
     oldPrice: "R$ 4399.99",
     imageSrc: "/images/hero/apple-watch-series-9.png",
     imageAlt: "Apple Watch Series 9",
-    href: "/images/hero/apple-watch-series-9.png",
+    productQuery: "Apple Watch Series 9",
   },
   {
     id: 2,
@@ -36,20 +37,37 @@ const PROMOS: PromoItem[] = [
     oldPrice: "R$ 9599.99",
     imageSrc: "/images/hero/ipad-pro-12.png",
     imageAlt: "iPad Pro 12.9",
-    href: "/images/hero/ipad-pro-12.png",
+    productQuery: "iPad Pro 12.9",
   },
 ];
 
 const PromoCard = React.memo(function PromoCard({ item }: { item: PromoItem }) {
-  const Wrapper: React.ElementType = item.href ? Link : "div";
-  const wrapperProps: Record<string, unknown> = item.href
-    ? { href: item.href }
-    : {};
+  const router = useRouter();
+  const [navigating, setNavigating] = useState(false);
+
+  const handleNavigate = async () => {
+    if (navigating) return;
+    setNavigating(true);
+    try {
+      const query = item.productQuery || item.title;
+      const { products } = await getProducts({ search: query, limit: 1 });
+      if (products.length > 0) {
+        router.push(`/product/${products[0].id}`);
+      } else {
+        router.push(`/products?search=${encodeURIComponent(query)}`);
+      }
+    } finally {
+      setNavigating(false);
+    }
+  };
 
   return (
-    <Wrapper
-      {...wrapperProps}
-      className="w-full h-full min-h-0 relative rounded-[10px] bg-white p-4 sm:p-6 transition-shadow hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 flex"
+    <button
+      type="button"
+      onClick={handleNavigate}
+      aria-label={`Ver produto: ${item.title}`}
+      className="w-full h-full min-h-0 relative rounded-[10px] bg-white p-4 sm:p-6 transition-shadow hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 flex text-left"
+      disabled={navigating}
     >
       <div className="flex items-start justify-between gap-6 w-full">
         <div className="min-w-0 h-full flex flex-col justify-between gap-2">
@@ -83,7 +101,7 @@ const PromoCard = React.memo(function PromoCard({ item }: { item: PromoItem }) {
           />
         </div>
       </div>
-    </Wrapper>
+    </button>
   );
 });
 

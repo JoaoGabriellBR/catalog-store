@@ -36,9 +36,9 @@ const OrderCard = ({ order }: OrderCardProps) => {
       </header>
 
       <ul className="divide-y divide-gray-3 mb-4">
-        {order.items.map((item) => (
+        {order.items.map((item, index) => (
           <li
-            key={item.id}
+            key={index}
             className="flex items-center justify-between py-2 text-sm text-dark"
           >
             <span className="flex-1">
