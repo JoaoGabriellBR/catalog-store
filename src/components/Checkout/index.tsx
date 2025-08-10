@@ -92,6 +92,7 @@ const Checkout: React.FC = () => {
     ensureAuthenticated,
     user,
     paymentMethod,
+    shippingMethod,
     cartItems,
     subtotal,
     shippingCost,

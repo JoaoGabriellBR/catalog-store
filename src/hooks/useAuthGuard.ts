@@ -1,13 +1,11 @@
 "use client";
 import { useCallback } from "react";
-import { usePathname } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
 import type { User } from "@supabase/supabase-js";
 import { useLoginRequiredModal } from "@/app/context/LoginRequiredModalContext";
 
 export function useAuthGuard() {
   const { user } = useAuth();
-  const pathname = usePathname();
   const { open } = useLoginRequiredModal();
 
   const ensureAuthenticated = useCallback(
@@ -19,7 +17,7 @@ export function useAuthGuard() {
       }
       return true;
     },
-    [user, open, pathname]
+    [user, open]
   );
 
   const getAuthenticatedUserOrRedirect = useCallback(

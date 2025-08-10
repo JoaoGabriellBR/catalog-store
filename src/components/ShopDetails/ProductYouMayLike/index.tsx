@@ -1,8 +1,6 @@
 "use client";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import ProductItem from "@/components/Common/ProductItem";
-import Image from "next/image";
-import Link from "next/link";
 
 import { Swiper, SwiperSlide, type SwiperRef } from "swiper/react";
 import "swiper/css/navigation";

@@ -3,7 +3,7 @@ import Breadcrumb from "../Common/Breadcrumb";
 import Link from "next/link";
 import { ArrowLeft, SearchX } from "lucide-react";
 
-const NotFound = () => {
+export const NotFoundComponent = () => {
   return (
     <>
       <Breadcrumb title="Página não encontrada" pages={["erro"]} />
@@ -34,5 +34,3 @@ const NotFound = () => {
     </>
   );
 };
-
-export default NotFound;

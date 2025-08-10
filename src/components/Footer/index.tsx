@@ -1,17 +1,10 @@
 import React from "react";
 import {
-  MapPin,
-  Phone,
   Mail,
   Facebook,
   Twitter,
   Instagram,
   Linkedin,
-  CreditCard,
-  Wallet,
-  Banknote,
-  Apple,
-  BadgeDollarSign,
   ShoppingBag,
 } from "lucide-react";
 import Link from "next/link";

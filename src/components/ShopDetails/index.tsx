@@ -6,7 +6,6 @@ import ProductYouMayLike from "./ProductYouMayLike";
 import { useCartActions } from "@/hooks/useCartActions";
 import Button from "@/components/Common/Button";
 import {
-  ArrowLeft,
   CircleCheckBig,
   Link,
   Minus,

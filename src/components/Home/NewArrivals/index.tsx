@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import ProductItem from "@/components/Common/ProductItem";
 import { getProducts } from "@/services/products";
