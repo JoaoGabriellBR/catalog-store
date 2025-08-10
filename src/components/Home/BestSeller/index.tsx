@@ -21,10 +21,10 @@ const BestSeller = () => {
           <div>
             <span className="flex items-center gap-2.5 font-medium text-dark mb-1.5">
               <Tag className="w-[17px] h-[17px]" />
-              This Month
+              Este mês
             </span>
             <h2 className="font-semibold text-xl xl:text-heading-5 text-dark">
-              Best Sellers
+              Mais vendidos
             </h2>
           </div>
         </div>
