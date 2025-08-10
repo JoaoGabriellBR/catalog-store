@@ -11,20 +11,20 @@ Este repositório foi criado para um processo seletivo e traz, como diferencial,
 - Catálogo de produtos com busca e filtragem.
 - Página de detalhes com galeria de imagens e informações técnicas.
 - Carrinho persistente com cálculo de subtotal e frete.
-- Lista de favoritos.
+- Lista de favoritos do usuário.
 - Checkout com validação de formulário e envio de pedido via WhatsApp.
 - Histórico de pedidos sincronizado com Supabase.
 
 ## Tecnologias Utilizadas
 
-**Frontend**
+**Front-end**
 
-- [Next.js](https://nextjs.org/) (App Router)
+- [Next.js](https://nextjs.org/)
 - [React](https://react.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [TailwindCSS](https://tailwindcss.com/)
 
-**Backend/Database**
+**Back-end/Banco de Dados**
 
 - [Supabase](https://supabase.com/)
 
@@ -58,24 +58,53 @@ A IA atuou como parceira de desenvolvimento, oferecendo alternativas e insights,
 
 ## Instalação e Execução
 
+### 🔨 Guia de instalação
+
+Clone o projeto
+
 ```bash
-# Clonar o repositório
-git clone <url-do-repositorio>
-cd stg-catalog
-
-# Instalar dependências
-npm install
-
-# Rodar o projeto
-npm run dev
+  git clone https://github.com/JoaoGabriellBR/stg-catalog-challenge.git
 ```
 
-Configure as variáveis de ambiente do Supabase em um arquivo `.env.local` antes de iniciar o servidor.
+Entre no diretório do projeto
 
-## Evidências Visuais
+```bash
+  cd stg-catalog-challenge
+```
 
-Inclua screenshots ou GIFs das principais telas (catálogo, detalhes, carrinho e checkout) na pasta `docs/` ou dentro de `public/`. Referencie-os nesta seção para enriquecer a apresentação do projeto.
+Instale as dependências
+
+```bash
+  npm install
+```
+
+Configure suas variáveis de ambiente em `.env.local` antes de iniciar o servidor.
+   ```js
+   NEXT_PUBLIC_SUPABASE_URL = 'ENTER YOUR SUPABASE URL';
+   NEXT_PUBLIC_SUPABASE_ANON_KEY = 'ENTER YOUR SUPABASE ANON KEY';
+   ```
+
+Inicie o servidor
+
+```bash
+  npm run dev
+```
 
 ## Considerações Finais
 
 Este projeto demonstra domínio das tecnologias modernas de frontend e backend, aliado ao uso responsável de Inteligência Artificial para acelerar a entrega e manter alta qualidade. Agradeço a oportunidade de participar do processo seletivo e estou à disposição para esclarecimentos adicionais.
+
+## 🔗 Links
+
+[![Deploy][Deploy]][Deploy-url]
+[![Github][GitHub]][GitHub-url]
+
+<!-- MARKDOWN LINKS & IMAGES -->
+[Website]: https://img.shields.io/badge/site%20oficial-22C55E?style=for-the-badge
+[Website-url]: https://up-write.vercel.app
+
+[Deploy]: https://img.shields.io/badge/deploy-000?style=for-the-badge&logo=ko-fi&logoColor=white
+[Deploy-url]: https://stg-catalog-challenge-two.vercel.app
+
+[GitHub]: https://img.shields.io/badge/-Github-black.svg?style=for-the-badge&logo=github&colorB=blue
+[GitHub-url]: https://github.com/JoaoGabriellBR/stg-catalog-challenge
