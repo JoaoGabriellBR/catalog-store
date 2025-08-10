@@ -129,7 +129,7 @@ const Checkout: React.FC = () => {
   }
 
   return (
-    <section className="overflow-hidden py-16 sm:py-20 bg-gray-2">
+    <section className="overflow-hidden bg-gray-2 pt-[250px] sm:pt-[200px] lg:pt-[140px] xl:pt-[200px] pb-16 sm:pb-20">
       <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
         <h1 className="text-2xl sm:text-3xl font-semibold text-dark mb-6 sm:mb-8 text-center sm:text-left">
           Finalizar compra

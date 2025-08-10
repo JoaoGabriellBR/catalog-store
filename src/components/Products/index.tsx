@@ -44,7 +44,7 @@ const AllProducts: React.FC = () => {
     <>
       <Breadcrumb
         title="Explorar todos os produtos"
-        pages={["Loja", "/", "Sem sidebar"]}
+        pages={["Loja", "/", "Explorar todos os produtos"]}
       />
 
       <section className="relative bg-[#f3f4f6] pb-20 pt-5 lg:pt-20 xl:pt-28 overflow-hidden">

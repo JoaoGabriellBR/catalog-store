@@ -36,7 +36,7 @@ type PasswordFormData = z.infer<typeof passwordSchema>;
 const MyAccount = () => {
   const router = useRouter();
   const { user, loading } = useAuth();
-  const [activeTab, setActiveTab] = useState("dashboard");
+  const [activeTab, setActiveTab] = useState("account-details");
   const [addressModal, setAddressModal] = useState(false);
   const [profile, setProfile] = useState({ fullName: "", email: "" });
   const [passwordMessage, setPasswordMessage] = useState<{
@@ -141,7 +141,7 @@ const MyAccount = () => {
 
   return (
     <>
-      <Breadcrumb title={"Minha Conta"} pages={["my account"]} />
+      <Breadcrumb title={"Minha Conta"} pages={["Minha Conta"]} />
 
       <section className="overflow-hidden py-20 bg-gray-2">
         <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
