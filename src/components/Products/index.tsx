@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import Breadcrumb from "../Common/Breadcrumb";
 import SingleListItem from "../Shop/SingleListItem";
-import CustomSelect from "./CustomSelect";
 import { Grid, List, ChevronLeft, ChevronRight } from "lucide-react";
 import Button from "@/components/Common/Button";
 import ProductItem from "../Common/ProductItem";
@@ -11,13 +10,6 @@ import type { Product } from "@/types/product";
 
 const AllProducts: React.FC = () => {
   const [productStyle, setProductStyle] = useState<"grid" | "list">("grid");
-
-  const sortOptions = [
-    { label: "Produtos mais recentes", value: "0" },
-    { label: "Mais vendidos", value: "1" },
-    { label: "Produtos antigos", value: "2" },
-  ];
-
   const itemsPerPage = 12;
   const [products, setProducts] = useState<Product[]>([]);
   const [totalItems, setTotalItems] = useState(0);
@@ -63,7 +55,6 @@ const AllProducts: React.FC = () => {
               {/* Barra de controle */}
               <div className="mb-6 flex items-center justify-between rounded-lg bg-white px-3 py-2.5 shadow-1">
                 <div className="flex flex-wrap items-center gap-4">
-                  <CustomSelect options={sortOptions} />
                   <p>
                     Exibindo{" "}
                     <span className="font-medium text-dark">
