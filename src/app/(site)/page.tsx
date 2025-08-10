@@ -2,9 +2,16 @@ import Home from "@/components/Home";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "NextCommerce | Nextjs E-commerce template",
-  description: "This is Home for NextCommerce Template",
-  // other metadata
+  title: "STG Catalog | Loja de Produtos Online",
+  description:
+    "Explore a nossa vasta gama de produtos, desde eletrônicos a moda, tudo com qualidade garantida e entrega rápida.",
+  keywords: "loja online, produtos, eletrônicos, moda, entrega rápida",
+  openGraph: {
+    title: "STG Catalog | Loja de Produtos Online",
+    description:
+      "Explore a nossa vasta gama de produtos, desde eletrônicos a moda, tudo com qualidade garantida e entrega rápida.",
+    siteName: "STG Catalog",
+  },
 };
 
 export default function HomePage() {

@@ -19,7 +19,6 @@ import {
   Search,
   User,
   ShoppingCart,
-  Clock,
   Heart,
   ShoppingBag,
 } from "lucide-react";
@@ -163,7 +162,7 @@ const Header: React.FC = () => {
                     </p>
                   </Link>
                 )}
-                <Link href="/wishlist" className="flex items-center gap-2.5">
+                <Link href="/wishlist" className="flex items-center gap-2.5 -mr-5">
                   <span className="relative inline-block">
                     <Heart size={24} className="stroke-current" />
                     <span className="absolute -right-2 -top-2.5 flex h-4.5 w-4.5 items-center justify-center rounded-full bg-blue text-2xs font-medium text-white">

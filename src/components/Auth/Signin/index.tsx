@@ -93,12 +93,6 @@ const Signin = () => {
               {message && (
                 <p className="text-center mt-4 text-red-600">{message}</p>
               )}
-              <a
-                href="#"
-                className="block text-center text-dark-4 mt-4.5 ease-out duration-200 hover:text-dark"
-              >
-                Esqueceu sua senha?
-              </a>
               <span className="relative z-1 block font-medium text-center mt-4.5">
                 <span className="block absolute -z-1 left-0 top-1/2 h-px w-full bg-gray-3"></span>
                 <span className="inline-block px-3 bg-white">Ou</span>

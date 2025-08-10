@@ -3,9 +3,11 @@ import React from "react";
 
 import { Metadata } from "next";
 export const metadata: Metadata = {
-  title: "Minha Conta | NextCommerce Nextjs E-commerce template",
-  description: "This is Minha Conta page for NextCommerce Template",
-  // other metadata
+  title: "Minha Conta | STG Catalog",
+  description:
+    "Gerencie suas informações pessoais, pedidos e preferências de conta.",
+  keywords:
+    "minha conta, gerenciamento de conta, pedidos, informações pessoais",
 };
 
 const MyAccountPage = () => {
