@@ -32,7 +32,7 @@ const ProductDetails = ({ product }: ProductProps) => {
   const handleAddToCart = async () => {
     if (product) {
       setAdding(true);
-      await addToCart({ ...product, quantity });
+      await addToCart(product, quantity);
       setAdding(false);
     }
   };

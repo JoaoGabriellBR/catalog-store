@@ -122,8 +122,8 @@ const Hero: React.FC = () => {
             <div className="relative rounded-[10px] bg-white overflow-hidden h-[380px] md:h-[440px] xl:h-[520px]">
               {/* BG decorativo */}
               <Image
-                src="/images/hero/hero-bg.png"
-                alt=""
+                src="/images/hero/herobg.png"
+                alt="Background Hero"
                 aria-hidden="true"
                 className="absolute right-0 bottom-0"
                 width={534}

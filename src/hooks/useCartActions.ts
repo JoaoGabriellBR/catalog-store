@@ -9,8 +9,8 @@ import {
   updateCartItemQuantity,
   removeAllItemsFromCart,
   setCartItems,
-  CartItem,
 } from "@/redux/features/cart-slice";
+import type { Product } from "@/types/product";
 import {
   addOrUpdateCartItem,
   removeCartItem,
@@ -32,7 +32,7 @@ export const useCartActions = () => {
     dispatch(setCartItems(items));
   }, [user, dispatch]);
 
-  const addToCart = async (item: CartItem, quantity = 1) => {
+  const addToCart = async (item: Product, quantity = 1) => {
     const authUser = getAuthenticatedUserOrRedirect(
       "Você precisa estar logado para adicionar itens ao carrinho.",
       "cart"

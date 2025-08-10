@@ -27,7 +27,7 @@ const SingleItem = ({ item }: { item: Product }) => {
   // Adicionar ao carrinho
   const handleAddToCart = async () => {
     setAdding(true);
-    await addToCart({ ...item, quantity: 1 });
+    await addToCart(item, 1);
     setAdding(false);
   };
 
