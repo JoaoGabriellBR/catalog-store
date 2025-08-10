@@ -5,7 +5,7 @@ export async function getCartItems(userId: string): Promise<CartItem[]> {
   const { data, error } = await supabase
     .from("cart_items")
     .select(
-      "quantity, products:id, products(name, description, price, image_url, category)"
+      "quantity, product_id, products(name, description, price, image_url, category)"
     )
     .eq("user_id", userId);
 
@@ -17,8 +17,8 @@ export async function getCartItems(userId: string): Promise<CartItem[]> {
   return data.map(
     (row: {
       quantity: number;
+      product_id: string;
       products: {
-        id: string;
         name: string;
         description: string;
         price: number;
@@ -26,7 +26,7 @@ export async function getCartItems(userId: string): Promise<CartItem[]> {
         category: string;
       };
     }) => ({
-      id: row.products.id,
+      id: row.product_id,
       name: row.products.name,
       description: row.products.description,
       price: row.products.price,
