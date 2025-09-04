@@ -1,10 +1,10 @@
-# STG Catalog
+# Catalog
 
-Aplicação de loja virtual desenvolvida como parte de um teste técnico. O projeto simula uma vitrine online com catálogo, carrinho, favoritos e checkout, além de integração com Supabase e WhatsApp.
+O projeto simula uma vitrine online com catálogo, carrinho, favoritos e checkout, além de integração com Supabase e WhatsApp.
 
-## Contexto do Teste Técnico
+## Contexto do Projeto
 
-Este repositório foi criado para um processo seletivo e traz, como diferencial, a documentação transparente do uso de Inteligência Artificial durante o desenvolvimento. Todas as etapas foram auxiliadas por ferramentas como ChatGPT e Codex, mas com curadoria e decisões finais feitas manualmente.
+Este repositório foi criado com o objetivo de testar o potencial técnico e criativo das LLMs. Como diferencial, apresenta uma documentação transparente sobre o uso de Inteligência Artificial ao longo do desenvolvimento. Todas as etapas contaram com o apoio de ferramentas como ChatGPT e Codex, mas a curadoria e as decisões finais foram realizadas manualmente.
 
 ## Principais Funcionalidades
 
@@ -36,16 +36,16 @@ Este repositório foi criado para um processo seletivo e traz, como diferencial,
 
 **Ferramentas de IA**
 
-- [ChatGPT](https://chat.openai.com/) para brainstorming, geração de código e revisão textual
-- [OpenAI Codex](https://openai.com/blog/openai-codex) para sugestões de snippets durante o desenvolvimento
+- [ChatGPT](https://chat.openai.com/) para brainstorming.
+- [OpenAI Codex](https://openai.com/blog/openai-codex) para revisões e sugestões de snippets durante o desenvolvimento.
 
 ## Como a IA foi Utilizada
 
 1. **Criação e refinamento de prompts**: prompts iterativos foram usados para definir arquitetura, modelagem de dados e padrões de estilo.
-2. **Geração de código otimizado**: componentes de UI, hooks e serviços foram inicialmente gerados pela IA e posteriormente revisados.
-3. **Melhoria de UI/UX**: sugestões de microinterações, responsividade e acessibilidade.
-4. **Correções de bugs**: análise de stack traces e propostas de correção imediata.
-5. **Otimização de performance**: recomendações de memoização, lazy loading e redução de payloads.
+2. **Melhoria de UI/UX**: sugestões de microinterações, responsividade e acessibilidade.
+3. **Correções de bugs**: análise de stack traces e propostas de correção imediata.
+4. **Otimização de performance**: recomendações de memoização, lazy loading e redução de payloads.
+5. **Aprimoramento do código**: Revisão de acessibilidade, responsividade e segurança.
 
 A IA atuou como parceira de desenvolvimento, oferecendo alternativas e insights, enquanto a implementação final, testes e ajustes ficaram sob responsabilidade humana.
 
@@ -89,11 +89,6 @@ Inicie o servidor
 ```bash
   npm run dev
 ```
-
-## Considerações Finais
-
-Este projeto demonstra domínio das tecnologias modernas de frontend e backend, aliado ao uso responsável de Inteligência Artificial para acelerar a entrega e manter alta qualidade. Agradeço a oportunidade de participar do processo seletivo e estou à disposição para esclarecimentos adicionais.
-
 ## 🔗 Links
 
 [![Deploy][Deploy]][Deploy-url]
