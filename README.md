@@ -1,10 +1,6 @@
 # Catalog
 
-O projeto simula uma vitrine online com catálogo, carrinho, favoritos e checkout, além de integração com Supabase e WhatsApp.
-
-## Contexto do Projeto
-
-Este repositório foi criado com o objetivo de testar o potencial técnico e criativo das LLMs. Como diferencial, apresenta uma documentação transparente sobre o uso de Inteligência Artificial ao longo do desenvolvimento. Todas as etapas contaram com o apoio de ferramentas como ChatGPT e Codex, mas a curadoria e as decisões finais foram realizadas manualmente.
+Experiência de e-commerce completa, com catálogo, carrinho, favoritos e checkout, unindo Supabase e WhatsApp.
 
 ## Principais Funcionalidades
 
@@ -46,8 +42,6 @@ Este repositório foi criado com o objetivo de testar o potencial técnico e cri
 3. **Correções de bugs**: análise de stack traces e propostas de correção imediata.
 4. **Otimização de performance**: recomendações de memoização, lazy loading e redução de payloads.
 5. **Aprimoramento do código**: Revisão de acessibilidade, responsividade e segurança.
-
-A IA atuou como parceira de desenvolvimento, oferecendo alternativas e insights, enquanto a implementação final, testes e ajustes ficaram sob responsabilidade humana.
 
 ## Benefícios do Uso de IA
 
