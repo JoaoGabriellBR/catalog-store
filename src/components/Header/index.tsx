@@ -15,13 +15,7 @@ import Button from "@/components/Common/Button";
 import useDebounce from "@/hooks/useDebounce";
 import { useAuth } from "@/app/context/AuthContext";
 import { useFavorites } from "@/app/context/FavoritesContext";
-import {
-  Search,
-  User,
-  ShoppingCart,
-  Heart,
-  ShoppingBag,
-} from "lucide-react";
+import { Search, User, ShoppingCart, Heart, ShoppingBag } from "lucide-react";
 
 const Header: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -92,7 +86,7 @@ const Header: React.FC = () => {
           <div className="z-20 flex flex-col sm:flex-row items-center sm:justify-between gap-5 sm:gap-10 w-full">
             <Link href="/" className="flex items-center gap-2 w-full sm:w-auto">
               <ShoppingBag size={25} className="stroke-current text-blue" />
-              <h1 className="text-3xl font-bold text-dark">Stg Catalog</h1>
+              <h1 className="text-3xl font-bold text-dark">Catalog</h1>
             </Link>
             <div className="max-w-[475px] w-full">
               <form onSubmit={(e) => e.preventDefault()}>
@@ -162,7 +156,10 @@ const Header: React.FC = () => {
                     </p>
                   </Link>
                 )}
-                <Link href="/wishlist" className="flex items-center gap-2.5 -mr-5">
+                <Link
+                  href="/wishlist"
+                  className="flex items-center gap-2.5 -mr-5"
+                >
                   <span className="relative inline-block">
                     <Heart size={24} className="stroke-current" />
                     <span className="absolute -right-2 -top-2.5 flex h-4.5 w-4.5 items-center justify-center rounded-full bg-blue text-2xs font-medium text-white">

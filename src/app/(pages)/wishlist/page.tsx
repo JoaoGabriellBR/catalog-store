@@ -3,7 +3,7 @@ import { Wishlist } from "@/components/Wishlist";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Favoritos | Loja STG Catalog",
+  title: "Favoritos | Loja Catalog",
   description: "Tela de favoritos da loja",
 };
 

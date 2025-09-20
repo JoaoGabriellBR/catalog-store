@@ -4,7 +4,7 @@ import AllProducts from "@/components/Products";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Produtos | Loja STG Catalog",
+  title: "Produtos | Loja Catalog",
   description: "Tela de produtos da loja",
 };
 

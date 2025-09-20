@@ -58,7 +58,7 @@ const Checkout: React.FC = () => {
     setLoading(true);
     try {
       const messageLines = [
-        "NOVO PEDIDO - STG CATALOG",
+        "NOVO PEDIDO - Catalog",
         `Cliente: ${user.user_metadata?.full_name || ""}`,
         `Email: ${user.email}`,
         "PRODUTOS:",
@@ -70,12 +70,12 @@ const Checkout: React.FC = () => {
         ),
         "",
         `Subtotal: ${formatCurrency(subtotal)}`,
-        `Frete (${ 
+        `Frete (${
           shippingMethod === "express" ? "Expresso" : "Padrão"
         }): ${formatCurrency(shippingCost)}`,
         `TOTAL: ${formatCurrency(grandTotal)}`,
         "",
-        "Pedido via STG Catalog",
+        "Pedido via Catalog",
       ];
 
       await createOrder(user.id, cartItems, grandTotal);
@@ -354,9 +354,7 @@ const Checkout: React.FC = () => {
               <div className="space-y-2 text-sm">
                 <div className="flex items-center justify-between">
                   <span className="text-dark-4">Subtotal</span>
-                  <span className="text-dark">
-                    {formatCurrency(subtotal)}
-                  </span>
+                  <span className="text-dark">{formatCurrency(subtotal)}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-dark-4">Frete</span>

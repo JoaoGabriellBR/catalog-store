@@ -3,7 +3,7 @@ import Cart from "@/components/Cart";
 
 import { Metadata } from "next";
 export const metadata: Metadata = {
-  title: "Carrinho | Loja STG Catalog",
+  title: "Carrinho | Loja Catalog",
   description: "Tela do carrinho de compras",
 };
 

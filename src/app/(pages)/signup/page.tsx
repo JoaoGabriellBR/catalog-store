@@ -4,7 +4,7 @@ import React from "react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Criar conta | Loja STG Catalog",
+  title: "Criar conta | Loja Catalog",
   description: "Tela de criação de conta na loja",
 };
 

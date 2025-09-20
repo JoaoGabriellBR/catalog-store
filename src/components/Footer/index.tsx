@@ -66,7 +66,7 @@ const Footer = () => {
           <div className="flex flex-col justify-between item-start">
             <Link href="/" className="flex items-center gap-2 w-full sm:w-auto">
               <ShoppingBag size={25} className="stroke-current text-blue" />
-              <h1 className="text-3xl font-bold text-dark">Stg Catalog</h1>
+              <h1 className="text-3xl font-bold text-dark">Catalog</h1>
             </Link>
 
             <div className="flex items-center gap-4 mt-7.5">
@@ -111,7 +111,7 @@ const Footer = () => {
               <li>
                 <Link href="#" className="flex items-center gap-4.5">
                   <Mail size={24} className="text-blue" />
-                  stgcatalog@gmail.com
+                  catalog@gmail.com
                 </Link>
               </li>
             </ul>
@@ -128,7 +128,7 @@ const Footer = () => {
             <p className="text-dark font-medium">
               &copy; {year}. Todos os direitos reservados por{" "}
               <Link href={"/"} className="underline">
-                STG Catalog.
+                Catalog.
               </Link>
             </p>
           </div>

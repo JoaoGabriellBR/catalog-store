@@ -3,7 +3,7 @@ import React from "react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Login | Loja STG Catalog",
+  title: "Login | Loja Catalog",
   description: "Tela de login para acessar a loja",
 };
 

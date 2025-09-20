@@ -7,7 +7,7 @@ import { getProductById } from "@/services/products";
 import type { Product } from "@/types/product";
 
 // export const metadata: Metadata = {
-//   title: "Detalhes do Produto | Loja STG Catalog",
+//   title: "Detalhes do Produto | Loja Catalog",
 //   description: "Tela de detalhes do produto",
 // };
 

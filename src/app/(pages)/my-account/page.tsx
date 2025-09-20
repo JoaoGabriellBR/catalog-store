@@ -3,7 +3,7 @@ import React from "react";
 
 import { Metadata } from "next";
 export const metadata: Metadata = {
-  title: "Minha Conta | STG Catalog",
+  title: "Minha Conta | Catalog",
   description:
     "Gerencie suas informações pessoais, pedidos e preferências de conta.",
   keywords:

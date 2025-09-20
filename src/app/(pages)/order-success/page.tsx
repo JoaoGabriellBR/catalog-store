@@ -3,7 +3,7 @@ import OrderSuccess from "@/components/OrderSuccess";
 
 import { Metadata } from "next";
 export const metadata: Metadata = {
-  title: "Pedido Realizado | STG Catalog",
+  title: "Pedido Realizado | Catalog",
   description: "Página de confirmação de pedido",
 };
 
