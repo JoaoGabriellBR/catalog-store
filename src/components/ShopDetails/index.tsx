@@ -177,7 +177,7 @@ const ProductDetails = ({ product }: ProductProps) => {
                     {product && (
                       <FavoriteButton
                         product={product}
-                        className="flex items-center justify-center w-12 h-12 rounded-md border border-gray-3 ease-out duration-200 hover:text-white hover:bg-dark hover:border-transparent"
+                        className="flex items-center justify-center w-12 h-12 rounded-md border border-gray-3 ease-out duration-200 hover:bg-dark hover:border-transparent"
                       />
                     )}
                   </div>
