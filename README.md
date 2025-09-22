@@ -57,13 +57,13 @@ Experiência de e-commerce completa, com catálogo, carrinho, favoritos e checko
 Clone o projeto
 
 ```bash
-  git clone https://github.com/JoaoGabriellBR/stg-catalog-challenge.git
+  git clone https://github.com/JoaoGabriellBR/catalog-store.git
 ```
 
 Entre no diretório do projeto
 
 ```bash
-  cd stg-catalog-challenge
+  cd catalog-store
 ```
 
 Instale as dependências
@@ -89,11 +89,8 @@ Inicie o servidor
 [![Github][GitHub]][GitHub-url]
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[Website]: https://img.shields.io/badge/site%20oficial-22C55E?style=for-the-badge
-[Website-url]: https://up-write.vercel.app
-
 [Deploy]: https://img.shields.io/badge/deploy-000?style=for-the-badge&logo=ko-fi&logoColor=white
-[Deploy-url]: https://stg-catalog-challenge-two.vercel.app
+[Deploy-url]: https://the-catalog-store.vercel.app
 
 [GitHub]: https://img.shields.io/badge/-Github-black.svg?style=for-the-badge&logo=github&colorB=blue
-[GitHub-url]: https://github.com/JoaoGabriellBR/stg-catalog-challenge
+[GitHub-url]: https://github.com/JoaoGabriellBR/catalog-store
